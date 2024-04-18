@@ -23,9 +23,9 @@ This repository contains implementations for two different vocoder: a **Polyphon
 - ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+) : Implemented
 - ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) : Implementing
 
-### Explanation
+## Explanation
 
-#### 1. PluginProcessor
+### 1. PluginProcessor
 **Role:** This is the core of your Vocoder plugin. It interacts with the host DAW (Digital Audio Workstation) and manages audio processing.  
 **Functionality:**
 - **Inputs:** MIDI data and a voiceSignal (the carrier, e.g., a human voice).
@@ -33,7 +33,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
   - Converts MIDI note data into corresponding frequencies.
   - Sends these frequencies along with the voiceSignal to the VocoderProcessor.
 
-#### 2. VocoderProcessor
+### 2. VocoderProcessor
 **Role:** Manages the vocoding process by allocating and controlling multiple VocoderVoice instances, each corresponding to different MIDI notes.  
 **Functionality:**
 - **Inputs:** Frequencies from MIDI notes and an audio signal (the modulator).
@@ -41,7 +41,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
   - For each active MIDI note, it instantiates or updates a corresponding VocoderVoice with the frequency of the MIDI note and the voiceSignal.
   - Collects outputs from all active VocoderVoice instances and mixes them into a single output stream.
 
-#### 3. VocoderVoice
+### 3. VocoderVoice
 **Role:** Represents a single vocoding voice corresponding to a specific MIDI note.  
 **Functionality:**
 - **Inputs:** A voiceSignal and the frequency of a MIDI note.
