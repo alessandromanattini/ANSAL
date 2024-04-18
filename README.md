@@ -1,7 +1,7 @@
 # CMLS - VOCODER
 
 ## Overview
-This repository contains implementations for two different vocoder: a **Polyphonic ChannelVocoder** and a **Autocorrelation MonophonicVocoder**.
+This repository contains implementations for two different vocoder: a **Polyphonic ChannelVocoder** and a **Monophonic AutocorrelationVocoder**.
 
 ## Polyphonic Channel Vocoder Section
 ### UML Editor Link
