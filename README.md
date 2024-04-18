@@ -11,12 +11,12 @@ This repository contains implementations for two different vocoder: a **Polyphon
 
 | Class               | Status         |
 |---------------------|----------------|
-| SawtoothOscillator  | ![yellow_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
-| BandPassFilter      | ![yellow_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
-| EnvelopeFollower    | ![yellow_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
-| VocoderVoice        | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
-| VocoderProcessor    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
-| PluginProcessor     | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) Not implemented |
+| SawtoothOscillator  | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
+| BandPassFilter      | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
+| EnvelopeFollower    | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
+| VocoderVoice        | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
+| VocoderProcessor    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
+| PluginProcessor     | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
 
 ## Legend
 - ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) : Not implemented
