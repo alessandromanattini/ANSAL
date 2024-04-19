@@ -32,9 +32,5 @@
 *.app
 
 #JUCE
-**/Polyphonic_ChannelVoc/Builds
-**/Monophonic_AutocorrVoc/Builds
-**/ComponentsTests/SawtoothSynth/Builds
-**/Polyphonic_ChannelVoc/JuceLibraryCode
-**/Monophonic_AutocorrVoc/JuceLibraryCode
-**/ComponentsTests/SawtoothSynth/JuceLibraryCode
+**/Builds
+**/JuceLibraryCode
