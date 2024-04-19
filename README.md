@@ -12,7 +12,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
 | Class               | Status         |
 |---------------------|----------------|
 | SawtoothOscillator  | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| BandPassFilter      | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
+| BandPassFilter      | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
 | EnvelopeFollower    | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
 | VocoderVoice        | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
 | VocoderProcessor    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
@@ -61,7 +61,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
 The autocorrelation vocoder offers high-quality vocoding but lacks polyphony due to its nature.
 
 ## Usage
-Refer to individual class implementations for detailed usage instructions.
+...
 
 ## Contributors
 - Angelo Antona
