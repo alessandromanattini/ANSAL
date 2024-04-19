@@ -35,6 +35,9 @@
 **/Polyphonic_ChannelVoc/Builds
 **/Monophonic_AutocorrVoc/Builds
 **/ComponentsTests/SawtoothSynth/Builds
+**/ComponentsTests/BandPassTest/Builds
+
 **/Polyphonic_ChannelVoc/JuceLibraryCode
 **/Monophonic_AutocorrVoc/JuceLibraryCode
 **/ComponentsTests/SawtoothSynth/JuceLibraryCode
+**/ComponentsTests/BandPassTest/Builds
