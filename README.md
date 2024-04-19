@@ -13,7 +13,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
 |---------------------|----------------|
 | SawtoothOscillator  | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
 | BandPassFilter      | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| EnvelopeFollower    | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
+| EnvelopeFollower    | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
 | VocoderVoice        | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
 | VocoderProcessor    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
 | PluginProcessor     | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
@@ -55,6 +55,17 @@ This repository contains implementations for two different vocoder: a **Polyphon
   - The EnvelopeFollower modulates the amplitude of the sawtooth wave based on the dynamics of the filtered voiceSignal.
 - **Output:** The modulated sawtooth wave, which is a component of the final vocoded output.
 
+## Test Classes
+### SawtoothOscillatorTest
+Uses the SawtoothOscillator Class to implement a simple midi polyphonic synthesizer plugin using the JUCE framework, which can generate sawtooth waveforms.
+
+### BandPassFilterTest
+* **Audio Processing**: The primary function of this plugin is to apply a band-pass filter to an audio signal. This type of filter allows frequencies within a certain range to pass through while attenuating frequencies outside that range.
+* **User Interactivity**: Through a GUI, the plugin offers a slider allowing users to dynamically adjust the center frequency of the band-pass filter.
+
+### EnvelopeFollowerTest
+* **MIDI Input Handling**: The plugin processes MIDI messages to control the frequency of the sine wave oscillator. Each time a MIDI note-on message is received, the oscillator's frequency is set based on the MIDI note number, translating it into a frequency using a standard formula.
+* **Audio Processing**: During the audio processing block, **the plugin modulates the output of the sine wave oscillator with the envelope extracted from the input audio signal**. This means the loudness of the synthesized sound is dynamically shaped by the loudness characteristics of the incoming audio, creating an interesting effect where the synthesized sound reflects the dynamics of the input.
 
 
 ## Autocorrelation Vocoder Section
