@@ -53,7 +53,7 @@ Uses the SawtoothOscillator Class to implement a simple midi polyphonic synthesi
 It's a test version of the complete vocoder. It doesn't support noise generation, so it's a vocoder devoid of word intelligibility.
 
 ## Autocorrelation Vocoder Section
-The autocorrelation vocoder offers high-quality vocoding but lacks polyphony due to its nature.
+The monophonic version yields good results. I'm trying to extend it to a polyphonic version, but at the moment, the performances are terrible.
 
 ## Usage
 ...

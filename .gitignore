@@ -32,16 +32,18 @@
 *.app
 
 #JUCE
-**/Polyphonic_ChannelVoc/Builds
-**/Monophonic_AutocorrVoc/Builds
+**/ChannelVoc/Builds
+**/AutocorrVoc/MonoPhaseVoc/Builds
+**/AutocorrVoc/PolyPhaseVoc/Builds
 **/ComponentsTests/SawtoothSynth/Builds
 **/ComponentsTests/BandPassTest/Builds
 **/ComponentsTests/EnvelopeFollowerTest/Builds
 **/ComponentsTests/VocVoiceTest/Builds
 
 
-**/Polyphonic_ChannelVoc/JuceLibraryCode
-**/Monophonic_AutocorrVoc/JuceLibraryCode
+**/ChannelVoc/JuceLibraryCode
+**/AutocorrVoc/MonoPhaseVoc/JuceLibraryCode
+**/AutocorrVoc/PolyPhaseVoc/JuceLibraryCode
 **/ComponentsTests/SawtoothSynth/JuceLibraryCode
 **/ComponentsTests/BandPassTest/JuceLibraryCode
 **/ComponentsTests/EnvelopeFollowerTest/JuceLibraryCode
