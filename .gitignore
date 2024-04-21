@@ -37,9 +37,12 @@
 **/ComponentsTests/SawtoothSynth/Builds
 **/ComponentsTests/BandPassTest/Builds
 **/ComponentsTests/EnvelopeFollowerTest/Builds
+**/ComponentsTests/VocVoiceTest/Builds
+
 
 **/Polyphonic_ChannelVoc/JuceLibraryCode
 **/Monophonic_AutocorrVoc/JuceLibraryCode
 **/ComponentsTests/SawtoothSynth/JuceLibraryCode
 **/ComponentsTests/BandPassTest/JuceLibraryCode
 **/ComponentsTests/EnvelopeFollowerTest/JuceLibraryCode
+**/ComponentsTests/VocVoiceTest/JuceLibraryCode

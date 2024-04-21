@@ -9,42 +9,24 @@ This repository contains implementations for two different vocoder: a **Polyphon
 
 ## Classes Status
 
-| Class               | Status         |
-|---------------------|----------------|
-| SawtoothOscillator  | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| BandPassFilter      | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| EnvelopeFollower    | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| VocoderVoice        | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
-| VocoderProcessor    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
-| PluginProcessor     | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
+| Class                     | Status                                                                |
+|---------------------------|-----------------------------------------------------------------------|
+| SawtoothOscillator        | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
+| BandPassFilter            | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
+| EnvelopeFollower          | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
+| ZCR noise/osc selector    | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)     |
+| VocoderVoice              | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+)  |
 
 ## Legend
 - ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) : Not implemented
 - ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+) : Implemented
 - ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) : Implementing
 
-## Explanation
-
-### 1. PluginProcessor
-**Role:** This is the core of your Vocoder plugin. It interacts with the host DAW (Digital Audio Workstation) and manages audio processing.  
+## Components Explanation
+### VocoderVoice
+**Role:**  Manages the vocoding process by allocating and controlling multiple BPF, EnvFoll. and SawOsc. instances, each corresponding to different MIDI notes.  
 **Functionality:**
-- **Inputs:** MIDI data and a voiceSignal (the carrier, e.g., a human voice).
-- **Process:**
-  - Converts MIDI note data into corresponding frequencies.
-  - Sends these frequencies along with the voiceSignal to the VocoderProcessor.
-
-### 2. VocoderProcessor
-**Role:** Manages the vocoding process by allocating and controlling multiple VocoderVoice instances, each corresponding to different MIDI notes.  
-**Functionality:**
-- **Inputs:** Frequencies from MIDI notes and an audio signal (the modulator).
-- **Process:**
-  - For each active MIDI note, it instantiates or updates a corresponding VocoderVoice with the frequency of the MIDI note and the voiceSignal.
-  - Collects outputs from all active VocoderVoice instances and mixes them into a single output stream.
-
-### 3. VocoderVoice
-**Role:** Represents a single vocoding voice corresponding to a specific MIDI note.  
-**Functionality:**
-- **Inputs:** A voiceSignal and the frequency of a MIDI note.
+- **Inputs:** A voiceSignal and a MIDI note.
 - **Components:**
   - **SawtoothOscillator:** Generates a sawtooth wave at the given frequency.
   - **BandPassFilter:** Filters the voiceSignal around the frequency provided, allowing only a specific frequency band to pass.
@@ -53,7 +35,7 @@ This repository contains implementations for two different vocoder: a **Polyphon
   - The SawtoothOscillator provides a continuous tone at the MIDI note frequency.
   - The BandPassFilter processes the voiceSignal to extract frequency components near the MIDI note.
   - The EnvelopeFollower modulates the amplitude of the sawtooth wave based on the dynamics of the filtered voiceSignal.
-- **Output:** The modulated sawtooth wave, which is a component of the final vocoded output.
+- **Output:** The modulated sawtooth waves.
 
 ## Test Classes
 ### SawtoothOscillatorTest
@@ -67,6 +49,8 @@ Uses the SawtoothOscillator Class to implement a simple midi polyphonic synthesi
 * **MIDI Input Handling**: The plugin processes MIDI messages to control the frequency of the sine wave oscillator. Each time a MIDI note-on message is received, the oscillator's frequency is set based on the MIDI note number, translating it into a frequency using a standard formula.
 * **Audio Processing**: During the audio processing block, **the plugin modulates the output of the sine wave oscillator with the envelope extracted from the input audio signal**. This means the loudness of the synthesized sound is dynamically shaped by the loudness characteristics of the incoming audio, creating an interesting effect where the synthesized sound reflects the dynamics of the input.
 
+### VocVoiceTest
+It's a test version of the complete vocoder. It doesn't support noise generation, so it's a vocoder devoid of word intelligibility.
 
 ## Autocorrelation Vocoder Section
 The autocorrelation vocoder offers high-quality vocoding but lacks polyphony due to its nature.
@@ -77,3 +61,4 @@ The autocorrelation vocoder offers high-quality vocoding but lacks polyphony due
 ## Contributors
 - Angelo Antona
 - Alessandro Manattini
+- Salvatore Benvenuto Zocco
