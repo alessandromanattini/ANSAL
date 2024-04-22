@@ -132,7 +132,6 @@ bool PolyPhaseVoc2AudioProcessor::isBusesLayoutSupported (const BusesLayout& lay
 
 void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) {
     juce::ScopedNoDenormals noDenormals;
-
     auto numSamples = buffer.getNumSamples();
     juce::AudioBuffer<float> tempBufferTot(buffer.getNumChannels(), numSamples);
     tempBufferTot.clear();
@@ -143,16 +142,18 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     }
 
     // Mix outputs from active vocoders
-    for (auto& vocoder : vocoders) {
-        // Temporary buffer to hold vocoder output, make sure it is cleared if vocoder.process doesn't.
-        juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
-        tempBuffer.clear(); // Clear if necessary.
+    for (int i = 0; i < maxVoices; ++i) {
+        if (activeNotes[i] != -1) { // Check if the voice is active
+            // Temporary buffer to hold vocoder output, make sure it is cleared if vocoder.process doesn't.
+            juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
+            tempBuffer.clear(); // Clear if necessary.
 
-        vocoder.process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
+            vocoders[i].process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
 
-        // Add mono vocoder output to all channels in the total buffer
-        for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
-            tempBufferTot.addFrom(channel, 0, tempBuffer, 0, 0, numSamples);
+            // Add mono vocoder output to all channels in the total buffer
+            for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
+                tempBufferTot.addFrom(channel, 0, tempBuffer, 0, 0, numSamples);
+            }
         }
     }
 
@@ -161,6 +162,7 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         buffer.copyFrom(channel, 0, tempBufferTot, channel, 0, numSamples);
     }
 }
+
 
 
 //==============================================================================
