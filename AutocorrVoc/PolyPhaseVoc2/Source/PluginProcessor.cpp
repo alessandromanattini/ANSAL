@@ -23,6 +23,9 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
 #endif
 {
     activeNotes.resize(maxVoices, -1);  // Initialize all voices as inactive
+
+    comp.setRatio(8.0f);
+    comp.setThreshold(0.5f);
 }
 
 PolyPhaseVoc2AudioProcessor::~PolyPhaseVoc2AudioProcessor()
@@ -146,9 +149,11 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         if (activeNotes[i] != -1) { // Check if the voice is active
             // Temporary buffer to hold vocoder output, make sure it is cleared if vocoder.process doesn't.
             juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
-            tempBuffer.clear(); // Clear if necessary.
+            tempBuffer.clear();
 
-            vocoders[i].process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
+            comp.process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples); // COMPRESSOR
+
+            vocoders[i].process(tempBuffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
 
             // Add mono vocoder output to all channels in the total buffer
             for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {

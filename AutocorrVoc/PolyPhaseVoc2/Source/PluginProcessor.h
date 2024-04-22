@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PhaseVoc.h"
+#include "SimpleCompressor.h"
 
 #include <array>
 #include <vector>
@@ -64,6 +65,8 @@ private:
     std::vector<int> activeNotes; // To keep track of which MIDI notes are currently active
 
     void handleMidiEvent(const juce::MidiMessage& msg);
+
+    SimpleCompressor comp;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolyPhaseVoc2AudioProcessor)

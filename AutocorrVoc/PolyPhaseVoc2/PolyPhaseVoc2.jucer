@@ -15,6 +15,8 @@
     </GROUP>
     <FILE id="sm6FyK" name="PhaseVoc.cpp" compile="1" resource="0" file="Source/PhaseVoc.cpp"/>
     <FILE id="Syp4pw" name="PhaseVoc.h" compile="0" resource="0" file="Source/PhaseVoc.h"/>
+    <FILE id="qSFX2S" name="SimpleCompressor.h" compile="0" resource="0"
+          file="Source/SimpleCompressor.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
