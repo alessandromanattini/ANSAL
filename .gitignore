@@ -35,15 +35,18 @@
 **/ChannelVoc/Builds
 **/AutocorrVoc/MonoPhaseVoc/Builds
 **/AutocorrVoc/PolyPhaseVoc/Builds
+**/AutocorrVoc/PolyPhaseVoc2/Builds
 **/ComponentsTests/SawtoothSynth/Builds
 **/ComponentsTests/BandPassTest/Builds
 **/ComponentsTests/EnvelopeFollowerTest/Builds
 **/ComponentsTests/VocVoiceTest/Builds
 
 
+
 **/ChannelVoc/JuceLibraryCode
 **/AutocorrVoc/MonoPhaseVoc/JuceLibraryCode
 **/AutocorrVoc/PolyPhaseVoc/JuceLibraryCode
+**/AutocorrVoc/PolyPhaseVoc2/JuceLibraryCode
 **/ComponentsTests/SawtoothSynth/JuceLibraryCode
 **/ComponentsTests/BandPassTest/JuceLibraryCode
 **/ComponentsTests/EnvelopeFollowerTest/JuceLibraryCode

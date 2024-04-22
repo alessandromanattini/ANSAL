@@ -1,9 +1,35 @@
 # CMLS - VOCODER
 
 ## Overview
-This repository contains implementations for two different vocoder: a **Polyphonic ChannelVocoder** and a **Monophonic AutocorrelationVocoder**.
+This repository contains implementations for two different vocoder: a **ChannelVocoder** and a **AutocorrelationVocoder**.
 
-## Polyphonic Channel Vocoder Section
+## Autocorrelation Vocoder Section
+The plugin employs a set of internally managed vocoder instances, each capable of processing a monophonic signal. When a MIDI note is played, a vocoder instance is allocated to that note, and the corresponding pitch transformation is applied. The outputs of all active vocoder instances are then mixed together to form a polyphonic output.
+
+Autocorrelation is used to analyze the input signal and identify its periodicity, which informs the pitch shifting process. The windowing function within the phase vocoder ensures that phase coherence is maintained, resulting in a smooth and continuous output signal.
+
+### Features
+* Polyphonic Capabilities: Unlike a monophonic vocoder, which processes a single note at a time, the PolyPhase Vocoder can handle multiple notes simultaneously, allowing for complex soundscapes and harmonies.
+* Phase Vocoder Processing: At the core of the plugin is the phase vocoder process, which performs pitch shifting and time stretching without affecting the other characteristics of the sound.
+* Leaky Autocorrelation: This feature ensures that the signal retains a degree of temporal coherence, resulting in a more natural and less 'robotic' sound than traditional vocoders.
+* Dynamic MIDI Control: The plugin can be controlled via MIDI, allowing for dynamic pitch manipulation during a performance.
+* Stereo Processing: While the internal processing is monophonic, the output is stereo, ensuring compatibility with conventional music production workflows.
+
+## Classes Status
+
+| Class                     | Status                                                                |
+|---------------------------|-----------------------------------------------------------------------|
+| PhaseVoc                  | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
+| PluginProcessor           | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) |
+
+## Legend
+- ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) : Not implemented
+- ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+) : Implemented
+- ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) : Implementing
+
+
+
+## Channel Vocoder Section
 ### UML Editor Link
 [Polyphonic Vocoder UML Editor](https://lucid.app/lucidchart/ab4a26a6-fc86-46e5-888e-316cc1204135/edit?viewport_loc=-1135%2C-415%2C3913%2C1628%2C0_0&invitationId=inv_0c0c533d-3a09-4dd8-8d4a-a29dd9f9e304)
 
@@ -52,11 +78,7 @@ Uses the SawtoothOscillator Class to implement a simple midi polyphonic synthesi
 ### VocVoiceTest
 It's a test version of the complete vocoder. It doesn't support noise generation, so it's a vocoder devoid of word intelligibility.
 
-## Autocorrelation Vocoder Section
-The monophonic version yields good results. I'm trying to extend it to a polyphonic version, but at the moment, the performances are terrible.
 
-## Usage
-...
 
 ## Contributors
 - Angelo Antona
