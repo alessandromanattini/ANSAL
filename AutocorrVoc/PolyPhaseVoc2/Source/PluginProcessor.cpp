@@ -146,18 +146,19 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
     // Mix outputs from active vocoders
     for (int i = 0; i < maxVoices; ++i) {
-        if (activeNotes[i] != -1) { // Check if the voice is active
-            // Temporary buffer to hold vocoder output, make sure it is cleared if vocoder.process doesn't.
+        if (activeNotes[i] != -1 || vocoders[i].envGen.isActive()) { // Continue processing if note is active or envelope is active
             juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
             tempBuffer.clear();
 
-            comp.process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples); // COMPRESSOR
-
+            comp.process(buffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
             vocoders[i].process(tempBuffer.getReadPointer(0), tempBuffer.getWritePointer(0), numSamples);
 
-            // Add mono vocoder output to all channels in the total buffer
             for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
                 tempBufferTot.addFrom(channel, 0, tempBuffer, 0, 0, numSamples);
+            }
+
+            if (!vocoders[i].envGen.isActive()) {
+                activeNotes[i] = -1; // Only mark as inactive if envelope has fully completed
             }
         }
     }
@@ -167,6 +168,9 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         buffer.copyFrom(channel, 0, tempBufferTot, channel, 0, numSamples);
     }
 }
+
+
+
 
 
 
@@ -210,19 +214,20 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
         float newDelta = frequency * (static_cast<float>(0xFFFFFFFF) / getSampleRate());
         bool voiceAllocated = false;
 
-        // Find an inactive voice
+        // Find an inactive voice or reuse the oldest one
         for (int i = 0; i < maxVoices; ++i) {
-            if (activeNotes[i] == -1) {  // This checks for an inactive voice
+            if (activeNotes[i] == -1) {
                 vocoders[i].setDelta(newDelta);
+                vocoders[i].noteOn(); // Start the envelope
                 activeNotes[i] = noteNumber;
                 voiceAllocated = true;
                 break;
             }
         }
 
-        // If no inactive voice found, steal the oldest voice
         if (!voiceAllocated) {
             vocoders[0].setDelta(newDelta);
+            vocoders[0].noteOn(); // Start the envelope on the reused voice
             activeNotes[0] = noteNumber;
         }
     }
@@ -230,9 +235,11 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
         int noteNumber = msg.getNoteNumber();
         for (int i = 0; i < maxVoices; ++i) {
             if (activeNotes[i] == noteNumber) {
+                vocoders[i].noteOff(); // Stop the envelope
                 activeNotes[i] = -1; // Mark this voice as inactive
                 break;
             }
         }
     }
 }
+
