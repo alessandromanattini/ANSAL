@@ -5,7 +5,7 @@ PhaseVocoder::PhaseVocoder(){
 }
 
 void PhaseVocoder::initializeParameters() {
-    corr_k = 0.9975f; // Leaky integration factor, you might want to tweak this
+    corr_k = 0.9997f; // Leaky integration factor, you might want to tweak this
 
     // Initialize the Hann window function
     for (int i = 0; i < 256; ++i) {

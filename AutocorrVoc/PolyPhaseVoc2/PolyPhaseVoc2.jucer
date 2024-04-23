@@ -13,6 +13,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="HPi37Q" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="HaqVmG" name="EnvelopeGenerator.h" compile="0" resource="0"
+          file="Source/EnvelopeGenerator.h"/>
     <FILE id="sm6FyK" name="PhaseVoc.cpp" compile="1" resource="0" file="Source/PhaseVoc.cpp"/>
     <FILE id="Syp4pw" name="PhaseVoc.h" compile="0" resource="0" file="Source/PhaseVoc.h"/>
     <FILE id="qSFX2S" name="SimpleCompressor.h" compile="0" resource="0"

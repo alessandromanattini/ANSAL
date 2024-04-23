@@ -21,6 +21,7 @@ Autocorrelation is used to analyze the input signal and identify its periodicity
 |---------------------------|-----------------------------------------------------------------------|
 | PhaseVoc                  | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
 | SimpleCompressor          | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
+| EnvelopeGenerator         | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)    |
 | PluginProcessor           | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) |
 
 ## Legend
