@@ -1,0 +1,4 @@
+PolyPhaseVoc2:
+
+* Discontinuità quando si preme una nuova nota.
+* Quando non si sta suonando alcuna nota e si parla nel microfono, viene comunque emessa una singola nota.

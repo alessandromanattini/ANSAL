@@ -24,7 +24,7 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
 {
     activeNotes.resize(maxVoices, -1);  // Initialize all voices as inactive
 
-    comp.setRatio(8.0f);
+    comp.setRatio(2.0f);
     comp.setThreshold(0.5f);
 }
 
