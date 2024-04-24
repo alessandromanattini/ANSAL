@@ -35,7 +35,7 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
     release = 0.3f; // Release time in seconds
 
     // Initialize default PhaseVoc parameters
-    corr_k = 0.9992f;
+    corr_k = 0.9992f; //(direi tipo da 0.9950 a 0.9999, ma prova in tempo reale con lo slider)
 }
 
 PolyPhaseVoc2AudioProcessor::~PolyPhaseVoc2AudioProcessor()
