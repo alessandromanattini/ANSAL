@@ -24,8 +24,18 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
 {
     activeNotes.resize(maxVoices, -1);  // Initialize all voices as inactive
 
-    comp.setRatio(2.0f);
-    comp.setThreshold(0.5f);
+    // Initialize default Compressor Parameters
+    ratio = 4.0f;
+    threshold = 1.0f;
+
+    // Initialize default EnvelopeGenerator parameters
+    attack = 0.2f;  // Attack time in seconds
+    decay = 0.2f;   // Decay time in seconds
+    sustain = 0.7f; // Sustain level (0.0 to 1.0)
+    release = 0.3f; // Release time in seconds
+
+    // Initialize default PhaseVoc parameters
+    corr_k = 0.9992f;
 }
 
 PolyPhaseVoc2AudioProcessor::~PolyPhaseVoc2AudioProcessor()
@@ -97,8 +107,10 @@ void PolyPhaseVoc2AudioProcessor::changeProgramName (int index, const juce::Stri
 //==============================================================================
 void PolyPhaseVoc2AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    updateCompressorParameters();
+    updateEnvelopeParameters();
+    updatePhaseVocParameters();
+
 }
 
 void PolyPhaseVoc2AudioProcessor::releaseResources()
@@ -147,6 +159,7 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     // Mix outputs from active vocoders
     for (int i = 0; i < maxVoices; ++i) {
         if (activeNotes[i] != -1 || vocoders[i].envGen.isActive()) { // Continue processing if note is active or envelope is active
+                        
             juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
             tempBuffer.clear();
 
@@ -243,3 +256,28 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
     }
 }
 
+
+
+/* ______________________________________METODI UTILI PER SLIDERS______________________________________*/
+
+void PolyPhaseVoc2AudioProcessor::updateEnvelopeParameters() {
+    for (int i = 0; i < maxVoices; ++i) {
+        vocoders[i].envGen.setAttack(attack);
+        vocoders[i].envGen.setDecay(decay);
+        vocoders[i].envGen.setSustain(sustain);
+        vocoders[i].envGen.setRelease(release);
+    }
+}
+
+void PolyPhaseVoc2AudioProcessor::updateCompressorParameters() {
+    comp.setRatio(ratio);
+    comp.setThreshold(threshold);
+}
+
+void PolyPhaseVoc2AudioProcessor::updatePhaseVocParameters() {
+    for (int i = 0; i < maxVoices; ++i) {
+        vocoders[i].setCorr_k(corr_k);
+    }
+}
+
+/* ____________________________________________________________________________________________________*/

@@ -58,6 +58,15 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+
+
+    /* ______________________________________METODI UTILI PER SLIDERS______________________________________*/
+    void updateEnvelopeParameters();
+    void updateCompressorParameters();
+    void updatePhaseVocParameters();
+    /* ____________________________________________________________________________________________________*/
+
+
 private:
 
     static constexpr int maxVoices = 5;
@@ -67,6 +76,22 @@ private:
     void handleMidiEvent(const juce::MidiMessage& msg);
 
     SimpleCompressor comp;
+
+    /* ______________________________________VARIABILI UTILI PER SLIDERS______________________________________*/
+    // ENVELOPE GENERATOR VARIABLES
+    float attack;
+    float decay;
+    float sustain;
+    float release;
+
+    // SIMPLE COMPRESSOR VARIABLES
+    float ratio;
+    float threshold;
+
+    // PHASE VOCODER VARIABLES
+    float corr_k;
+    /* _______________________________________________________________________________________________________*/
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolyPhaseVoc2AudioProcessor)

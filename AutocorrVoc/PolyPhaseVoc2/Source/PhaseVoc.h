@@ -16,6 +16,7 @@ public:
     void noteOn();  // Add method to trigger note on
     void noteOff(); // Add method to trigger note off
     EnvelopeGenerator envGen;  // Declare the EnvelopeGenerator object
+    void setCorr_k(float value);
 
 private:
     std::array<float, 256> X;

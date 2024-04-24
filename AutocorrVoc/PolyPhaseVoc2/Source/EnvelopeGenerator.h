@@ -4,14 +4,7 @@
 
 class EnvelopeGenerator {
 public:
-    EnvelopeGenerator() {
-        // Initialize with default ADSR parameters
-        params.attack = 0.2f;  // Attack time in seconds
-        params.decay = 0.2f;   // Decay time in seconds
-        params.sustain = 0.7f; // Sustain level (0.0 to 1.0)
-        params.release = 0.3f; // Release time in seconds
-        adsr.setParameters(params);
-    }
+    EnvelopeGenerator() {}
 
     void setAttack(float value) {
         params.attack = value;

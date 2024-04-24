@@ -61,3 +61,7 @@ void PhaseVocoder::noteOn() {
 void PhaseVocoder::noteOff() {
     envGen.noteOff();
 }
+
+void PhaseVocoder::setCorr_k(float value) {
+    corr_k = value;
+}

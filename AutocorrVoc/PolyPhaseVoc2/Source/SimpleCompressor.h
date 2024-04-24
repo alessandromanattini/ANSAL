@@ -15,10 +15,7 @@
 class SimpleCompressor
 {
 public:
-    SimpleCompressor() {
-        setRatio(4.0f);
-        setThreshold(1.0f);
-    }
+    SimpleCompressor(){}
 
     void setThreshold(float newThreshold) { threshold = newThreshold; }
     void setRatio(float newRatio) { ratio = newRatio; }
@@ -42,6 +39,6 @@ public:
     }
 
 private:
-    float threshold = 0.1f; // default threshold
-    float ratio = 4.0f;     // default compression ratio (4:1)
+    float threshold; // default threshold
+    float ratio;     // default compression ratio (4:1)
 };
