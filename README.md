@@ -86,8 +86,8 @@ It's a test version of the complete vocoder. It doesn't support noise generation
 |---------------------------|-----------------------------------------------------------------------|
 | Compressor Knobs          | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
 | Envelope Knobs            | ![green_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)  |
-| Effects Knobs             | ![yellow_circle](https://via.placeholder.com/15/4CAF50/000000?text=+) |
-| SuperCollider GUI         | ![red_circle](https://via.placeholder.com/15/4CAF50/000000?text=+)    |
+| Effects Knobs             | ![yellow_circle](https://via.placeholder.com/15/FFEB3B/000000?text=+) |
+| SuperCollider GUI         | ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+)    |
 
 ## Legend
 - ![red_circle](https://via.placeholder.com/15/F44336/000000?text=+) : Not implemented
