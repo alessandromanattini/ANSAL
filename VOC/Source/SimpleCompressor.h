@@ -27,18 +27,26 @@ public:
             float inputSample = input[i];
             float outputSample = inputSample;
 
+            // Controllo solo se il campione supera la soglia in valore assoluto
             if (std::abs(inputSample) > threshold)
             {
                 float exceedance = std::abs(inputSample) - threshold;
-                float compressedExceedance = exceedance / ratio;
-                outputSample = (inputSample > 0 ? 1 : -1) * (threshold + compressedExceedance);
+                float attenuation = exceedance * (1.0f - 1.0f / ratio);
+                outputSample = (inputSample > 0 ? 1 : -1) * (threshold + attenuation);
+            }
+            // Altrimenti, lascia il campione come è se è sotto la soglia
+            else
+            {
+                outputSample = inputSample;
             }
 
             output[i] = outputSample;
         }
     }
 
+
+
 private:
-    float threshold; // default threshold
-    float ratio;     // default compression ratio (4:1)
+    float threshold; 
+    float ratio;     
 };
