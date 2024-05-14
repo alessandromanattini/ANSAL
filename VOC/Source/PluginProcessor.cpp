@@ -27,7 +27,7 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
 
     // Initialize default Compressor Parameters
     ratio = 4.0f;
-    threshold = 1.0f;
+    threshold = 0.7f;
 
     // Initialize default EnvelopeGenerator parameters
     attack = 0.2f;  // Attack time in seconds
