@@ -95,7 +95,7 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     samplesPerBlockSlider.addListener(this);
 
    // ----------------------Knobs Compressor------------------------------
-    ratioSlider.setRange(0.0, 10.0, 1.0);
+    ratioSlider.setRange(1.1, 20.0, 1.0);
     ratioSlider.setValue(0.0);
     ratioSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     ratioSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
@@ -110,8 +110,8 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     ratioSlider.addListener(this);
 
   
-    thresholdSlider.setRange(0.0, 1.0, 0.01);
-    thresholdSlider.setValue(0.0);
+    thresholdSlider.setRange(0.0, 1.0, 0.1);
+    thresholdSlider.setValue(1.0);
     thresholdSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     thresholdSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
     thresholdSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);

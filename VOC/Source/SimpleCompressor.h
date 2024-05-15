@@ -24,7 +24,7 @@ public:
     {
         for (int i = 0; i < numSamples; ++i)
         {
-            float inputSample = input[i];
+            float inputSample = input[i]*ratio;
             float outputSample = inputSample;
 
             // Controllo solo se il campione supera la soglia in valore assoluto

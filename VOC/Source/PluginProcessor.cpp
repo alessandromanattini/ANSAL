@@ -293,7 +293,7 @@ void PolyPhaseVoc2AudioProcessor::setRatio(float newRatio) {
 }
 
 void PolyPhaseVoc2AudioProcessor::setThreshold(float newThreshold) {
-    ratio = newThreshold;
+    newThreshold = newThreshold;
     updateCompressorParameters();
 }
 
