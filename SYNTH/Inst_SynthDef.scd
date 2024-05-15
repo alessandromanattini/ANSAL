@@ -1,7 +1,13 @@
-//=======================================================================================================
-//==============================================INST=SYNTHDEF============================================
-//=======================================================================================================
+//==========================================================================================================================
+//=======================================================INST=SYNTHDEF======================================================
+//==========================================================================================================================
 
+/*----------------------------------------------List-of-available-instruments----------------------------------------------*/
+/*  \everythingrhodes    \mrostinato    \synchronicity    \distortedTri    \sawtooth    \hammondOrgan    \violin    \bass  */
+/*-------------------------------------------------------------------------------------------------------------------------*/
+
+
+//-------------------------------------------------------------------------------------------------
 
 SynthDef(\everythingrhodes, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, source, chorus, numVoices, dynamicCutoff, noteDur, globalAmp, lpFreq;
@@ -28,6 +34,8 @@ SynthDef(\everythingrhodes, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus 
     Out.ar(out, Pan2.ar(chorus, pan));
 }).add;
 
+//-------------------------------------------------------------------------------------------------
+
 SynthDef(\mrostinato, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpFreqBus = 0|
     var lforate, lfowidth, pan;
     var lfo, pulse, env, lpFreq;
@@ -51,6 +59,8 @@ SynthDef(\mrostinato, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpF
     Out.ar(out, Pan2.ar(Mix(pulse) * env * amp, pan));
 }).add;
 
+//-------------------------------------------------------------------------------------------------
+
 SynthDef(\synchronicity, { |out = 0, freq = 440, amp = 0.1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, syncfreq, cutoff, rq, lpFreq;
 
@@ -70,6 +80,8 @@ SynthDef(\synchronicity, { |out = 0, freq = 440, amp = 0.1, gate = 1, pan = 0.0,
     amp = In.kr(ampBus);
     Out.ar(out, Pan2.ar(filter * env * amp, pan));
 }).add;
+
+//-------------------------------------------------------------------------------------------------
 
 SynthDef(\distortedTri, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, drive = 1.0, ampBus = 0, lpFreqBus = 0|
     var tri, dist, env, lpFreq;
@@ -93,6 +105,8 @@ SynthDef(\distortedTri, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, 
     Out.ar(out, Pan2.ar(dist * env * amp, pan));
 }).add;
 
+//-------------------------------------------------------------------------------------------------
+
 SynthDef(\sawtooth, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var saw, env, lpFreq;
 
@@ -111,6 +125,8 @@ SynthDef(\sawtooth, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus
     // Uscita
     Out.ar(out, Pan2.ar(saw * env * amp, pan));
 }).add;
+
+//-------------------------------------------------------------------------------------------------
 
 SynthDef(\hammondOrgan, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc1, osc2, osc3, osc4, osc5, osc6, osc7, osc8, osc9, lpFreq;
@@ -142,6 +158,8 @@ SynthDef(\hammondOrgan, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, 
     Out.ar(out, Pan2.ar(sig * env * amp, pan));
 }).add;
 
+//-------------------------------------------------------------------------------------------------
+
 SynthDef(\violin, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc, filter, vibrato, lpFreq;
 
@@ -164,6 +182,8 @@ SynthDef(\violin, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus =
     Out.ar(out, Pan2.ar(filter * env * amp, pan));
 }).add;
 
+//-------------------------------------------------------------------------------------------------
+
 SynthDef(\bass, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc, filter, vibrato, lpFreq;
 
@@ -185,3 +205,5 @@ SynthDef(\bass, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0,
     // Uscita con panning
     Out.ar(out, Pan2.ar(filter * env * amp, pan));
 }).add;
+
+//-------------------------------------------------------------------------------------------------
