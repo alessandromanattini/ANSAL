@@ -3,28 +3,30 @@
 //=======================================================================================================
 
 (
-
 //------------------------------------------------SETUP--------------------------------------------------
 s.quit;  // Fermiamo il server prima di apportare modifiche alle configurazioni
-s.options.blockSize = 256;  // Impostiamo la dimensione del buffer a 64 campioni per ridurre la latenza
+s.options.blockSize = 256;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
 s.options.numBuffers = 128;  // Numero di buffer disponibili
 s.options.numWireBufs = 64;  // Numero di wire buffers (aumentalo se necessario)
 s.options.numInputBusChannels = 2;  // Numero di canali input bus
 s.options.numOutputBusChannels = 2;  // Numero di canali output bus
 s.options.memSize = 8192;  // Dimensione della memoria allocata per il server in kilobytes
 s.options.sampleRate = 44100;
-s.boot;  // Riavviamo il server per applicare le configurazioni
 s.latency = 0;
+s.boot;  // Riavviamo il server per applicare le configurazioni
+
 // Carica i file di configurazione e le definizioni di synth
 "Inst_SynthDef.scd".loadRelative;
 "Drum_SynthDef.scd".loadRelative;
+
+"Midi_Init.scd".loadRelative;
 "Inst_Midi.scd".loadRelative;
 "Knobs.scd".loadRelative;
 "Drum_Sequences.scd".loadRelative;
 "Drum_Midi.scd".loadRelative;
+"OSCCommunication.scd".loadRelative;
 
 //------------------------------------------BUS-INITIALIZATION-------------------------------------------
-// 's' è il server di SuperCollider, '1' indica un canale
 ~busOne = Bus.control(s, 1);
 ~busTwo = Bus.control(s, 1);
 ~lowPassFilterOne = Bus.control(s, 1);
@@ -46,4 +48,7 @@ s.latency = 0;
 //-------------------------------------DRUM-VARIABLES-INITIALIZATION-------------------------------------
 ~bpmDrum = 250;
 
+//--------------------------------------CC-VARIABLES-INITIALIZATION--------------------------------------
+~ccPedalOne = 1;
+~ccPedalTwo =1;
 )
