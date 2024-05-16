@@ -8,5 +8,5 @@ MIDIIn.disconnectAll;
 MIDIIn.connectAll;
 
 // Traccia tutti i messaggi MIDI ricevuti per debug
-MIDIdef.trace(true);
+//MIDIdef.trace(true);
 )

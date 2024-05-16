@@ -3,7 +3,7 @@
 //=======================================================================================================
 
 // Funzione per calcolare il tempo in secondi da un valore BPM
-~bpmToSeconds = { |bpm| 60 / bpm };
+~bpmToSeconds = { |bpm| (60 / bpm)/2 };
 
 // Variabili per i Task che gestiscono le sequenze
 ~drumTasks = IdentityDictionary.new;

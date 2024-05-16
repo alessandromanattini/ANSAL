@@ -44,11 +44,16 @@ s.boot;  // Riavviamo il server per applicare le configurazioni
 ~sustainTwo = false;  // Initialize sustain state
 ~instOne = \violin;
 ~instTwo = \everythingrhodes;
-
+~monoOne = false;
+~monoTwo = false;
+~octaveOne = 1;
+~octaveTwo = 1;
 //-------------------------------------DRUM-VARIABLES-INITIALIZATION-------------------------------------
-~bpmDrum = 250;
+~bpmDrum = 120;
 
 //--------------------------------------CC-VARIABLES-INITIALIZATION--------------------------------------
 ~ccPedalOne = 1;
 ~ccPedalTwo =1;
 )
+
+
