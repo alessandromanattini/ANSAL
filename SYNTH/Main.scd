@@ -42,8 +42,8 @@ s.boot;  // Riavviamo il server per applicare le configurazioni
 ~activeNotesTwo = Dictionary.new;
 ~sustainOne = false;  // Initialize sustain state
 ~sustainTwo = false;  // Initialize sustain state
-~instOne = \violin;
-~instTwo = \everythingrhodes;
+~instOne = \none;
+~instTwo = \none;
 ~monoOne = false;
 ~monoTwo = false;
 ~octaveOne = 1;
@@ -56,4 +56,10 @@ s.boot;  // Riavviamo il server per applicare le configurazioni
 ~ccPedalTwo =1;
 )
 
+~octaveOne = 1/2;
+~monoOne = true;
+~ccPedalTwo = 1;
+
+~instOne = \bass;
+~instTwo = \violin;
 
