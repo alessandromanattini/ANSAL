@@ -35,28 +35,28 @@
     var value;
     switch(num,
         16, {
-            value = val.linlin(0, 127, 0, 1);
+            value = val.linexp(0, 127, 0.01, 1);
             ~busOne.set(value);
             ("AmpOne: " ++ value).postln;
             ~processingAddr.sendMsg('/volume1', value); // Invia messaggio OSC a Processing
             "Inviato messaggio OSC a Processing: /volume1".postln;
         },
         17, {
-            value = val.linlin(0, 127, 0, 1);
+            value = val.linexp(0, 127, 0.01, 1);
             ~busTwo.set(value);
             ("AmpTwo: " ++ value).postln;
             ~processingAddr.sendMsg('/volume2', value); // Invia messaggio OSC a Processing
             "Inviato messaggio OSC a Processing: /volume2".postln;
         },
         20, {
-            value = val.linlin(0, 127, 200, 6000);
+            value = val.linexp(0, 127, 200, 6000);
             ~lowPassFilterOne.set(value);
             ("LPF One Cutoff: " ++ value).postln;
             ~processingAddr.sendMsg('/LPF1', value); // Invia messaggio OSC a Processing
             "Inviato messaggio OSC a Processing: /LPF1".postln;
         },
         21, {
-            value = val.linlin(0, 127, 200, 6000);
+            value = val.linexp(0, 127, 200, 6000);
             ~lowPassFilterTwo.set(value);
             ("LPF Two Cutoff: " ++ value).postln;
             ~processingAddr.sendMsg('/LPF2', value); // Invia messaggio OSC a Processing
