@@ -3,7 +3,7 @@
 ## Overview
 In this part there is the implementation of **SuperCollider** and **Processing**. 
 
-# SuperCollider
+## SuperCollider
 Here is an overview of the functions:
 1) **Drum_Midi** : sets up a MIDI control change handler that listens for control change messages on channel 0. Depending on the control number, it either triggers individual drum sounds (\kick, \snare, etc.) or toggles predefined drum sequences
 2) **Drum_Sequences** : sets up a system for managing and playing drum sequences. It includes functions to start and stop sequences based on BPM, and predefined drum patterns inspired by Daft Punk. The sequences are managed as tasks, and the system ensures only one sequence runs at a time.
