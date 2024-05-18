@@ -67,6 +67,12 @@
 				"Comando CC 70 ON ricevuto".postln;
 				~captureMIDINote.value;
 			}
+		},
+		69, {
+			if (num == 69 && val > 0) {
+				"Comando CC 71 ricevuto".postln;
+				~toggleEditor.value;
+			}
 		}
     );
 };

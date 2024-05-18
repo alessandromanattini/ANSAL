@@ -116,8 +116,6 @@ OSCdef(\mono1, { |msg|
 	if(state == "off") {
         ~monoOne = false;
         "Mono Strumento 1 disattivato.".postln;
-    }  {
-        "Stato mono 1 non riconosciuto.".postln;
     }
 }, '/mono1');
 
@@ -141,12 +139,12 @@ OSCdef(\mono2, { |msg|
 
 // Gestore OSC per il volume
 OSCdef(\volume1, { |msg|
-	~busOne.set(msg[1].asFloat);
+    ~volumeOne = msg[1].asFloat;
     "Volume strumento 1 impostato a: ".post; ~volumeOne.postln;
 }, '/volume1');
 
 OSCdef(\volume2, { |msg|
-    ~busTwo.set(msg[1].asFloat);
+    ~volumeTwo = msg[1].asFloat;
     "Volume strumento 2 impostato a: ".post; ~volumeTwo.postln;
 }, '/volume2');
 
@@ -154,12 +152,12 @@ OSCdef(\volume2, { |msg|
 
 // Gestore OSC per il filtro passa basso (LPF)
 OSCdef(\LPF1, { |msg|
-	~lowPassFilterOne.set(msg[1].asFloat);
+    ~lpfFreq1 = msg[1].asFloat;
     "Frequenza LPF strumento 1 impostata a: ".post; ~lpfFreq1.postln;
 }, '/LPF1');
 
 OSCdef(\LPF2, { |msg|
-    ~lowPassFilterTwo.set(msg[1].asFloat);
+    ~lpfFreq2 = msg[1].asFloat;
     "Frequenza LPF strumento 2 impostata a: ".post; ~lpfFreq2.postln;
 }, '/LPF2');
 
@@ -180,19 +178,66 @@ OSCdef(\BPM, { |msg|
 // Gestore OSC per la selezione dell'ottava
 OSCdef(\selectOctave1, { |msg|
 	var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
-	"Ottava 1 selezionata: ".post; octave.postln;
-	// Aggiungi qui il codice per gestire la selezione dell'ottava 1
-	~octaveOne = octave;
-	"Nuova ottava 1: ".postln; ~octaveOne.postln;
+	switch(octave,
+		0, {
+			~octaveOne = 1;
+		},
+		1, {
+			~octaveOne = 2;
+		},
+		2, {
+			~octaveOne = 4;
+		},
+		3, {
+			~octaveOne = 8;
+		},
+		-1, {
+			~octaveOne = 1/2;
+		},
+		-2, {
+			~octaveOne = 1/4;
+		},
+		-3,{
+			~octaveOne = 1/8;
+		}
+	);
 }, '/selectOctave1');
 
 
 OSCdef(\selectOctave2, { |msg|
 	var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
-	"Ottava 2 selezionata: ".post; octave.postln;
-	// Aggiungi qui il codice per gestire la selezione dell'ottava 2
-	~octaveTwo = octave;
-	"Nuova ottava 2: ".postln; ~octaveTwo.postln;
+	switch(octave,
+		0, {
+			~octaveOne = 1;
+		},
+		1, {
+			~octaveOne = 2;
+		},
+		2, {
+			~octaveOne = 4;
+		},
+		3, {
+			~octaveOne = 8;
+		},
+		-1, {
+			~octaveOne = 1/2;
+		},
+		-2, {
+			~octaveOne = 1/4;
+		},
+		-3,{
+			~octaveOne = 1/8;
+		}
+	);
 }, '/selectOctave2');
 
 // ------------------------------------------------------------------------------------------------------------------
+
+OSCdef(\guiVocoder, { |msg|
+	~toggleEditor.value;
+}, '/guiVocoder');
+
+OSCdef(\vocoderVolume, { |msg|
+	var volume = msg[1].asFloat;  // Usa asInt per convertire il valore in intero
+	~vocAmpBus.set(volume/2);
+}, '\vocoderVolume');

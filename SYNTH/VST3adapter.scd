@@ -44,3 +44,21 @@ s.waitForBoot({
 		}).play;
 	)
 });
+
+
+
+// Variabile di stato per tenere traccia se l'editor è aperto o chiuso
+~editorOpen = false;
+
+// Funzione per alternare lo stato dell'editor
+~toggleEditor = {
+	if (~editorOpen) {
+		~vsti.editor(show: false); // Nasconde l'editor del plugin
+		~editorOpen = false;
+		"Editor chiuso".postln;
+	} {
+		~vsti.editor(show: true); // Mostra l'editor del plugin
+		~editorOpen = true;
+		"Editor aperto".postln;
+	}
+};

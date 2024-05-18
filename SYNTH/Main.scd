@@ -5,8 +5,8 @@
 (
 //------------------------------------------------SETUP--------------------------------------------------
 s.quit;  // Fermiamo il server prima di apportare modifiche alle configurazioni
-s.options.blockSize = 256;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
-s.options.numBuffers = 128;  // Numero di buffer disponibili
+s.options.blockSize = 32;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
+s.options.numBuffers = 64;  // Numero di buffer disponibili
 s.options.numWireBufs = 64;  // Numero di wire buffers (aumentalo se necessario)
 s.options.numInputBusChannels = 2;  // Numero di canali input bus
 s.options.numOutputBusChannels = 2;  // Numero di canali output bus
@@ -79,11 +79,8 @@ Routine({
 	~lowPassFilterOne.set(1000);
 	~lowPassFilterTwo.set(1000);
 	~vocAmpBus.set(0.3);
-	~vsti.editor;
+	~vsti.editor(show: false);
 }).play;
 
 )
-
-
-
 
