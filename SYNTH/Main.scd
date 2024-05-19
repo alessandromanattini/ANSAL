@@ -60,12 +60,11 @@ s.boot;
 //----------------------------------------GLOBAL-INITIALIZATION---------------------------------------
 Routine({
 	"Inizio".postln;
-	7.0.wait;  // Attende 5 secondi
+	5.0.wait;  // Attende 10 secondi
 	"Esegui dopo 5 secondi".postln;
 	~octaveOne = 1/2;
 	~octaveTwo = 1;
 	~monoOne = false;
-	~ccPedalTwo = 1;
 
 	~instOne = \violin ;
 	~instTwo = \violin;
