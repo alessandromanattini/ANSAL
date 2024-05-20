@@ -70,8 +70,8 @@ Routine({
 	~instTwo = \violin;
 	~bpmDrum = 110;
 
-	~ccPedalOne = 0;
-	~ccPedalTwo =1;
+	~ccPedalOne = 1;
+	~ccPedalTwo =0;
 
 	~busOne.set(0.2);
 	~busTwo.set(0.2);

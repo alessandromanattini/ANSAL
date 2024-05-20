@@ -2,9 +2,10 @@
 SerialPort.listDevices;  // Elenca tutte le porte seriali disponibili
 
 (
-var processSerialData, previous, numPrevious;
+var processSerialData, previous, numPrevious, averageOrder;
 numPrevious= 0;
-previous = Array.fill(5, 0);
+averageOrder = 2;
+previous = Array.fill(averageOrder, 0);
 
 ~port;
 ~lpfFrequency = 3000;  // Valore iniziale della frequenza di taglio del filtro
@@ -14,14 +15,16 @@ previous = Array.fill(5, 0);
     var average, value;
 
     // Shift elements in the 'previous' array to make room for the new pitch
-    previous[0] = previous[1];
-    previous[1] = previous[2];
-	previous[2] = previous[3];
-    previous[3] = previous[4];
-    previous[4] = pitch;
+	// Eseguire il ciclo per spostare gli elementi dell'array
+	(1..averageOrder-1).do { |i|
+		previous[i-1] = previous[i];
+	};
+
+	previous[averageOrder-1] = pitch;  // Assegna il pitch all'ultimo elemento dell'array
+
 
     // Update the count of valid elements in the 'previous' array
-    if (numPrevious < 5) {
+    if (numPrevious < averageOrder) {
         numPrevious = numPrevious + 1;
     };
 
@@ -31,8 +34,8 @@ previous = Array.fill(5, 0);
     if (average < -11) {
         ~setKnobValue.value(1, 21);
     } {
-        if (average < 20) {
-            value = average.linexp(-12, 20, 1, 127);
+        if (average < 15) {
+            value = average.linexp(-12, 15, 1, 127);
             ~setKnobValue.value(value, 21);
         } {
             ~setKnobValue.value(127, 21);
