@@ -9,18 +9,19 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "SimpleCompressor.h"
+#include "HighPassFilter.h"
 
 //==============================================================================
 PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
+    : AudioProcessor(BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", juce::AudioChannelSet::stereo(), true)
+#endif
+        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+    )
 #endif
 {
     activeNotes.resize(maxVoices, -1);  // Initialize all voices as inactive
@@ -51,29 +52,29 @@ const juce::String PolyPhaseVoc2AudioProcessor::getName() const
 
 bool PolyPhaseVoc2AudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool PolyPhaseVoc2AudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool PolyPhaseVoc2AudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double PolyPhaseVoc2AudioProcessor::getTailLengthSeconds() const
@@ -84,7 +85,7 @@ double PolyPhaseVoc2AudioProcessor::getTailLengthSeconds() const
 int PolyPhaseVoc2AudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int PolyPhaseVoc2AudioProcessor::getCurrentProgram()
@@ -92,22 +93,26 @@ int PolyPhaseVoc2AudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void PolyPhaseVoc2AudioProcessor::setCurrentProgram (int index)
+void PolyPhaseVoc2AudioProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String PolyPhaseVoc2AudioProcessor::getProgramName (int index)
+const juce::String PolyPhaseVoc2AudioProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void PolyPhaseVoc2AudioProcessor::changeProgramName (int index, const juce::String& newName)
+void PolyPhaseVoc2AudioProcessor::changeProgramName(int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void PolyPhaseVoc2AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void PolyPhaseVoc2AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
+
+    highPassFilter.prepareToPlay(sampleRate, samplesPerBlock);
+    highPassFilter.setCutoffFrequency(highPassCutoff);
+
     updateCompressorParameters();
     updateEnvelopeParameters();
     updatePhaseVocParameters();
@@ -121,28 +126,28 @@ void PolyPhaseVoc2AudioProcessor::releaseResources()
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool PolyPhaseVoc2AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool PolyPhaseVoc2AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
+#if JucePlugin_IsMidiEffect
+    juce::ignoreUnused(layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     // Some plugin hosts, such as certain GarageBand versions, will only
     // load plugins that support stereo bus layouts.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
     // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+#if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
+#endif
 
     return true;
-  #endif
+#endif
 }
 #endif
 
@@ -160,7 +165,7 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     // Mix outputs from active vocoders
     for (int i = 0; i < maxVoices; ++i) {
         if (activeNotes[i] != -1 || vocoders[i].envGen.isActive()) { // Continue processing if note is active or envelope is active
-                        
+
             juce::AudioBuffer<float> tempBuffer(1, numSamples);  // Assuming vocoder output is mono.
             tempBuffer.clear();
 
@@ -177,12 +182,15 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         }
     }
 
-    
+
 
     // Copy all the samples from tempBufferTot to buffer
     for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
         buffer.copyFrom(channel, 0, tempBufferTot, channel, 0, numSamples);
     }
+
+    // Apply the high-pass filter
+    highPassFilter.processBlock(buffer);
 
     if (auto* editor = dynamic_cast<PolyPhaseVoc2AudioProcessorEditor*>(getActiveEditor()))
     {
@@ -203,18 +211,18 @@ bool PolyPhaseVoc2AudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* PolyPhaseVoc2AudioProcessor::createEditor()
 {
-    return new PolyPhaseVoc2AudioProcessorEditor (*this);
+    return new PolyPhaseVoc2AudioProcessorEditor(*this);
 }
 
 //==============================================================================
-void PolyPhaseVoc2AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void PolyPhaseVoc2AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void PolyPhaseVoc2AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void PolyPhaseVoc2AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -323,7 +331,10 @@ void PolyPhaseVoc2AudioProcessor::setCorr(float newCorr) {
 }
 
 
-
+void PolyPhaseVoc2AudioProcessor::setHighPassCutoff(float newCutoff) {
+    highPassCutoff = newCutoff;
+    highPassFilter.setCutoffFrequency(newCutoff);
+}
 
 
 /* ____________________________________________________________________________________________________*/

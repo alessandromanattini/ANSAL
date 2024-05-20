@@ -27,6 +27,7 @@ s.boot;
 "Knobs.scd".loadRelative;
 "Drum_Sequences.scd".loadRelative;
 "Drum_Midi.scd".loadRelative;
+
 "OSCCommunication.scd".loadRelative;
 "VST3adapter.scd".loadRelative;
 //------------------------------------------BUS-DECLARATION-------------------------------------------
@@ -83,3 +84,8 @@ Routine({
 
 )
 
+	~vsti.editor(show: true);
+	~monoOne = true;
+
+~instOne = \violin ;
+	~instTwo = \violin;

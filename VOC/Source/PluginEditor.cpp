@@ -12,10 +12,10 @@
 //#include "ImageKnob.h"
 
 //==============================================================================
-PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseVoc2AudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVoc2AudioProcessor& p)
+    : AudioProcessorEditor(&p), audioProcessor(p)
 
-    
+
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -38,6 +38,8 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     customFontKnobScreen.setHeight(13);
     customFontKnobScreen.setBold(true);
 
+    juce::Font customFontKnobCompBold = customFontKnobComp.withStyle(juce::Font::bold);
+
     // Load images
     woodBackground = juce::ImageCache::getFromMemory(BinaryData::sfondoLegnoNero_jpg, BinaryData::sfondoLegnoNero_jpgSize);
     background = juce::ImageCache::getFromMemory(BinaryData::Subtract_png, BinaryData::Subtract_pngSize);
@@ -47,8 +49,21 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     // Load text images
     //ratioText = juce::ImageCache::getFromMemory(BinaryData::RATIO_png, BinaryData::RATIO_pngSize);
     //thresholdText = juce::ImageCache::getFromMemory(BinaryData::THR_png, BinaryData::THR_pngSize);
+    juce::Image ansalLogo = juce::ImageCache::getFromMemory(BinaryData::ANSAL_LOGO_png, BinaryData::ANSAL_LOGO_pngSize);
+    logoComponent.setImage(ansalLogo);
+    addAndMakeVisible(logoComponent);
 
-    
+    vocoderLogo.setText("VOCODER", juce::dontSendNotification);
+    vocoderLogo.setFont(customFontKnobScreen);
+    vocoderLogo.setColour(juce::Label::textColourId, juce::Colour(0xFF7C7C7C));
+
+    // Increase font size for vocoderLogo
+    juce::Font customFontVocoderLogo(typeface1);
+    customFontVocoderLogo.setHeight(30); // Increase the height to make it bigger
+    vocoderLogo.setFont(customFontVocoderLogo);
+    addAndMakeVisible(vocoderLogo);
+
+
     /*___________________________________________________________________________*/
 
     // Visualizer
@@ -67,7 +82,7 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     bufferSizeSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
     bufferSizeSlider.onValueChange = [this] {
         visualiser.setBufferSize((int)bufferSizeSlider.getValue());
-    };
+        };
 
     bsLabel.setText("BUFF SIZE", juce::dontSendNotification);
     bsLabel.setFont(customFontKnobScreen);
@@ -84,7 +99,7 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     samplesPerBlockSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
     samplesPerBlockSlider.onValueChange = [this] {
         visualiser.setSamplesPerBlock((int)samplesPerBlockSlider.getValue());
-    };
+        };
 
     spbLabel.setText("SPL", juce::dontSendNotification);
     spbLabel.setFont(customFontKnobScreen);
@@ -94,14 +109,14 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     addAndMakeVisible(spbLabel);
     samplesPerBlockSlider.addListener(this);
 
-   // ----------------------Knobs Compressor------------------------------
+    // ----------------------Knobs Compressor------------------------------
     ratioSlider.setRange(1.1, 20.0, 1.0);
     ratioSlider.setValue(0.0);
     ratioSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     ratioSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
     ratioSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
 
-    ratioLabel.setText("RATIO", juce::dontSendNotification);
+    ratioLabel.setText("SAT", juce::dontSendNotification);
     ratioLabel.setFont(customFontKnobComp);
     ratioLabel.setColour(juce::Label::textColourId, juce::Colour(0xFF7C7C7C));
 
@@ -109,20 +124,20 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     addAndMakeVisible(&ratioSlider);
     ratioSlider.addListener(this);
 
-  
-    thresholdSlider.setRange(0.0, 1.0, 0.1);
-    thresholdSlider.setValue(1.0);
-    thresholdSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    thresholdSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
-    thresholdSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
 
-    thresholdLabel.setText("THRESHOLD", juce::dontSendNotification);
-    thresholdLabel.setFont(customFontKnobComp);
-    thresholdLabel.setColour(juce::Label::textColourId, juce::Colour(0xFF7C7C7C));
+    HPFSlider.setRange(0, 1000, 1);
+    HPFSlider.setValue(200);
+    HPFSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    HPFSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
+    HPFSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
 
-    addAndMakeVisible(&thresholdSlider);
-    addAndMakeVisible(thresholdLabel);
-    thresholdSlider.addListener(this);
+    HPFLabel.setText("HPF", juce::dontSendNotification);
+    HPFLabel.setFont(customFontKnobComp);
+    HPFLabel.setColour(juce::Label::textColourId, juce::Colour(0xFF7C7C7C));
+
+    addAndMakeVisible(&HPFSlider);
+    addAndMakeVisible(HPFLabel);
+    HPFSlider.addListener(this);
 
     // ---------------------- Knob Envelope ------------------------------------
 
@@ -193,12 +208,13 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor (PolyPhaseV
     granuliserSlider.setColour(juce::Slider::thumbColourId, juce::Colours::black);
     granuliserSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
 
-    //granuliserLabel.setText("CORR", juce::dontSendNotification);
-    //granuliserLabel.setFont(customFontKnobComp);
-    //granuliserLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    granuliserLabel.setText("AC FACTOR", juce::dontSendNotification);
+    granuliserLabel.setFont(customFontKnobCompBold);
+    granuliserLabel.setColour(juce::Label::textColourId, juce::Colour(0xFF7C7C7C));
 
     //addAndMakeVisible(granuliserLabel);
     addAndMakeVisible(&granuliserSlider);
+    addAndMakeVisible(granuliserLabel);
     granuliserSlider.addListener(this);
 
 
@@ -280,8 +296,8 @@ void PolyPhaseVoc2AudioProcessorEditor::paint(juce::Graphics& g)
 
 void PolyPhaseVoc2AudioProcessorEditor::resized()
 {
-    
-    visualiser.setBounds(117, 96, 477, 94);
+
+    visualiser.setBounds(167, 97.5, 417, 94);
 
     // Sliders Visualiser
     bufferSizeSlider.setBounds(619, 117, 60, 60);
@@ -289,7 +305,7 @@ void PolyPhaseVoc2AudioProcessorEditor::resized()
 
     // Knobs RATIO and THRESHOLD
     ratioSlider.setBounds(530, 408, 65, 65);
-    thresholdSlider.setBounds(634, 408, 65, 65);
+    HPFSlider.setBounds(634, 408, 65, 65);
 
     // Knobs ATTACK, DECAY, SUSTAIN and RELEASE
     attackSlider.setBounds(433, 303, 65, 65);
@@ -298,20 +314,22 @@ void PolyPhaseVoc2AudioProcessorEditor::resized()
     releaseSlider.setBounds(733, 303, 65, 65);
 
     // Knob GRANULIZER
-    granuliserSlider.setBounds(89, 293, 100, 100);
-    
-
+    granuliserSlider.setBounds(134, 315, 150, 150);
 
     // Texts
     bsLabel.setBounds(614, 180, 83, 13);
     spbLabel.setBounds(734, 180, 35, 13);
-    ratioLabel.setBounds(533, 481, 56, 21);
-    thresholdLabel.setBounds(607, 481, 115, 21);
+    ratioLabel.setBounds(543, 481, 56, 21);
+    HPFLabel.setBounds(644, 481, 115, 21);
     attackLabel.setBounds(427, 378, 72, 21);
     decayLabel.setBounds(533, 378, 62, 21);
     sustainLabel.setBounds(623, 378, 77, 21);
     releaseLabel.setBounds(726, 378, 82, 21);
-    granuliserLabel.setBounds(75, 180, 60, 50);
+    granuliserLabel.setBounds(160, 280, 100, 50);
+
+    // LOGO
+    logoComponent.setBounds(65, 95, 100, 100);
+    vocoderLogo.setBounds(125, 430, 200, 100);
 
 
 }
@@ -328,9 +346,9 @@ void PolyPhaseVoc2AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
         audioProcessor.setRatio(newRatio);
     }
 
-    if (slider == &thresholdSlider) {
-        float newThreshold = thresholdSlider.getValue();
-        audioProcessor.setThreshold(newThreshold);
+    if (slider == &HPFSlider) {
+        float newHPF = HPFSlider.getValue();
+        audioProcessor.setHighPassCutoff(newHPF);
     }
 
     if (slider == &attackSlider) {
@@ -355,7 +373,7 @@ void PolyPhaseVoc2AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
 
     if (slider == &granuliserSlider) {
         float newGran = granuliserSlider.getValue();
-        audioProcessor.setCorr(newGran);     
+        audioProcessor.setCorr(newGran);
     }
 
 

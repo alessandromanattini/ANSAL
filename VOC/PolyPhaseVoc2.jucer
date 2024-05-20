@@ -8,6 +8,8 @@
     <GROUP id="{106B5541-90CB-FBBD-E208-EA87FE2FACC5}" name="Source">
       <FILE id="xgyb2U" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
+      <FILE id="LSeo1G" name="HighPassFilter.h" compile="0" resource="0"
+            file="Source/HighPassFilter.h"/>
       <FILE id="uVLYi6" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
       <FILE id="cPcewQ" name="PluginEditor.cpp" compile="1" resource="0"
@@ -25,6 +27,7 @@
           file="Source/SimpleCompressor.h"/>
     <FILE id="JZNPLc" name="ImageKnob.h" compile="0" resource="0" file="Source/ImageKnob.h"/>
     <GROUP id="{1C716052-4C6F-D0FB-10EA-8E365F869F3F}" name="images">
+      <FILE id="b33JuC" name="ANSAL_LOGO.png" compile="0" resource="1" file="images/ANSAL_LOGO.png"/>
       <FILE id="lT7sl3" name="knobBig.png" compile="0" resource="1" file="images/knobBig.png"/>
       <FILE id="CHdBXT" name="Rectangle 27.png" compile="0" resource="1"
             file="images/Rectangle 27.png"/>
@@ -66,7 +69,7 @@
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Debug" targetName="PolyPhaseVoc2"/>
-        <CONFIGURATION isDebug="1" name="Release" targetName="PolyPhaseVoc2"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="PolyPhaseVoc2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../../../../../../../../PROGRAMMI/INGEGNERIA/JUCE/modules"/>

@@ -17,14 +17,14 @@
 //==============================================================================
 /**
 */
-class PolyPhaseVoc2AudioProcessorEditor  : public juce::AudioProcessorEditor, juce::Slider::Listener
+class PolyPhaseVoc2AudioProcessorEditor : public juce::AudioProcessorEditor, juce::Slider::Listener
 {
 public:
-    PolyPhaseVoc2AudioProcessorEditor (PolyPhaseVoc2AudioProcessor&);
+    PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVoc2AudioProcessor&);
     ~PolyPhaseVoc2AudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
     void pushDataToVisualiser(const juce::AudioBuffer<float>& buffer);
@@ -43,14 +43,9 @@ private:
 
 
 
-    //============ Text Images ====================================================
-    /*juce::Image ratioText;
-    juce::Image thresholdText;
-    juce::Image attackText;
-    juce::Image decayText;
-    juce::Image sustainText;
-    juce::Image releaseText;*/
-
+    //============ LOGO Image ====================================================
+    juce::ImageComponent logoComponent;
+    juce::Label vocoderLogo;
     //============================ Visualizer ======================================
     juce::AudioVisualiserComponent visualiser{ 1 };
 
@@ -63,8 +58,8 @@ private:
     // Compressor sliders and labels
     ImageKnob ratioSlider;
     juce::Label ratioLabel;
-    ImageKnob thresholdSlider;
-    juce::Label thresholdLabel;
+    ImageKnob HPFSlider;
+    juce::Label HPFLabel;
 
     // Envelope sliders and labels
     ImageKnob attackSlider;
@@ -80,9 +75,9 @@ private:
     ImageKnobBig granuliserSlider;
     juce::Label granuliserLabel;
 
-   
+
     void sliderValueChanged(juce::Slider* slider) override; // Handle sliders changes
 
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolyPhaseVoc2AudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PolyPhaseVoc2AudioProcessorEditor)
 };
