@@ -28,11 +28,11 @@ previous = Array.fill(averageOrder, 0);
     // Calculate the average of the valid elements in the 'previous' array
     average = previous[0..(numPrevious - 1)].sum / numPrevious;
 
-    if (average < -15) {
+    if (average < -20) {
         ~setKnobValue.value(1, 21);
     } {
         if (average < 10) {
-            value = average.linexp(-12, 15, 1, 127);
+            value = average.linexp(-20, 10, 1, 127);
             ~setKnobValue.value(value, 21);
         } {
             ~setKnobValue.value(127, 21);
@@ -105,15 +105,3 @@ processSerialData = { |data|
 }.play;
 )
 
-// Questo avvia la lettura (handshaking con Arduino)
-~port.put(0);
-
-// Codice per chiudere la porta seriale
-(
-if (~port.notNil and: { ~port.isOpen }) {
-    ~port.close;
-    "Port closed successfully".postln;
-} {
-    "Port was not open or failed to close".postln;
-};
-)

@@ -21,12 +21,12 @@ s.boot;
 // Carica i file di configurazione e le definizioni di synth
 "Inst_SynthDef.scd".loadRelative;
 "Drum_SynthDef.scd".loadRelative;
-
 "Midi_Init.scd".loadRelative;
 "Inst_Midi.scd".loadRelative;
 "Knobs.scd".loadRelative;
 "Drum_Sequences.scd".loadRelative;
 "Drum_Midi.scd".loadRelative;
+"ArduinoAdapter2.scd".loadRelative;
 
 "OSCCommunication.scd".loadRelative;
 "VST3adapter.scd".loadRelative;
@@ -89,3 +89,15 @@ Routine({
 
 ~instOne = \violin ;
 	~instTwo = \violin;
+
+
+// Codice per chiudere la porta seriale
+(
+if (~port.notNil and: { ~port.isOpen }) {
+    ~port.close;
+    "Port closed successfully".postln;
+} {
+    "Port was not open or failed to close".postln;
+};
+)
+
