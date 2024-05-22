@@ -85,6 +85,13 @@ public:
     int samplePerBlockValue = 512;
 
     /*_____________________________________________________________________________________________________*/
+    void setHighPassCutoffSlider(juce::Slider* slider) { highPassCutoffSlider = slider; }
+    void setAttackSlider(juce::Slider* slider) { attackSlider = slider; }
+    void setDecaySlider(juce::Slider* slider) { decaySlider = slider; }
+    void setSustainSlider(juce::Slider* slider) { sustainSlider = slider; }
+    void setReleaseSlider(juce::Slider* slider) { releaseSlider = slider; }
+    void setRatioSlider(juce::Slider* slider) { ratioSlider = slider; }
+    void setCorrSlider(juce::Slider* slider) { corrSlider = slider; }
 
 
 private:
@@ -116,7 +123,14 @@ private:
 
     HighPassFilter highPassFilter;
     float highPassCutoff{ 200.0f };
-
+    //_______________________________________________________________________________________________________
+    juce::Slider* highPassCutoffSlider = nullptr;
+    juce::Slider* attackSlider = nullptr;
+    juce::Slider* decaySlider = nullptr;
+    juce::Slider* sustainSlider = nullptr;
+    juce::Slider* releaseSlider = nullptr;
+    juce::Slider* ratioSlider = nullptr;
+    juce::Slider* corrSlider = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PolyPhaseVoc2AudioProcessor)
 };

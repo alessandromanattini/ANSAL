@@ -376,5 +376,12 @@ void PolyPhaseVoc2AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
         audioProcessor.setCorr(newGran);
     }
 
+    audioProcessor.setHighPassCutoffSlider(&HPFSlider); // Pass the HPFSlider to the processor
+    audioProcessor.setAttackSlider(&attackSlider); // Pass the attackSlider to the processor
+    audioProcessor.setDecaySlider(&decaySlider); // Pass the decaySlider to the processor
+    audioProcessor.setSustainSlider(&sustainSlider); // Pass the sustainSlider to the processor
+    audioProcessor.setReleaseSlider(&releaseSlider); // Pass the releaseSlider to the processor
+    audioProcessor.setRatioSlider(&ratioSlider);
+    audioProcessor.setCorrSlider(&granuliserSlider);
 
 }

@@ -270,6 +270,71 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
             }
         }
     }
+    else if (msg.isController()) { // Only respond to messages on channel 1
+        int controllerNumber = msg.getControllerNumber();
+        int controllerValue = msg.getControllerValue();
+        float normalizedValue = controllerValue / 127.0f;
+
+        switch (controllerNumber) {
+        case 22: {// MIDI controller 22 modifies the ratio
+            setRatio(normalizedValue * 19.0f + 1.1f); // Map to ratio range 1.1 to 20.0
+            DBG("Updated ratio to: " << mappedValue);
+            if (ratioSlider)
+                ratioSlider->setValue(normalizedValue * 19.0f + 1.1f, juce::NotificationType::dontSendNotification);
+            break;
+        }
+        case 23: { // MIDI controller 23 modifies corr_k
+            float mappedValue = normalizedValue * 0.0049f + 0.9950f; // Map to corr_k range 0.9950 to 0.9999
+            setCorr(mappedValue); // Update the processor's corr_k parameter
+            if (corrSlider)
+                corrSlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated corr_k to: " << mappedValue);
+            break;
+        }
+        case 24: { // MIDI controller 24 modifies highPassCutoff
+            float mappedValue = normalizedValue * 1000.0f; // Map to highPassCutoff range 0 to 1000 Hz
+            setHighPassCutoff(mappedValue); // Update the processor's highPassCutoff parameter
+            if (highPassCutoffSlider)
+                highPassCutoffSlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated highPassCutoff to: " << mappedValue);
+            break;
+        }
+        case 26: { // MIDI controller 26 modifies attack
+            float mappedValue = normalizedValue * 1.5f; // Map to attack range 0.0 to 1.5
+            setAttack(mappedValue); // Update the processor's attack parameter
+            if (attackSlider)
+                attackSlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated attack to: " << mappedValue);
+            break;
+        }
+        case 27: { // MIDI controller 27 modifies decay
+            float mappedValue = normalizedValue * 2.0f; // Map to decay range 0.0 to 2.0
+            setDecay(mappedValue); // Update the processor's decay parameter
+            if (decaySlider)
+                decaySlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated decay to: " << mappedValue);
+            break;
+        }
+        case 28: { // MIDI controller 28 modifies sustain
+            float mappedValue = normalizedValue; // Map to sustain range 0.0 to 1.0
+            setSustain(mappedValue); // Update the processor's sustain parameter
+            if (sustainSlider)
+                sustainSlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated sustain to: " << mappedValue);
+            break;
+        }
+        case 29: { // MIDI controller 29 modifies release
+            float mappedValue = normalizedValue * 3.0f; // Map to release range 0.0 to 3.0
+            setRelease(mappedValue); // Update the processor's release parameter
+            if (releaseSlider)
+                releaseSlider->setValue(mappedValue, juce::NotificationType::dontSendNotification); // Update the slider without sending notification
+            DBG("Updated release to: " << mappedValue);
+            break;
+        }
+        default:
+            break;
+        }
+    }
 }
 
 

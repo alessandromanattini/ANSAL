@@ -58,7 +58,28 @@
 			if (num == 69 && val > 0) {
 				~toggleEditor.value;
 			}
-		}
+		},
+        22, { // ratio
+            ~vsti.midi.control(0, 22, val);
+        },
+        23, { // corr_k
+            ~vsti.midi.control(0, 23, val);
+        },
+        24, { // highPassCutoff
+            ~vsti.midi.control(0, 24, val);
+        },
+        26, { // attack
+            ~vsti.midi.control(0, 26, val);
+        },
+        27, { // decay
+            ~vsti.midi.control(0, 27, val);
+        },
+        28, { // sustain
+            ~vsti.midi.control(0, 28, val);
+        },
+        29, { // release
+            ~vsti.midi.control(0, 29, val);
+        }
     );
 };
 
