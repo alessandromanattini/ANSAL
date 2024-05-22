@@ -17,16 +17,20 @@
 ~currentPitchBend = 0;
 
 MIDIdef.noteOn(\noteOnHandler, { |vel, note, chan|
-    var freq, amp, activateNoteOne, activateNoteTwo;
+    var freq, freqOne, freqTwo, amp, activateNoteOne, activateNoteTwo;
     if (~waitingForKeySplit) {
         // Gestione del key split in corso, non fare nulla
     } {
-        freq = note.midicps * ~pitchBendToFreq.value(~currentPitchBend); // Applica il pitch bend
+        freq = note.midicps;
         amp = vel.linexp(0, 127, 0.01, 1);
-        "NoteOn.".postln;
 
         // Funzione per gestire l'attivazione delle note per instOne e vocoder
         activateNoteOne = {
+			if (~gloveXOne){
+				freqOne=freq* ~pitchBendToFreq.value(~currentPitchBend); // Applica il pitch bend
+			}{
+				freqOne=freq;
+			};
             if (~monoOne) {
                 ~activeNotesOne.do({ |data|
                     data[0].release;
@@ -47,6 +51,11 @@ MIDIdef.noteOn(\noteOnHandler, { |vel, note, chan|
 
         // Funzione per gestire l'attivazione delle note per instTwo
         activateNoteTwo = {
+			if (~gloveXTwo){
+				freqTwo=freq* ~pitchBendToFreq.value(~currentPitchBend); // Applica il pitch bend
+			}{
+				freqTwo=freq;
+			};
             if (~monoTwo) {
                 ~activeNotesTwo.do({ |data|
                     data[0].release;
@@ -94,7 +103,6 @@ MIDIdef.noteOff(\noteOffHandler, { |vel, note, chan|
                     ~activeNotesVoc[note] = true; // ready to release vocoder note
                 });
             }, {
-                "Note1 data not found.".postln;
             });
         };
 
@@ -108,7 +116,6 @@ MIDIdef.noteOff(\noteOffHandler, { |vel, note, chan|
                     dataTwo[1] = true;  // ready to release
                 });
             }, {
-                "Note2 data not found.".postln;
             });
         };
 
@@ -172,15 +179,19 @@ MIDIdef.bend(\pitchWheelHandler, { |val, chan|
     freqMultiplier = ~pitchBendToFreq.value(val);
 
     // Aggiorna le frequenze di instOne e vocoder
-    ~activeNotesOne.keysValuesDo({ |note, data|
-        data[0].set(\freq, note.midicps * ~octaveOne * freqMultiplier);
-        // Assumiamo che il vocoder non richieda modifiche
-    });
+	if(~gloveXOne){
+		~activeNotesOne.keysValuesDo({ |note, data|
+			data[0].set(\freq, note.midicps * ~octaveOne * freqMultiplier);
+			// Assumiamo che il vocoder non richieda modifiche
+		});
+	};
 
-    // Aggiorna le frequenze di instTwo
-    ~activeNotesTwo.keysValuesDo({ |note, data|
-        data[0].set(\freq, note.midicps * ~octaveTwo * freqMultiplier);
-    });
+	// Aggiorna le frequenze di instTwo
+	if(~gloveXTwo){
+		~activeNotesTwo.keysValuesDo({ |note, data|
+			data[0].set(\freq, note.midicps * ~octaveTwo * freqMultiplier);
+		});
+	};
 }, chan: 0);
 
 )

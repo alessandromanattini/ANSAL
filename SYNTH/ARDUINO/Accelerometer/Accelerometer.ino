@@ -32,5 +32,5 @@ void loop() {
   Serial.print(",");
   Serial.println(roll);
 
-  delay(28);
+  delay(30);
 }

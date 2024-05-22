@@ -87,7 +87,7 @@ void setup() {
                         .setText("OCTAVE 2");
 
     controlPedal2Text = cp5.addTextlabel("CONTROL 2")
-                        .setPosition(407.5, 255)
+                        .setPosition(402.5, 255)
                         .setSize(200, 50)
                         .setColorValue(color(255, 255, 255))
                         .setFont(createFont("Arial", 15))
@@ -140,7 +140,7 @@ void setup() {
         .setPosition(675, 75)
         .setSize(50, 250)
         .setLabel("")
-        .setRange(80, 300)
+        .setRange(60, 300)
         .setValue(128)
         .setColorForeground(color(128, 122, 122))
         .setColorBackground(color(43, 40, 40))
@@ -156,8 +156,8 @@ void setup() {
                   .setPosition(800, 75)
                   .setSize(50, 250)
                   .setLabel("")
-                  .setRange(0, 5)
-                  .setValue(50)
+                  .setRange(0, 1)
+                  .setValue(0.5)
                   .setColorForeground(color(128, 122, 122))
                   .setColorBackground(color(43, 40, 40))
                   .setColorCaptionLabel(color(128, 122, 122))

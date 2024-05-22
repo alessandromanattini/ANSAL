@@ -27,7 +27,7 @@ s.boot;
 "Drum_Sequences.scd".loadRelative;
 "Drum_Midi.scd".loadRelative;
 "ArduinoAdapter2.scd".loadRelative;
-
+"PresetsManaging.scd".loadRelative;
 "OSCCommunication.scd".loadRelative;
 "VST3adapter.scd".loadRelative;
 //------------------------------------------BUS-DECLARATION-------------------------------------------
@@ -58,6 +58,13 @@ s.boot;
 ~ccPedalOne = 1;
 ~ccPedalTwo =1;
 
+//------------------------------------GLOVE-VARIABLES-DECLARATION-------------------------------------
+~gloveXOne = true;
+~gloveXTwo =false;
+
+~gloveYOne = true;
+~gloveYTwo =false;
+
 //----------------------------------------GLOBAL-INITIALIZATION---------------------------------------
 Routine({
 	"Inizio".postln;
@@ -84,11 +91,7 @@ Routine({
 
 )
 
-	~vsti.editor(show: true);
-	~monoOne = true;
-
-~instOne = \violin ;
-	~instTwo = \violin;
+~vsti.editor(show: true);
 
 
 // Codice per chiudere la porta seriale
@@ -100,4 +103,5 @@ if (~port.notNil and: { ~port.isOpen }) {
     "Port was not open or failed to close".postln;
 };
 )
+
 

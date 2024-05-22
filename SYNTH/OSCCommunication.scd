@@ -2,7 +2,7 @@
 //============================================OSC COMMUNICATION=========================================
 //======================================================================================================
 
-
+(
 // Crea un indirizzo di rete per Processing (o qualsiasi altro server OSC)
 ~processingAddr = NetAddr("127.0.0.1", 12000);
 
@@ -140,12 +140,10 @@ OSCdef(\mono2, { |msg|
 // Gestore OSC per il volume
 OSCdef(\volume1, { |msg|
     ~volumeOne = msg[1].asFloat;
-    "Volume strumento 1 impostato a: ".post; ~volumeOne.postln;
 }, '/volume1');
 
 OSCdef(\volume2, { |msg|
     ~volumeTwo = msg[1].asFloat;
-    "Volume strumento 2 impostato a: ".post; ~volumeTwo.postln;
 }, '/volume2');
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -153,12 +151,10 @@ OSCdef(\volume2, { |msg|
 // Gestore OSC per il filtro passa basso (LPF)
 OSCdef(\LPF1, { |msg|
     ~lpfFreq1 = msg[1].asFloat;
-    "Frequenza LPF strumento 1 impostata a: ".post; ~lpfFreq1.postln;
 }, '/LPF1');
 
 OSCdef(\LPF2, { |msg|
     ~lpfFreq2 = msg[1].asFloat;
-    "Frequenza LPF strumento 2 impostata a: ".post; ~lpfFreq2.postln;
 }, '/LPF2');
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -167,9 +163,7 @@ OSCdef(\LPF2, { |msg|
 OSCdef(\BPM, { |msg|
     ~bpmDrum = msg[1].asFloat;
 	//int value = ~bpmDrum;
-    "Volume strumento 1 impostato a: ".post; ~bpmDrum.postln;
 	 ~processingAddr.sendMsg('/BPM', ~bpmDrum); // Invia messaggio OSC a Processing
-     "Inviato messaggio OSC a Processing: ".postln; ~bpmDrum.postln;
 }, '/BPM');
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -241,3 +235,109 @@ OSCdef(\vocoderVolume, { |msg|
 	var volume = msg[1].asFloat;  // Usa asInt per convertire il valore in intero
 	~vocAmpBus.set(volume/2);
 }, '\vocoderVolume');
+
+
+OSCdef(\selectControlPedal1, { |msg|
+	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
+	switch(mode,
+		"NIL", {
+			~ccPedalOne = 0;
+		},
+		"DIR", {
+			~ccPedalOne = 1;
+		},
+		"INV", {
+			~ccPedalOne = -1;
+		}
+	);
+}, '\selectControlPedal1');
+
+OSCdef(\selectControlPedal2, { |msg|
+	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
+	switch(mode,
+		"NIL", {
+			~ccPedalTwo = 0;
+		},
+		"DIR", {
+			~ccPedalTwo = 1;
+		},
+		"INV", {
+			~ccPedalTwo = -1;
+		}
+	);
+}, '\selectControlPedal2');
+
+
+OSCdef(\selectAccelerometerX, { |msg|
+	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
+	switch(mode,
+		"NONE", {
+			~gloveXOne = false;
+			~gloveXTwo = false;
+		},
+		"INS 1", {
+			~gloveXOne = true;
+			~gloveXTwo = false;
+		},
+		"INS 2", {
+			~gloveXOne = false;
+			~gloveXTwo = true;
+		},
+		"BOTH", {
+			~gloveXOne = true;
+			~gloveXTwo = true;
+		}
+	);
+}, '\selectAccelerometerX');
+
+
+OSCdef(\selectAccelerometerY, { |msg|
+	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
+	switch(mode,
+		"NONE", {
+			~gloveYOne = false;
+			~gloveYTwo = false;
+		},
+		"INS 1", {
+			~gloveYOne = true;
+			~gloveYTwo = false;
+		},
+		"INS 2", {
+			~gloveYOne = false;
+			~gloveYTwo = true;
+		},
+		"BOTH", {
+			~gloveYOne = true;
+			~gloveYTwo = true;
+		}
+	);
+}, '\selectAccelerometerY');
+
+
+
+
+//_________________________________________________________________________________
+~updateGUI = {
+	~busOne.get { |value|
+		~processingAddr.sendMsg('/volume1', value); // Invia messaggio OSC a Processing con il valore del bus
+	};
+	~busTwo.get { |value|
+		~processingAddr.sendMsg('/volume2', value); // Invia messaggio OSC a Processing con il valore del bus
+	};
+	~lowPassFilterOne.get { |value|
+		~processingAddr.sendMsg('/LPF1', value); // Invia messaggio OSC a Processing con il valore del bus
+	};
+	~lowPassFilterTwo.get { |value|
+		~processingAddr.sendMsg('/LPF2', value); // Invia messaggio OSC a Processing con il valore del bus
+	};
+};
+
+// Routine per eseguire l'aggiornamento GUI a intervalli regolari
+~guiRoutine = Routine {
+	loop {
+		~updateGUI.value;
+		0.1.wait; // Intervallo di 0.1 secondi (modifica secondo necessità)
+	}
+}.play(TempoClock.default);
+
+)

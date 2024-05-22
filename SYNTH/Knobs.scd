@@ -1,7 +1,7 @@
 //=======================================================================================================
 //=============================================MIDI=CONTROLS=============================================
 //=======================================================================================================
-
+(
 ~keySplit = -1;
 ~waitingForKeySplit = false;
 
@@ -14,7 +14,6 @@
         MIDIdef.noteOn(\captureNote, { |vel, num|
             ~keySplit = num;
 		    ~waitingForKeySplit=false; // Esce se in modalità di attesa per keySplit
-			"Nota MIDI ricevuta".postln;
             // Dopo aver ricevuto una nota, cancella la definizione per evitare ulteriori catture
             MIDIdef.noteOn(\captureNote).free;
         });
@@ -37,40 +36,26 @@
         16, {
             value = val.linexp(0, 127, 0.01, 1);
             ~busOne.set(value);
-            ("AmpOne: " ++ value).postln;
-            ~processingAddr.sendMsg('/volume1', value); // Invia messaggio OSC a Processing
-            "Inviato messaggio OSC a Processing: /volume1".postln;
         },
         17, {
             value = val.linexp(0, 127, 0.01, 1);
             ~busTwo.set(value);
-            ("AmpTwo: " ++ value).postln;
-            ~processingAddr.sendMsg('/volume2', value); // Invia messaggio OSC a Processing
-            "Inviato messaggio OSC a Processing: /volume2".postln;
         },
         20, {
             value = val.linexp(0, 127, 200, 6000);
             ~lowPassFilterOne.set(value);
-            ("LPF One Cutoff: " ++ value).postln;
-            ~processingAddr.sendMsg('/LPF1', value); // Invia messaggio OSC a Processing
-            "Inviato messaggio OSC a Processing: /LPF1".postln;
         },
         21, {
             value = val.linexp(0, 127, 200, 6000);
             ~lowPassFilterTwo.set(value);
-            ("LPF Two Cutoff: " ++ value).postln;
-            ~processingAddr.sendMsg('/LPF2', value); // Invia messaggio OSC a Processing
-            "Inviato messaggio OSC a Processing: /LPF2".postln;
         },
 		70, {
 			if (num == 70 && val > 0) {
-				"Comando CC 70 ON ricevuto".postln;
 				~captureMIDINote.value;
 			}
 		},
 		69, {
 			if (num == 69 && val > 0) {
-				"Comando CC 71 ricevuto".postln;
 				~toggleEditor.value;
 			}
 		}
@@ -122,3 +107,4 @@ MIDIdef.cc(\controlPedalHandler, { |val, num, chan, src|
         ~handleCCpedal.value(val);
     };
 }, chan: 7);
+)

@@ -1,9 +1,11 @@
 (
-// Inizia la comunicazione seriale
-var processSerialData, previous, numPrevious, averageOrder;
+var processSerialData, previous, previousRoll, numPrevious, numPreviousRoll, averageOrder, buffer;
 numPrevious = 0;
-averageOrder = 2;
+numPreviousRoll = 0;
+averageOrder = 5;
 previous = Array.fill(averageOrder, 0);
+previousRoll = Array.fill(averageOrder, 0);
+buffer = "";  // Inizializza il buffer come una stringa vuota
 
 ~port;
 ~lpfFrequency = 3000;  // Valore iniziale della frequenza di taglio del filtro
@@ -28,32 +30,53 @@ previous = Array.fill(averageOrder, 0);
     // Calculate the average of the valid elements in the 'previous' array
     average = previous[0..(numPrevious - 1)].sum / numPrevious;
 
-    if (average < -20) {
-        ~setKnobValue.value(1, 21);
+    if (average < -30) {
+		value=1;
     } {
         if (average < 10) {
-            value = average.linexp(-20, 10, 1, 127);
-            ~setKnobValue.value(value, 21);
+            value = average.linexp(-30, 10, 1, 127);
         } {
-            ~setKnobValue.value(127, 21);
+            value = 127;
         };
     };
+	if (~gloveYOne){
+		~setKnobValue.value(value, 20);
+	};
+	if (~gloveYTwo){
+		~setKnobValue.value(value, 21);
+	}
 };
 
 // Funzione per mappare il roll al valore del pitch wheel
 ~mapRollToPitchWheel = { |roll|
-    var pitchWheelValue;
-    if (roll < -20) {
+    var average, pitchWheelValue;
+
+    // Shift elements in the 'previousRoll' array to make room for the new roll
+    (1..averageOrder - 1).do { |i|
+        previousRoll[i - 1] = previousRoll[i];
+    };
+
+    previousRoll[averageOrder - 1] = roll;  // Assegna il roll all'ultimo elemento dell'array
+
+    // Update the count of valid elements in the 'previousRoll' array
+    if (numPreviousRoll < averageOrder) {
+        numPreviousRoll = numPreviousRoll + 1;
+    };
+
+    // Calculate the average of the valid elements in the 'previousRoll' array
+    average = previousRoll[0..(numPreviousRoll - 1)].sum / numPreviousRoll;
+
+    if (average < -40) {
         pitchWheelValue = -8192;  // Pitch wheel a -2 semitoni
     } {
-        if (roll < -15) {
-            pitchWheelValue = ((roll).linlin(-20, -15, -8192, 0));  // Mappa tra -2 e 0 semitoni
+        if (average < -20) {
+            pitchWheelValue = average.linlin(-40, -20, -8192, 0);  // Mappa tra -2 e 0 semitoni
         } {
-            if (roll < 20) {
+            if (average < 20) {
                 pitchWheelValue = 0;  // Pitch wheel a 0 semitoni
             } {
-                if (roll < 40) {
-                    pitchWheelValue = ((roll).linlin(20, 40, 0, 8191));  // Mappa tra 0 e +2 semitoni
+                if (average < 40) {
+                    pitchWheelValue = average.linlin(20, 40, 0, 8191);  // Mappa tra 0 e +2 semitoni
                 } {
                     pitchWheelValue = 8191;  // Pitch wheel a +2 semitoni
                 };
@@ -67,20 +90,12 @@ previous = Array.fill(averageOrder, 0);
 
 // Funzione per processare i dati seriali ricevuti
 processSerialData = { |data|
-    var angles, angleX, angleY;
-    "Data received: ".post; data.postln; // Debug: stampa i dati ricevuti
+    var angles;
     // I dati sono ricevuti come una stringa, quindi separiamo gli angoli usando la virgola
     angles = data.split($,) ;
     if (angles.size == 2) {
-        angleX = angles[0].asFloat;
-        angleY = angles[1].asFloat;
-        // Stampa gli angoli nella post window di SuperCollider
-        ("Pitch: " ++ angleX).postln;
-        ("Roll: " ++ angleY).postln;
-        ~mapPitchToFrequency.value(angleX);
-        ~mapRollToPitchWheel.value(angleY);
-    } {
-        ("Invalid data received: " ++ data).postln;
+        ~mapPitchToFrequency.value(angles[0].asFloat);
+        ~mapRollToPitchWheel.value(angles[1].asFloat);
     };
 };
 
@@ -89,19 +104,15 @@ processSerialData = { |data|
 
 // Legge continuamente i dati dalla porta seriale
 ~routine = Routine {
-    var byte, str;
     inf.do {
-        if(~port.read == Char.nl.asInteger) {
-            str = "";
-            while({
-                byte = ~port.read;
-                byte != Char.ret.asInteger
-            }, {
-                str = str ++ byte.asAscii
-            });
-            processSerialData.(str);
-        }
+        var byte;
+        byte = ~port.read;
+        if (byte != Char.nl.asInteger) {
+            buffer = buffer ++ byte.asAscii;
+        } {
+            processSerialData.(buffer);
+            buffer = "";
+        };
     };
 }.play;
 )
-
