@@ -8,13 +8,14 @@ s.quit;  // Fermiamo il server prima di apportare modifiche alle configurazioni
 s.options.blockSize = 512;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
 s.options.numBuffers = 64;  // Numero di buffer disponibili
 s.options.numWireBufs = 64;  // Numero di wire buffers (aumentalo se necessario)
-s.options.hardwareBufferSize = 600; // Imposta una dimensione del buffer hardware
+s.options.hardwareBufferSize = 1024; // Imposta una dimensione del buffer hardware
 
 s.options.numInputBusChannels = 2;  // Numero di canali input bus
 s.options.numOutputBusChannels = 2;  // Numero di canali output bus
 s.options.memSize = 8192;  // Dimensione della memoria allocata per il server in kilobytes
 s.options.sampleRate = 48000;
 s.latency = 0;
+
 Server.default.options.device = "MME : IN 1-2 (3- BEHRINGER UMC 202HD)";
 Server.default.options.outDevice = "MME : OUT 1-2 (3- BEHRINGER UMC 202HD)";
 // Avvio del server
