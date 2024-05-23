@@ -1,7 +1,3 @@
-//======================================================================================================
-//============================================OSC COMMUNICATION=========================================
-//======================================================================================================
-
 (
 // Crea un indirizzo di rete per Processing (o qualsiasi altro server OSC)
 ~processingAddr = NetAddr("127.0.0.1", 12000);
@@ -11,333 +7,419 @@
 ~volumeOne = 0.5;
 ~lpfFreq1 = 440;
 
-
-
 // ----------------------------------------------- INSTRUMENT n.1 ----------------------------------------------------
 
 // Gestore OSC per il messaggio di selezione degli strumenti
-OSCdef(\selectInstrument1, { |msg, time, addr, recvPort|
+OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|
     var instrument;
     instrument = msg[1].asString;
 
     "Strumento n.1 selezionato: ".post; instrument.postln;
 
-    // Arresta eventuali synth in esecuzione
-    /*if (~currentSynth.notNil) {
-        ~currentSynth.free;
-    };*/
-
     // Seleziona e avvia il synth in base allo strumento selezionato
-    if (instrument == "everythingrhodes") {
-        ~instOne = \everythingrhodes;
-    };
-	if(instrument == "distortedTri") {
-		~instOne = \distortedTri;
-    };
-	if(instrument == "sawtooth") {
-		~instOne = \sawtooth;
-    };
-	if(instrument == "hammondOrgan") {
-		~instOne = \hammondOrgan;
-    };
-	if(instrument == "bass") {
-		~instOne = \bass;
-    };
-	if(instrument == "violin") {
-		~instOne = \violin;
-    };
-	if(instrument == "mrostinato") {
-		~instOne = \mrostinato;
-    };
-	if(instrument == "synchronicity") {
-		~instOne = \synchronicity;
-    };
-	if(instrument == "None") {
-		~instOne = nil;
-        "Nessuno strumento selezionato.".postln;
-    };
-}, '/selectInstrument1');
+    ~instOne = case
+    { instrument == "RHODES1" } { \RHODES1 }
+    { instrument == "RHODES2" } { \RHODES2 }
+    { instrument == "BASSYN1" } { \BASSYN1 }
+    { instrument == "LEADSCR" } { \LEADSCR }
+    { instrument == "TRIWAVE" } { \TRIWAVE }
+    { instrument == "SAWWAVE" } { \SAWWAVE }
+    { instrument == "HAMMOND" } { \HAMMOND }
+    { instrument == "VIOLSYN" } { \VIOLSYN }
+    { instrument == "BASSYN2" } { \BASSYN2 }
+    { instrument == "BASSIMP" } { \BASSIMP }
+    { instrument == "   NONE" } { nil }
+    { "Nessuno strumento selezionato.".postln; nil };
+}, '/cmd_instOne');
 
 // ----------------------------------------------- INSTRUMENT n.2 ----------------------------------------------------
 
-OSCdef(\selectInstrument2, { |msg, time, addr, recvPort|
+OSCdef(\cmd_instTwo, { |msg, time, addr, recvPort|
     var instrument;
     instrument = msg[1].asString;
 
     "Strumento n.2 selezionato: ".post; instrument.postln;
 
-    // Arresta eventuali synth in esecuzione
-    /*if (~currentSynth.notNil) {
-        ~currentSynth.free;
-    };*/
-
     // Seleziona e avvia il synth in base allo strumento selezionato
-    if (instrument == "everythingrhodes") {
-        ~instTwo = \everythingrhodes;
-    };
-	if(instrument == "distortedTri") {
-		~instTwo = \distortedTri;
-    };
-	if(instrument == "sawtooth") {
-		~instTwo = \sawtooth;
-    };
-	if(instrument == "hammondOrgan") {
-		~instTwo = \hammondOrgan;
-    };
-	if(instrument == "bass") {
-		~instTwo = \bass;
-    };
-	if(instrument == "violin") {
-		~instTwo = \violin;
-    };
-	if(instrument == "mrostinato") {
-		~instTwo = \mrostinato;
-    };
-	if(instrument == "synchronicity") {
-		~instTwo = \synchronicity;
-    };
-	if(instrument == "None") {
-		~instTwo = nil;
-        "Nessuno strumento selezionato.".postln;
-    };
-}, '/selectInstrument2');
+    ~instTwo = case
+    { instrument == "RHODES1" } { \RHODES1 }
+    { instrument == "RHODES2" } { \RHODES2 }
+    { instrument == "BASSYN1" } { \BASSYN1 }
+    { instrument == "LEADSCR" } { \LEADSCR }
+    { instrument == "TRIWAVE" } { \TRIWAVE }
+    { instrument == "SAWWAVE" } { \SAWWAVE }
+    { instrument == "HAMMOND" } { \HAMMOND }
+    { instrument == "VIOLSYN" } { \VIOLSYN }
+    { instrument == "BASSYN2" } { \BASSYN2 }
+    { instrument == "BASSIMP" } { \BASSIMP }
+    { instrument == "   NONE" } { nil }
+    { "Nessuno strumento selezionato.".postln; nil };
+}, '/cmd_instTwo');
 
 // ----------------------------------------------------------------------------------------------------------
 
 // Gestore OSC per il mono
-OSCdef(\mono1, { |msg|
+OSCdef(\cmd_monoOne, { |msg|
     var state;
     state = msg[1].asString;
 
     if (state == "on") {
         ~monoOne = true;
         "Mono Strumento 1 attivato.".postln;
+    } {
+        if(state == "off") {
+            ~monoOne = false;
+            "Mono Strumento 1 disattivato.".postln;
+        };
     };
-	if(state == "off") {
-        ~monoOne = false;
-        "Mono Strumento 1 disattivato.".postln;
-    }
-}, '/mono1');
+}, '/cmd_monoOne');
 
-OSCdef(\mono2, { |msg|
+OSCdef(\cmd_monoTwo, { |msg|
     var state;
     state = msg[1].asString;
 
     if (state == "on") {
         ~monoTwo = true;
         "Mono Strumento 2 attivato.".postln;
+    } {
+        if(state == "off") {
+            ~monoTwo= false;
+            "Mono Strumento 2 disattivato.".postln;
+        } {
+            "Stato mono 2 non riconosciuto.".postln;
+        };
     };
-	if(state == "off") {
-        ~monoTwo= false;
-        "Mono Strumento 2 disattivato.".postln;
-    }  {
-        "Stato mono 2 non riconosciuto.".postln;
-    }
-}, '/mono2');
+}, '/cmd_monoTwo');
 
 // ------------------------------------------------------------------------------------------------------------------
 
 // Gestore OSC per il volume
-OSCdef(\volume1, { |msg|
+OSCdef(\cmd_volume1, { |msg|
     ~volumeOne = msg[1].asFloat;
-}, '/volume1');
+}, '/cmd_volume1');
 
-OSCdef(\volume2, { |msg|
+OSCdef(\cmd_volume2, { |msg|
     ~volumeTwo = msg[1].asFloat;
-}, '/volume2');
+}, '/cmd_volume2');
 
 // ------------------------------------------------------------------------------------------------------------------
 
 // Gestore OSC per il filtro passa basso (LPF)
-OSCdef(\LPF1, { |msg|
+OSCdef(\cmd_LPF1, { |msg|
     ~lpfFreq1 = msg[1].asFloat;
-}, '/LPF1');
+}, '/cmd_LPF1');
 
-OSCdef(\LPF2, { |msg|
+OSCdef(\cmd_LPF2, { |msg|
     ~lpfFreq2 = msg[1].asFloat;
-}, '/LPF2');
+}, '/cmd_LPF2');
 
 // ------------------------------------------------------------------------------------------------------------------
 
 // Gestore OSC per BPM sequenza percussioni
-OSCdef(\BPM, { |msg|
+OSCdef(\cmd_bpmDrum, { |msg|
     ~bpmDrum = msg[1].asFloat;
-	//int value = ~bpmDrum;
-	 ~processingAddr.sendMsg('/BPM', ~bpmDrum); // Invia messaggio OSC a Processing
-}, '/BPM');
+    ~processingAddr.sendMsg('/BPM', ~bpmDrum); // Invia messaggio OSC a Processing
+}, '/cmd_bpmDrum');
 
 // ------------------------------------------------------------------------------------------------------------------
-
 
 // Gestore OSC per la selezione dell'ottava
-OSCdef(\selectOctave1, { |msg|
-	var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
-	switch(octave,
-		0, {
-			~octaveOne = 1;
-		},
-		1, {
-			~octaveOne = 2;
-		},
-		2, {
-			~octaveOne = 4;
-		},
-		3, {
-			~octaveOne = 8;
-		},
-		-1, {
-			~octaveOne = 1/2;
-		},
-		-2, {
-			~octaveOne = 1/4;
-		},
-		-3,{
-			~octaveOne = 1/8;
-		}
-	);
-}, '/selectOctave1');
+OSCdef(\cmd_octaveOne, { |msg|
+    var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
+    switch(octave,
+        0, {
+            ~octaveOne = 1;
+        },
+        1, {
+            ~octaveOne = 2;
+        },
+        2, {
+            ~octaveOne = 4;
+        },
+        3, {
+            ~octaveOne = 8;
+        },
+        -1, {
+            ~octaveOne = 1/2;
+        },
+        -2, {
+            ~octaveOne = 1/4;
+        },
+        -3,{
+            ~octaveOne = 1/8;
+        }
+    );
+}, '/cmd_octaveOne');
 
-
-OSCdef(\selectOctave2, { |msg|
-	var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
-	switch(octave,
-		0, {
-			~octaveOne = 1;
-		},
-		1, {
-			~octaveOne = 2;
-		},
-		2, {
-			~octaveOne = 4;
-		},
-		3, {
-			~octaveOne = 8;
-		},
-		-1, {
-			~octaveOne = 1/2;
-		},
-		-2, {
-			~octaveOne = 1/4;
-		},
-		-3,{
-			~octaveOne = 1/8;
-		}
-	);
-}, '/selectOctave2');
+OSCdef(\cmd_octaveTwo, { |msg|
+    var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
+    switch(octave,
+        0, {
+            ~octaveTwo = 1;
+        },
+        1, {
+            ~octaveTwo = 2;
+        },
+        2, {
+            ~octaveTwo = 4;
+        },
+        3, {
+            ~octaveTwo = 8;
+        },
+        -1, {
+            ~octaveTwo = 1/2;
+        },
+        -2, {
+            ~octaveTwo = 1/4;
+        },
+        -3,{
+            ~octaveTwo = 1/8;
+        }
+    );
+}, '/cmd_octaveTwo');
 
 // ------------------------------------------------------------------------------------------------------------------
 
-OSCdef(\guiVocoder, { |msg|
-	~toggleEditor.value;
-}, '/guiVocoder');
+OSCdef(\cmd_editorOpen, { |msg|
+    ~toggleEditor.value;
+}, '/cmd_editorOpen');
 
-OSCdef(\vocoderVolume, { |msg|
-	var volume = msg[1].asFloat;  // Usa asInt per convertire il valore in intero
-	~vocAmpBus.set(volume/2);
-}, '\vocoderVolume');
+OSCdef(\cmd_vocAmpBus, { |msg|
+    var volume = msg[1].asFloat;
+    ~vocAmpBus.set(volume/2);
+	~vocoderVolume=volume;
+}, '/cmd_vocAmpBus');
 
+OSCdef(\cmd_ccPedalOne, { |msg|
+    var mode = msg[1].asString;
+    switch(mode,
+        "NIL", {
+            ~ccPedalOne = 0;
+        },
+        "DIR", {
+            ~ccPedalOne = 1;
+        },
+        "INV", {
+            ~ccPedalOne = -1;
+        }
+    );
+}, '/cmd_ccPedalOne');
 
-OSCdef(\selectControlPedal1, { |msg|
-	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
-	switch(mode,
-		"NIL", {
-			~ccPedalOne = 0;
-		},
-		"DIR", {
-			~ccPedalOne = 1;
-		},
-		"INV", {
-			~ccPedalOne = -1;
-		}
-	);
-}, '\selectControlPedal1');
+OSCdef(\cmd_ccPedalTwo, { |msg|
+    var mode = msg[1].asString;
+    switch(mode,
+        "NIL", {
+            ~ccPedalTwo = 0;
+        },
+        "DIR", {
+            ~ccPedalTwo = 1;
+        },
+        "INV", {
+            ~ccPedalTwo = -1;
+        }
+    );
+}, '/cmd_ccPedalTwo');
 
-OSCdef(\selectControlPedal2, { |msg|
-	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
-	switch(mode,
-		"NIL", {
-			~ccPedalTwo = 0;
-		},
-		"DIR", {
-			~ccPedalTwo = 1;
-		},
-		"INV", {
-			~ccPedalTwo = -1;
-		}
-	);
-}, '\selectControlPedal2');
+OSCdef(\cmd_gloveX, { |msg|
+    var mode = msg[1].asString;
+    switch(mode,
+        "NONE", {
+            ~gloveXOne = false;
+            ~gloveXTwo = false;
+        },
+        "INS 1", {
+            ~gloveXOne = true;
+            ~gloveXTwo = false;
+        },
+        "INS 2", {
+            ~gloveXOne = false;
+            ~gloveXTwo = true;
+        },
+        "BOTH", {
+            ~gloveXOne = true;
+            ~gloveXTwo = true;
+        }
+    );
+}, '/cmd_gloveX');
 
+OSCdef(\cmd_gloveY, { |msg|
+    var mode = msg[1].asString;
+    switch(mode,
+        "NONE", {
+            ~gloveYOne = false;
+            ~gloveYTwo = false;
+        },
+        "INS 1", {
+            ~gloveYOne = true;
+            ~gloveYTwo = false;
+        },
+        "INS 2", {
+            ~gloveYOne = false;
+            ~gloveYTwo = true;
+        },
+        "BOTH", {
+            ~gloveYOne = true;
+            ~gloveYTwo = true;
+        }
+    );
+}, '/cmd_gloveY');
 
-OSCdef(\selectAccelerometerX, { |msg|
-	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
-	switch(mode,
-		"NONE", {
-			~gloveXOne = false;
-			~gloveXTwo = false;
-		},
-		"INS 1", {
-			~gloveXOne = true;
-			~gloveXTwo = false;
-		},
-		"INS 2", {
-			~gloveXOne = false;
-			~gloveXTwo = true;
-		},
-		"BOTH", {
-			~gloveXOne = true;
-			~gloveXTwo = true;
-		}
-	);
-}, '\selectAccelerometerX');
-
-
-OSCdef(\selectAccelerometerY, { |msg|
-	var mode = msg[1].asString;  // Usa asInt per convertire il valore in intero
-	switch(mode,
-		"NONE", {
-			~gloveYOne = false;
-			~gloveYTwo = false;
-		},
-		"INS 1", {
-			~gloveYOne = true;
-			~gloveYTwo = false;
-		},
-		"INS 2", {
-			~gloveYOne = false;
-			~gloveYTwo = true;
-		},
-		"BOTH", {
-			~gloveYOne = true;
-			~gloveYTwo = true;
-		}
-	);
-}, '\selectAccelerometerY');
-
-
-
+OSCdef(\cmd_currentPreset, { |msg|
+    var mode = msg[1].asString;
+    switch(mode,
+        "INTR", {
+            ~setModelParameters.value(~intro);
+        },
+        "DAFT", {
+            ~setModelParameters.value(~daftPunk);
+        };
+    );
+}, '/cmd_currentPreset');
 
 //_________________________________________________________________________________
 ~updateGUI = {
-	~busOne.get { |value|
-		~processingAddr.sendMsg('/volume1', value); // Invia messaggio OSC a Processing con il valore del bus
+    var message;
+
+    ~busOne.get { |value|
+        ~processingAddr.sendMsg('/cmd_volume1', value);
+    };
+    ~busTwo.get { |value|
+        ~processingAddr.sendMsg('/cmd_volume2', value);
+    };
+    ~lowPassFilterOne.get { |value|
+        ~processingAddr.sendMsg('/cmd_LPF1', value);
+    };
+    ~lowPassFilterTwo.get { |value|
+        ~processingAddr.sendMsg('/cmd_LPF2', value);
+    };
+
+    ~processingAddr.sendMsg('/cmd_vocAmpBus', ~vocoderVolume);
+
+
+    ~processingAddr.sendMsg('/cmd_currentPreset', ~currentPreset);
+
+
+
+    ~processingAddr.sendMsg('/cmd_instOne', ~instOne);
+
+
+    ~processingAddr.sendMsg('/cmd_instTwo', ~instTwo);
+
+
+	if(~monoOne){
+		~processingAddr.sendMsg('/cmd_monoOne', "on".asString);
+	}{
+		~processingAddr.sendMsg('/cmd_monoOne', "off".asString);
 	};
-	~busTwo.get { |value|
-		~processingAddr.sendMsg('/volume2', value); // Invia messaggio OSC a Processing con il valore del bus
+
+
+	if(~monoTwo){
+		~processingAddr.sendMsg('/cmd_monoTwo', "on".asString);
+	}{
+		~processingAddr.sendMsg('/cmd_monoTwo', "off".asString);
 	};
-	~lowPassFilterOne.get { |value|
-		~processingAddr.sendMsg('/LPF1', value); // Invia messaggio OSC a Processing con il valore del bus
+
+
+
+	~processingAddr.sendMsg('/cmd_bpmDrum', ~bpmDrum.asFloat);
+
+
+
+    // Messaggi per gloveX
+    message = if (~gloveXOne and: ~gloveXTwo) {
+        "BOTH".asString;
+    } {
+        if (~gloveXOne) {
+            "INS 1".asString;
+        } {
+            if (~gloveXTwo) {
+                "INS 2".asString;
+            } {
+                "NONE".asString;
+            };
+        };
+    };
+    ~processingAddr.sendMsg('/cmd_gloveX', message);
+
+
+    // Messaggi per gloveY
+    message = if (~gloveYOne and: ~gloveYTwo) {
+        "BOTH".asString;
+    } {
+        if (~gloveYOne) {
+            "INS 1".asString;
+        } {
+            if (~gloveYTwo) {
+                "INS 2".asString;
+            } {
+                "NONE".asString;
+            };
+        };
+    };
+
+    ~processingAddr.sendMsg('/cmd_gloveY', message);
+
+
+	if(~editorOpen){
+		~processingAddr.sendMsg('/cmd_editorOpen', "on".asString);
+
+	}{
+		~processingAddr.sendMsg('/cmd_editorOpen', "off".asString);
 	};
-	~lowPassFilterTwo.get { |value|
-		~processingAddr.sendMsg('/LPF2', value); // Invia messaggio OSC a Processing con il valore del bus
-	};
+
+
+    // Messaggi per ControlPedal1
+    message = case
+    { ~ccPedalOne == 0 } { "NIL".asString }
+    { ~ccPedalOne == 1 } { "DIR".asString }
+    { ~ccPedalOne == -1 } { "INV".asString }
+    { "UNKNOWN" };
+    ~processingAddr.sendMsg('/cmd_ccPedalOne', message);
+
+
+    // Messaggi per ControlPedal2
+    message = case
+    { ~ccPedalTwo == 0 } { "NIL".asString }
+    { ~ccPedalTwo == 1 } { "DIR".asString }
+    { ~ccPedalTwo == -1 } { "INV".asString }
+    { "UNKNOWN" };
+    ~processingAddr.sendMsg('/cmd_ccPedalTwo', message);
+
+    // Messaggi per Octave1
+    message = case
+    { ~octaveOne == 1 } { 0.asInteger }
+    { ~octaveOne == 2 } { 1.asInteger }
+    { ~octaveOne == 4 } { 2.asInteger }
+    { ~octaveOne == 8 } { 3.asInteger }
+    { ~octaveOne == 0.5 } { -1.asInteger }
+    { ~octaveOne == 0.25 } { -2.asInteger }
+    { ~octaveOne == 0.125 } { -3.asInteger }
+    { -99 }; // Valore di default per indicare un caso non riconosciuto
+    ~processingAddr.sendMsg('/cmd_octaveOne', message);
+
+    // Messaggi per Octave2
+    message = case
+    { ~octaveTwo == 1 } { 0.asInteger }
+    { ~octaveTwo == 2 } { 1.asInteger }
+    { ~octaveTwo == 4 } { 2.asInteger }
+    { ~octaveTwo == 8 } { 3.asInteger }
+    { ~octaveTwo == 0.5 } { -1.asInteger }
+    { ~octaveTwo == 0.25 } { -2.asInteger }
+    { ~octaveTwo == 0.125 } { -3.asInteger }
+    { -99 }; // Valore di default per indicare un caso non riconosciuto
+    ~processingAddr.sendMsg('/cmd_octaveTwo', message);
 };
 
 // Routine per eseguire l'aggiornamento GUI a intervalli regolari
 ~guiRoutine = Routine {
-	loop {
-		~updateGUI.value;
-		0.1.wait; // Intervallo di 0.1 secondi (modifica secondo necessità)
-	}
+    loop {
+        ~updateGUI.value;
+        0.1.wait;
+    }
 }.play(TempoClock.default);
+
+// Stampa il valore di ~currentPreset all'inizio
+"Valore iniziale di ~currentPreset: ".post; ~currentPreset.postln;
+
 
 )

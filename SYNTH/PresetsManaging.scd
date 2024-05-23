@@ -1,18 +1,19 @@
 (
 ~daftPunk = (
+	currentPreset: "DAFT",
     busOne: 0.5,
     busTwo: 0.5,
     lowPassFilterOne: 3000,
     lowPassFilterTwo: 3000,
-    instOne: \violin,
-    instTwo: \violin,
-    monoOne: false,
-    monoTwo: false,
+    instOne: \VIOLSYN,
+    instTwo: \VIOLSYN,
+    monoOne: true,
+    monoTwo: true,
     octaveOne: 1,
-    octaveTwo: 1/2,
+    octaveTwo: 2,
     bpmDrum: 120,
-    vocAmpBus: 0.5,
-    ccPedalOne: 0,
+    vocAmpBus: 1.0,
+    ccPedalOne: 1,
     ccPedalTwo: 1,
     gloveXOne: false,
     gloveXTwo: false,
@@ -22,20 +23,21 @@
 
 
 ~intro = (
+	currentPreset: "INTR",
     busOne: 0.5,
     busTwo: 0.5,
     lowPassFilterOne: 3000,
     lowPassFilterTwo: 3000,
-    instOne: \violin,
-    instTwo: \violin,
+    instOne: \RHODES1,
+    instTwo: \BASSYN1,
     monoOne: false,
     monoTwo: false,
-    octaveOne: 1,
+    octaveOne: 4,
     octaveTwo: 1/2,
-    bpmDrum: 120,
-    vocAmpBus: 0.5,
+    bpmDrum: 220,
+    vocAmpBus: 0.0,
     ccPedalOne: 0,
-    ccPedalTwo: 1,
+    ccPedalTwo: -1,
     gloveXOne: true,
     gloveXTwo: false,
     gloveYOne: true,
@@ -44,8 +46,7 @@
 
 // Funzione per impostare i valori dei parametri dal contenitore
 ~setModelParameters = { |preset|
-	"ci sono".postln;
-
+	~currentPreset = preset[\currentPreset];
 	~busOne.set(preset[\busOne]);
 	~busTwo.set(preset[\busTwo]);
 	~lowPassFilterOne.set(preset[\lowPassFilterOne]);
@@ -61,6 +62,7 @@
 	~bpmDrum = preset[\bpmDrum];
 
 	~vocAmpBus.set(preset[\vocAmpBus]);
+	~vocoderVolume=preset[\vocAmpBus];
 
 	~ccPedalOne = preset[\ccPedalOne];
 	~ccPedalTwo = preset[\ccPedalTwo];

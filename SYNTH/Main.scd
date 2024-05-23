@@ -5,18 +5,27 @@
 (
 //------------------------------------------------SETUP--------------------------------------------------
 s.quit;  // Fermiamo il server prima di apportare modifiche alle configurazioni
-s.options.blockSize = 32;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
+s.options.blockSize = 512;  // Impostiamo la dimensione del buffer a 256 campioni per ridurre la latenza
 s.options.numBuffers = 64;  // Numero di buffer disponibili
 s.options.numWireBufs = 64;  // Numero di wire buffers (aumentalo se necessario)
+s.options.hardwareBufferSize = 600; // Imposta una dimensione del buffer hardware
+
 s.options.numInputBusChannels = 2;  // Numero di canali input bus
 s.options.numOutputBusChannels = 2;  // Numero di canali output bus
 s.options.memSize = 8192;  // Dimensione della memoria allocata per il server in kilobytes
-s.options.sampleRate = 44100;
+s.options.sampleRate = 48000;
 s.latency = 0;
 Server.default.options.device = "MME : IN 1-2 (3- BEHRINGER UMC 202HD)";
 Server.default.options.outDevice = "MME : OUT 1-2 (3- BEHRINGER UMC 202HD)";
 // Avvio del server
 s.boot;
+
+if (~port.notNil and: { ~port.isOpen }) {
+    ~port.close;
+    "Port closed successfully".postln;
+} {
+    "Port was not open or failed to close".postln;
+};
 
 // Carica i file di configurazione e le definizioni di synth
 "Inst_SynthDef.scd".loadRelative;
@@ -28,8 +37,9 @@ s.boot;
 "Drum_Midi.scd".loadRelative;
 "ArduinoAdapter2.scd".loadRelative;
 "PresetsManaging.scd".loadRelative;
-"OSCCommunication.scd".loadRelative;
 "VST3adapter.scd".loadRelative;
+
+~currentPreset = \INTR;
 //------------------------------------------BUS-DECLARATION-------------------------------------------
 ~busOne = Bus.control(s, 1);
 ~busTwo = Bus.control(s, 1);
@@ -48,11 +58,12 @@ s.boot;
 ~octaveOne = 1;
 ~octaveTwo = 1;
 //-------------------------------------DRUM-VARIABLES-DECLARATION-------------------------------------
-~bpmDrum = 120;
+~bpmDrum = 100;
 
 //-------------------------------------VOCODER-VARIABLES-DECLARATION----------------------------------
 ~vocAudioInBus = Bus.audio(s, 2);
 ~vocAmpBus = Bus.control(s, 1);
+~vocoderVolume = 0;
 
 //--------------------------------------CC-VARIABLES-DECLARATION--------------------------------------
 ~ccPedalOne = 1;
@@ -69,23 +80,9 @@ s.boot;
 Routine({
 	"Inizio".postln;
 	5.0.wait;  // Attende 10 secondi
+	"OSCCommunication.scd".loadRelative;
+
 	"Esegui dopo 5 secondi".postln;
-	~octaveOne = 1/2;
-	~octaveTwo = 1;
-	~monoOne = false;
-
-	~instOne = \violin ;
-	~instTwo = \violin;
-	~bpmDrum = 110;
-
-	~ccPedalOne = 1;
-	~ccPedalTwo =0;
-
-	~busOne.set(0.2);
-	~busTwo.set(0.2);
-	~lowPassFilterOne.set(1000);
-	~lowPassFilterTwo.set(1000);
-	~vocAmpBus.set(0.3);
 	~vsti.editor(show: false);
 }).play;
 
@@ -103,5 +100,6 @@ if (~port.notNil and: { ~port.isOpen }) {
     "Port was not open or failed to close".postln;
 };
 )
+
 
 

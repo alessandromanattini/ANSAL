@@ -9,7 +9,7 @@
 
 //------------------------------------\everythingrhodes----------------------------------------------
 
-SynthDef(\everythingrhodes, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\RHODES1, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, source, chorus, numVoices, dynamicCutoff, noteDur, globalAmp, lpFreq;
 
     numVoices = ~activeNotesOne.size;
@@ -35,7 +35,7 @@ SynthDef(\everythingrhodes, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus 
 }).add;
 
 
-SynthDef(\everythingrhodes2, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\RHODES2, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, source, chorus, numVoices, dynamicCutoff, noteDur, globalAmp, lpFreq, reverb;
 
     numVoices = ~activeNotesOne.size;
@@ -69,7 +69,7 @@ SynthDef(\everythingrhodes2, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus
 
 //-----------------------\mrostinato---------------------------------------------
 
-SynthDef(\mrostinato, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpFreqBus = 0|
+SynthDef(\BASSYN1, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpFreqBus = 0|
     var lforate, lfowidth, pan;
     var lfo, pulse, env, lpFreq;
 
@@ -94,7 +94,7 @@ SynthDef(\mrostinato, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpF
 
 //--------------------------------------\synchronicity-----------------------------------------------
 
-SynthDef(\synchronicity, { |out = 0, freq = 440, amp = 0.1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\LEADSCR, { |out = 0, freq = 440, amp = 0.1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, syncfreq, cutoff, rq, lpFreq;
 
     // Automazioni per cutoff e rq
@@ -116,7 +116,7 @@ SynthDef(\synchronicity, { |out = 0, freq = 440, amp = 0.1, gate = 1, pan = 0.0,
 
 //------------------------------------------\distortedTri----------------------------------------------
 
-SynthDef(\distortedTri, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, drive = 1.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\TRIWAVE, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, drive = 1.0, ampBus = 0, lpFreqBus = 0|
     var tri, dist, env, lpFreq;
 
     // Genera un'onda triangolare
@@ -140,7 +140,7 @@ SynthDef(\distortedTri, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, 
 
 //----------------------------------------------\sawtooth-----------------------------------------
 
-SynthDef(\sawtooth, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\SAWWAVE, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var saw, env, lpFreq;
 
     // Genera un'onda a dente di sega
@@ -161,7 +161,7 @@ SynthDef(\sawtooth, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus
 
 //----------------------------------------------\hammondOrgan-------------------------------------------
 
-SynthDef(\hammondOrgan, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\HAMMOND, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc1, osc2, osc3, osc4, osc5, osc6, osc7, osc8, osc9, lpFreq;
 
     // Oscillatori per i nove tiranti dell'organo Hammond
@@ -193,7 +193,7 @@ SynthDef(\hammondOrgan, { |out = 0, freq = 440, amp = 1.0, gate = 1, pan = 0.0, 
 
 //--------------------------------------------\violin--------------------------------------------
 
-SynthDef(\violin, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\VIOLSYN, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc, filter, vibrato, lpFreq;
 
     // Vibrato per aggiungere realismo
@@ -215,7 +215,7 @@ SynthDef(\violin, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus =
     Out.ar(out, Pan2.ar(filter * env * amp, pan));
 }).add;
 
-SynthDef(\bassSynth2, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0, detune = 0.005|
+SynthDef(\BASSYN2, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0, detune = 0.005|
     var sig, env, osc1, osc2, filter, vibrato, lpFreq, subOsc;
 
     // Vibrato per aggiungere realismo
@@ -245,41 +245,11 @@ SynthDef(\bassSynth2, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBu
 }).add;
 
 
-SynthDef(\bassSynth3, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0, detune = 0.005|
-    var sig, env, osc1, osc2, filter, vibrato, lpFreq, subOsc;
-
-    // Vibrato per aggiungere realismo
-    vibrato = SinOsc.kr(4, 0, 0.01, 1);
-
-    // Oscillatori a dente di sega leggermente scordati con vibrato
-    osc1 = Saw.ar((freq * vibrato) + (freq * detune), 0.5);
-    osc2 = Saw.ar((freq * vibrato) - (freq * detune), 0.5);
-
-    // Oscillatore sub per aggiungere profondità
-    subOsc = Pulse.ar(freq / 2, 0.5, 0.3);
-
-    // Combina gli oscillatori
-    sig = Mix([osc1, osc2, subOsc]);
-
-    // Legge il valore del bus di controllo per la frequenza di taglio
-    lpFreq = In.kr(lpFreqBus);
-    filter = LPF.ar(sig, lpFreq);
-
-    // Inviluppo ADSR
-    env = EnvGen.ar(Env.adsr(0.01, 0.1, 0.7, 0.3), gate, doneAction: 2);
-
-    // Legge il valore del bus di controllo per l'ampiezza
-    amp = In.kr(ampBus);
-    // Uscita con panning
-    Out.ar(out, Pan2.ar(filter * env * amp, pan));
-}).add;
-
-
 
 
 //----------------------------------------------\bass----------------------------------------------
 
-SynthDef(\bass, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\BASSIMP, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc, filter, vibrato, lpFreq;
 
     // Vibrato per aggiungere realismo
@@ -303,7 +273,7 @@ SynthDef(\bass, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0,
 
 //-------------------------------------------------------------------------------------------------
 
-SynthDef(\bassSynth, { |out = 0, freq = 110, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+SynthDef(\BASSYN3, { |out = 0, freq = 110, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var sig, env, osc, filter, vibrato, subOsc, lpFreq, distortion, chorus;
 
     // Vibrato per aggiungere realismo
