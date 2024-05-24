@@ -54,7 +54,7 @@ Slider bpm, vocoderVolume;
 void setup() {
     size(925, 850);
     
-    oscP5 = new OscP5(this, 12000);
+    oscP5 = new OscP5(this, 57121);
     superCollider = new NetAddress("127.0.0.1", 57120);
 
     cp5 = new ControlP5(this);
