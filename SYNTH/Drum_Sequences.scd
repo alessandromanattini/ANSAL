@@ -1,36 +1,32 @@
-//=======================================================================================================
-//=============================================DRUM=SEQUENCIES===========================================
-//=======================================================================================================
+// =========================================================================================================
+// ============================================== DRUM SEQUENCES ===========================================
+// =========================================================================================================
 
-// Funzione per calcolare il tempo in secondi da un valore BPM
-~bpmToSeconds = { |bpm| (60 / bpm)/2 };
+(
 
-// Variabili per i Task che gestiscono le sequenze
-~drumTasks = IdentityDictionary.new;
+~bpmToSeconds = { |bpm| (60 / bpm)/2 };                                             // Function to calculate time in seconds from a BPM value
 
-// Funzione per fermare tutte le sequenze
-~stopAllSequences = {
+~drumTasks = IdentityDictionary.new;                                                // Variables for the Tasks that manage the sequences
+
+~stopAllSequences = {                                                               // Function to stop all sequences
     ~drumTasks.keysValuesDo { |key, task|
         task.stop;
         ~drumTasks[key] = nil;
     };
 };
 
-// Funzione per avviare/fermare una sequenza di batteria
-~toggleDrumSequence = { |seqName, pattern|
+~toggleDrumSequence = { |seqName, pattern|                                          // Function to start/stop a drum sequence
     if (~drumTasks[seqName].isNil or: { ~drumTasks[seqName].isPlaying.not }) {
         ~stopAllSequences.();
         ~drumTasks[seqName] = Task({
             loop {
                 pattern.do { |synthEntry|
                     if (synthEntry.isArray) {
-                        // Se synthEntry è un array, suona ogni elemento dell'array
-                        synthEntry.do { |synthName|
+                        synthEntry.do { |synthName|                                 // If synthEntry is an array, play each element of the array
                             Synth(synthName);
                         };
                     } {
-                        // Altrimenti, suona il singolo synth
-                        Synth(synthEntry);
+                        Synth(synthEntry);                                          // Otherwise, play the single synth
                     };
                     ~bpmToSeconds.(~bpmDrum).wait;
                 }
@@ -44,10 +40,11 @@
     }
 };
 
-// Sequenze di batteria ispirate ai Daft Punk
-~sequences = (
+~sequences = (                                                                      // Drum sequences
     daftPunk1: [\kick, \hihat],
     daftPunk2: [\kick, \hihat, [\snare, \kick], \hihat],
     daftPunk3: [\kick, \hihat, \kick, \snare, \kick, \hihat, \snare, \hihat],
     daftPunk4: [\kick, \clap, \hihat, \snare, \kick, \hihat, \clap, \snare]
 );
+
+)

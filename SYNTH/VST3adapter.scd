@@ -1,43 +1,37 @@
+// ======================================================================================================
+// =========================================== VOCODER ADAPTER ==========================================
+// ======================================================================================================
+(
 s.waitForBoot({
-    // Definisci il SynthDef per il vocoder
+    // ------------------------------ Creation of Synthdef for the Vocoder ------------------------------
     (
         SynthDef.new(\vsti, { arg out = 0, inBus = 0, vocAmpBus;
-            var vocAmp = In.kr(vocAmpBus, 1);  // Legge il valore del ControlBus
+            var vocAmp = In.kr(vocAmpBus, 1);                      // Reads the value from the ControlBus
             var sound = VSTPlugin.ar(In.ar(inBus, 2), 2);
             Out.ar(out, sound * vocAmp);
         }).add;
     );
-
-    // Sincronizza il server per assicurarsi che il SynthDef sia stato aggiunto
     s.sync;
 
-    // Ottieni il percorso relativo al plugin VST
+    // ----------------------------------- Loading VSTPlugin --------------------------------------------
     ~vstPath = PathName(thisProcess.nowExecutingPath).parentPath +/+ "VST3vocoder/PolyPhaseVoc2.vst3";
-
-    // Crea il Synth con il VST instrument usando il ControlBus per il volume
     ~vsti = VSTPluginController(Synth(\vsti, [\inBus, ~vocAudioInBus, \vocAmpBus, ~vocAmpBus]));
-
-    // Apri il plugin usando il percorso relativo
     ~vsti.open(~vstPath, editor: true);
 
-    // Connessione dell'input audio al bus audio e poi al plugin
+    // ------------------------------ Connecting Vocoder Input and Output -------------------------------
     ~micInput = {
-        var mic = SoundIn.ar(0); // Assumendo che il microfono sia sul canale di input 0
+        var mic = SoundIn.ar(0);                                   // microphone is on input channel 0
         Out.ar(~vocAudioInBus, mic);
     }.play;
-
-    // Routing dell'output del plugin agli altoparlanti
     ~outputProcessedSound = {
-        Out.ar(0, In.ar(~vocAudioInBus, 2)); // Assumendo un'uscita stereo
+        Out.ar(0, In.ar(~vocAudioInBus, 2));                       // Assuming a stereo output
     }.play;
-
-    // Stampa i parametri del plugin e invia una nota MIDI manualmente
     Routine({
         ~vsti.openMsg({ |plugin|
-            // Invia l'evento MIDI manualmente
+            // Sends the MIDI event manually
             ~sendNote = {
                 ~vsti.midi.noteOn(0, 60, 127);
-                2.0.wait; // Mantiene la nota attiva per 2 secondi
+                2.0.wait;                                          // Keeps note active for 2 seconds
                 ~vsti.midi.noteOff(0, 60, 0);
             };
 
@@ -46,16 +40,15 @@ s.waitForBoot({
     }).play;
 });
 
-// Variabile di stato per tenere traccia se l'editor è aperto o chiuso
-~editorOpen = false;
-
-// Funzione per alternare lo stato dell'editor
+// ------------------------------------ Vocoder Interface Management ------------------------------------
+~editorOpen = false;                                               // true if the editor is open
 ~toggleEditor = {
     if (~editorOpen) {
-        ~vsti.editor(show: false); // Nasconde l'editor del plugin
+        ~vsti.editor(show: false);                                 // Hides the plugin editor
         ~editorOpen = false;
     } {
-        ~vsti.editor(show: true); // Mostra l'editor del plugin
+        ~vsti.editor(show: true);                                  // Shows the plugin editor
         ~editorOpen = true;
     }
 };
+)

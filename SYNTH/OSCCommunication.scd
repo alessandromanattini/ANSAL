@@ -1,22 +1,18 @@
+// ============================================================================================================================
+// ============================================== SC GUI COMMUNICATION MANAGEMENT =============================================
+// ============================================================================================================================
+
 (
-// Crea un indirizzo di rete per Processing (o qualsiasi altro server OSC)
+
+// ----------------------------------------- Create a network address for Processing -----------------------------------------
+
 ~processingAddr = NetAddr("127.0.0.1", 57121);
 
-// Variabili globali per il sustain, volume e lpf
-~sustainOne = false;
-~volumeOne = 0.5;
-~lpfFreq1 = 440;
+// ---------------------------------------------------- Receiving Messages ----------------------------------------------------
 
-// ----------------------------------------------- INSTRUMENT n.1 ----------------------------------------------------
-
-// Gestore OSC per il messaggio di selezione degli strumenti
-OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|
+OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|                   // OSC handler for instrument selection message
     var instrument;
     instrument = msg[1].asString;
-
-    "Strumento n.1 selezionato: ".post; instrument.postln;
-
-    // Seleziona e avvia il synth in base allo strumento selezionato
     ~instOne = case
     { instrument == "RHODES1" } { \RHODES1 }
     { instrument == "RHODES2" } { \RHODES2 }
@@ -31,15 +27,9 @@ OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|
     { \NONE  };
 }, '/cmd_instOne');
 
-// ----------------------------------------------- INSTRUMENT n.2 ----------------------------------------------------
-
 OSCdef(\cmd_instTwo, { |msg, time, addr, recvPort|
     var instrument;
     instrument = msg[1].asString;
-
-    "Strumento n.2 selezionato: ".post; instrument.postln;
-
-    // Seleziona e avvia il synth in base allo strumento selezionato
     ~instTwo = case
     { instrument == "RHODES1" } { \RHODES1 }
     { instrument == "RHODES2" } { \RHODES2 }
@@ -55,20 +45,15 @@ OSCdef(\cmd_instTwo, { |msg, time, addr, recvPort|
     { \NONE };
 }, '/cmd_instTwo');
 
-// ----------------------------------------------------------------------------------------------------------
 
-// Gestore OSC per il mono
-OSCdef(\cmd_monoOne, { |msg|
+OSCdef(\cmd_monoOne, { |msg|                                         // OSC handler for mono
     var state;
     state = msg[1].asString;
-
     if (state == "on") {
         ~monoOne = true;
-        "Mono Strumento 1 attivato.".postln;
     } {
         if(state == "off") {
             ~monoOne = false;
-            "Mono Strumento 1 disattivato.".postln;
         };
     };
 }, '/cmd_monoOne');
@@ -79,21 +64,15 @@ OSCdef(\cmd_monoTwo, { |msg|
 
     if (state == "on") {
         ~monoTwo = true;
-        "Mono Strumento 2 attivato.".postln;
     } {
         if(state == "off") {
             ~monoTwo= false;
-            "Mono Strumento 2 disattivato.".postln;
-        } {
-            "Stato mono 2 non riconosciuto.".postln;
         };
     };
 }, '/cmd_monoTwo');
 
-// ------------------------------------------------------------------------------------------------------------------
 
-// Gestore OSC per il volume
-OSCdef(\cmd_volume1, { |msg|
+OSCdef(\cmd_volume1, { |msg|                                         // OSC handler for volume
     ~volumeOne = msg[1].asFloat;
 }, '/cmd_volume1');
 
@@ -101,10 +80,8 @@ OSCdef(\cmd_volume2, { |msg|
     ~volumeTwo = msg[1].asFloat;
 }, '/cmd_volume2');
 
-// ------------------------------------------------------------------------------------------------------------------
 
-// Gestore OSC per il filtro passa basso (LPF)
-OSCdef(\cmd_LPF1, { |msg|
+OSCdef(\cmd_LPF1, { |msg|                                            // OSC handler for low-pass filter (LPF)
     ~lpfFreq1 = msg[1].asFloat;
 }, '/cmd_LPF1');
 
@@ -112,19 +89,15 @@ OSCdef(\cmd_LPF2, { |msg|
     ~lpfFreq2 = msg[1].asFloat;
 }, '/cmd_LPF2');
 
-// ------------------------------------------------------------------------------------------------------------------
 
-// Gestore OSC per BPM sequenza percussioni
-OSCdef(\cmd_bpmDrum, { |msg|
+OSCdef(\cmd_bpmDrum, { |msg|                                         // OSC handler for BPM drum sequence
     ~bpmDrum = msg[1].asFloat;
-    ~processingAddr.sendMsg('/BPM', ~bpmDrum); // Invia messaggio OSC a Processing
+    ~processingAddr.sendMsg('/BPM', ~bpmDrum);
 }, '/cmd_bpmDrum');
 
-// ------------------------------------------------------------------------------------------------------------------
 
-// Gestore OSC per la selezione dell'ottava
-OSCdef(\cmd_octaveOne, { |msg|
-    var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
+OSCdef(\cmd_octaveOne, { |msg|                                       // OSC handler for octave selection
+    var octave = msg[1].asInt;
     switch(octave,
         0, {
             ~octaveOne = 1;
@@ -151,7 +124,7 @@ OSCdef(\cmd_octaveOne, { |msg|
 }, '/cmd_octaveOne');
 
 OSCdef(\cmd_octaveTwo, { |msg|
-    var octave = msg[1].asInt;  // Usa asInt per convertire il valore in intero
+    var octave = msg[1].asInt;
     switch(octave,
         0, {
             ~octaveTwo = 1;
@@ -177,9 +150,8 @@ OSCdef(\cmd_octaveTwo, { |msg|
     );
 }, '/cmd_octaveTwo');
 
-// ------------------------------------------------------------------------------------------------------------------
 
-OSCdef(\cmd_editorOpen, { |msg|
+OSCdef(\cmd_editorOpen, { |msg|                                      // OSC handler for the Vocoder
     ~toggleEditor.value;
 }, '/cmd_editorOpen');
 
@@ -189,7 +161,8 @@ OSCdef(\cmd_vocAmpBus, { |msg|
 	~vocoderVolume=volume;
 }, '/cmd_vocAmpBus');
 
-OSCdef(\cmd_ccPedalOne, { |msg|
+
+OSCdef(\cmd_ccPedalOne, { |msg|                                      // OSC handler for control pedal mapping
     var mode = msg[1].asString;
     switch(mode,
         "NIL", {
@@ -219,7 +192,8 @@ OSCdef(\cmd_ccPedalTwo, { |msg|
     );
 }, '/cmd_ccPedalTwo');
 
-OSCdef(\cmd_gloveX, { |msg|
+
+OSCdef(\cmd_gloveX, { |msg|                                          // OSC handler for glove mapping
     var mode = msg[1].asString;
     switch(mode,
         "NONE", {
@@ -263,7 +237,8 @@ OSCdef(\cmd_gloveY, { |msg|
     );
 }, '/cmd_gloveY');
 
-OSCdef(\cmd_currentPreset, { |msg|
+
+OSCdef(\cmd_currentPreset, { |msg|                                   // OSC handler for preset selection
     var mode = msg[1].asString;
     switch(mode,
         "INTR", {
@@ -275,57 +250,32 @@ OSCdef(\cmd_currentPreset, { |msg|
     );
 }, '/cmd_currentPreset');
 
-//_________________________________________________________________________________
+
+// ---------------------------------------------------- Sending Messages ----------------------------------------------------
+
+
 ~updateGUI = {
     var message;
 
-    ~busOne.get { |value|
-        ~processingAddr.sendMsg('/cmd_volume1', value);
-    };
-    ~busTwo.get { |value|
-        ~processingAddr.sendMsg('/cmd_volume2', value);
-    };
-    ~lowPassFilterOne.get { |value|
-        ~processingAddr.sendMsg('/cmd_LPF1', value);
-    };
-    ~lowPassFilterTwo.get { |value|
-        ~processingAddr.sendMsg('/cmd_LPF2', value);
-    };
+    ~busOne.get { |value| ~processingAddr.sendMsg('/cmd_volume1', value);};          	// Sending instrument volumes
+    ~busTwo.get { |value| ~processingAddr.sendMsg('/cmd_volume2', value);};
 
-    ~processingAddr.sendMsg('/cmd_vocAmpBus', ~vocoderVolume);
+    ~lowPassFilterOne.get { |value| ~processingAddr.sendMsg('/cmd_LPF1', value);};    	// Sending LPF cutoff frequencies
+    ~lowPassFilterTwo.get { |value| ~processingAddr.sendMsg('/cmd_LPF2', value);};
 
+    ~processingAddr.sendMsg('/cmd_currentPreset', ~currentPreset); 	                    // Sending the currently selected preset
 
-    ~processingAddr.sendMsg('/cmd_currentPreset', ~currentPreset);
-
-
-
-    ~processingAddr.sendMsg('/cmd_instOne', ~instOne);
-
-
+    ~processingAddr.sendMsg('/cmd_instOne', ~instOne);                              	// Sending selected instruments
     ~processingAddr.sendMsg('/cmd_instTwo', ~instTwo);
 
+	if(~monoOne){~processingAddr.sendMsg('/cmd_monoOne', "on".asString);}               // Sending Mono status for both instruments
+	{~processingAddr.sendMsg('/cmd_monoOne', "off".asString);};
+	if(~monoTwo){~processingAddr.sendMsg('/cmd_monoTwo', "on".asString);}
+	{~processingAddr.sendMsg('/cmd_monoTwo', "off".asString);};
 
-	if(~monoOne){
-		~processingAddr.sendMsg('/cmd_monoOne', "on".asString);
-	}{
-		~processingAddr.sendMsg('/cmd_monoOne', "off".asString);
-	};
+	~processingAddr.sendMsg('/cmd_bpmDrum', ~bpmDrum.asFloat);                          // Sending BPM of the drum
 
-
-	if(~monoTwo){
-		~processingAddr.sendMsg('/cmd_monoTwo', "on".asString);
-	}{
-		~processingAddr.sendMsg('/cmd_monoTwo', "off".asString);
-	};
-
-
-
-	~processingAddr.sendMsg('/cmd_bpmDrum', ~bpmDrum.asFloat);
-
-
-
-    // Messaggi per gloveX
-    message = if (~gloveXOne and: ~gloveXTwo) {
+    message = if (~gloveXOne and: ~gloveXTwo) {                                         // Sending current glove mapping
         "BOTH".asString;
     } {
         if (~gloveXOne) {
@@ -340,8 +290,6 @@ OSCdef(\cmd_currentPreset, { |msg|
     };
     ~processingAddr.sendMsg('/cmd_gloveX', message);
 
-
-    // Messaggi per gloveY
     message = if (~gloveYOne and: ~gloveYTwo) {
         "BOTH".asString;
     } {
@@ -355,9 +303,9 @@ OSCdef(\cmd_currentPreset, { |msg|
             };
         };
     };
-
     ~processingAddr.sendMsg('/cmd_gloveY', message);
 
+    ~processingAddr.sendMsg('/cmd_vocAmpBus', ~vocoderVolume);                          // Sending current Vocoder status
 
 	if(~editorOpen){
 		~processingAddr.sendMsg('/cmd_editorOpen', "on".asString);
@@ -366,17 +314,13 @@ OSCdef(\cmd_currentPreset, { |msg|
 		~processingAddr.sendMsg('/cmd_editorOpen', "off".asString);
 	};
 
-
-    // Messaggi per ControlPedal1
-    message = case
+    message = case                                                                      // Sending control pedal mapping
     { ~ccPedalOne == 0 } { "NIL".asString }
     { ~ccPedalOne == 1 } { "DIR".asString }
     { ~ccPedalOne == -1 } { "INV".asString }
     { "UNKNOWN" };
     ~processingAddr.sendMsg('/cmd_ccPedalOne', message);
 
-
-    // Messaggi per ControlPedal2
     message = case
     { ~ccPedalTwo == 0 } { "NIL".asString }
     { ~ccPedalTwo == 1 } { "DIR".asString }
@@ -384,8 +328,7 @@ OSCdef(\cmd_currentPreset, { |msg|
     { "UNKNOWN" };
     ~processingAddr.sendMsg('/cmd_ccPedalTwo', message);
 
-    // Messaggi per Octave1
-    message = case
+    message = case                                                                      // Sending selected octave shift
     { ~octaveOne == 1 } { 0.asInteger }
     { ~octaveOne == 2 } { 1.asInteger }
     { ~octaveOne == 4 } { 2.asInteger }
@@ -393,10 +336,9 @@ OSCdef(\cmd_currentPreset, { |msg|
     { ~octaveOne == 0.5 } { -1.asInteger }
     { ~octaveOne == 0.25 } { -2.asInteger }
     { ~octaveOne == 0.125 } { -3.asInteger }
-    { -99 }; // Valore di default per indicare un caso non riconosciuto
+    { -99 };
     ~processingAddr.sendMsg('/cmd_octaveOne', message);
 
-    // Messaggi per Octave2
     message = case
     { ~octaveTwo == 1 } { 0.asInteger }
     { ~octaveTwo == 2 } { 1.asInteger }
@@ -405,20 +347,15 @@ OSCdef(\cmd_currentPreset, { |msg|
     { ~octaveTwo == 0.5 } { -1.asInteger }
     { ~octaveTwo == 0.25 } { -2.asInteger }
     { ~octaveTwo == 0.125 } { -3.asInteger }
-    { -99 }; // Valore di default per indicare un caso non riconosciuto
+    { -99 };
     ~processingAddr.sendMsg('/cmd_octaveTwo', message);
 };
 
-// Routine per eseguire l'aggiornamento GUI a intervalli regolari
-~guiRoutine = Routine {
+~guiRoutine = Routine {                                              // Routine to perform GUI update at regular intervals
     loop {
         ~updateGUI.value;
         0.1.wait;
     }
 }.play(TempoClock.default);
-
-// Stampa il valore di ~currentPreset all'inizio
-"Valore iniziale di ~currentPreset: ".post; ~currentPreset.postln;
-
 
 )

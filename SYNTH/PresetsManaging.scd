@@ -1,4 +1,15 @@
+// ==========================================================================================================================
+// ========================================================= PRESETS ========================================================
+/* ------------------------------------------------ List of available presets ---------------------------------------------*/
+
+/*                                             INTR      DAFT     MONO    THER                                             */
+
+/* ------------------------------------------------------------------------------------------------------------------------*/
+// ==========================================================================================================================
+
 (
+// --------------------------------------------------- Presets Parameters ---------------------------------------------------
+
 ~daftPunk = (
 	currentPreset: "DAFT",
     busOne: 0.3,
@@ -20,7 +31,6 @@
     gloveYOne: true,
     gloveYTwo: false
 );
-
 
 ~intro = (
 	currentPreset: "INTR",
@@ -44,36 +54,29 @@
     gloveYTwo: false
 );
 
-// Funzione per impostare i valori dei parametri dal contenitore
+// ------------------------------------------------------- Apply Presets ----------------------------------------------------
+
 ~setModelParameters = { |preset|
 	~currentPreset = preset[\currentPreset];
 	~busOne.set(preset[\busOne]);
 	~busTwo.set(preset[\busTwo]);
 	~lowPassFilterOne.set(preset[\lowPassFilterOne]);
 	~lowPassFilterTwo.set(preset[\lowPassFilterTwo]);
-
 	~instOne = preset[\instOne];
 	~instTwo = preset[\instTwo];
 	~monoOne = preset[\monoOne];
 	~monoTwo = preset[\monoTwo];
 	~octaveOne = preset[\octaveOne];
 	~octaveTwo = preset[\octaveTwo];
-
 	~bpmDrum = preset[\bpmDrum];
-
 	~vocAmpBus.set(preset[\vocAmpBus]);
 	~vocoderVolume=preset[\vocAmpBus];
-
 	~ccPedalOne = preset[\ccPedalOne];
 	~ccPedalTwo = preset[\ccPedalTwo];
-
 	~gloveXOne = preset[\gloveXOne];
 	~gloveXTwo = preset[\gloveXTwo];
-
 	~gloveYOne = preset[\gloveYOne];
 	~gloveYTwo = preset[\gloveYTwo];
 };
 
-// Ripristina i parametri al primo preset salvato
-~setModelParameters.value(~daftPunk);
 )
