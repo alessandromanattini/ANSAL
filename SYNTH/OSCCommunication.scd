@@ -1,6 +1,6 @@
 (
 // Crea un indirizzo di rete per Processing (o qualsiasi altro server OSC)
-~processingAddr = NetAddr("127.0.0.1", 12000);
+~processingAddr = NetAddr("127.0.0.1", 57121);
 
 // Variabili globali per il sustain, volume e lpf
 ~sustainOne = false;
@@ -28,8 +28,7 @@ OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|
     { instrument == "VIOLSYN" } { \VIOLSYN }
     { instrument == "BASSYN2" } { \BASSYN2 }
     { instrument == "BASSIMP" } { \BASSIMP }
-    { instrument == "   NONE" } { nil }
-    { "Nessuno strumento selezionato.".postln; nil };
+    { \NONE  };
 }, '/cmd_instOne');
 
 // ----------------------------------------------- INSTRUMENT n.2 ----------------------------------------------------
@@ -45,15 +44,15 @@ OSCdef(\cmd_instTwo, { |msg, time, addr, recvPort|
     { instrument == "RHODES1" } { \RHODES1 }
     { instrument == "RHODES2" } { \RHODES2 }
     { instrument == "BASSYN1" } { \BASSYN1 }
+	{ instrument == "BASSYN2" } { \BASSYN2 }
+	{ instrument == "BASSYN3" } { \BASSYN3 }
     { instrument == "LEADSCR" } { \LEADSCR }
     { instrument == "TRIWAVE" } { \TRIWAVE }
     { instrument == "SAWWAVE" } { \SAWWAVE }
     { instrument == "HAMMOND" } { \HAMMOND }
     { instrument == "VIOLSYN" } { \VIOLSYN }
-    { instrument == "BASSYN2" } { \BASSYN2 }
     { instrument == "BASSIMP" } { \BASSIMP }
-    { instrument == "   NONE" } { nil }
-    { "Nessuno strumento selezionato.".postln; nil };
+    { \NONE };
 }, '/cmd_instTwo');
 
 // ----------------------------------------------------------------------------------------------------------

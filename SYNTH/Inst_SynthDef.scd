@@ -8,7 +8,7 @@
 
 
 //------------------------------------\everythingrhodes----------------------------------------------
-
+(
 SynthDef(\RHODES1, { |out = 0, freq = 440, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
     var pulse, filter, env, source, chorus, numVoices, dynamicCutoff, noteDur, globalAmp, lpFreq;
 
@@ -90,6 +90,70 @@ SynthDef(\BASSYN1, { |out = 0, freq = 440, amp = 1, gate = 1, ampBus = 0, lpFreq
     // Legge il valore del bus di controllo per l'ampiezza
     amp = In.kr(ampBus);
     Out.ar(out, Pan2.ar(Mix(pulse) * env * amp, pan));
+}).add;
+
+SynthDef(\BASSYN2, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0, detune = 0.005|
+    var sig, env, osc1, osc2, filter, vibrato, lpFreq, subOsc;
+
+    // Vibrato per aggiungere realismo
+    vibrato = SinOsc.kr(4, 0, 0.01, 1);
+
+    // Oscillatori a dente di sega leggermente scordati con vibrato
+    osc1 = Saw.ar((freq + (freq * detune)) * vibrato, 0.5);
+    osc2 = Saw.ar((freq - (freq * detune)) * vibrato, 0.5);
+
+    // Oscillatore sub per aggiungere profondità
+    subOsc = Pulse.ar(freq / 2, 0.5, 0.3);
+
+    // Combina gli oscillatori
+    sig = Mix([osc1, osc2, subOsc]);
+
+    // Legge il valore del bus di controllo per la frequenza di taglio
+    lpFreq = In.kr(lpFreqBus);
+    filter = LPF.ar(sig, lpFreq);
+
+    // Inviluppo ADSR
+    env = EnvGen.ar(Env.adsr(0.01, 0.1, 0.7, 0.3), gate, doneAction: 2);
+
+    // Legge il valore del bus di controllo per l'ampiezza
+    amp = In.kr(ampBus);
+    // Uscita con panning
+    Out.ar(out, Pan2.ar(filter * env * amp, pan));
+}).add;
+
+SynthDef(\BASSYN3, { |out = 0, freq = 110, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
+    var sig, env, osc, filter, vibrato, subOsc, lpFreq, distortion, chorus;
+
+    // Vibrato per aggiungere realismo
+    vibrato = SinOsc.kr(4, 0, 0.005, 1);
+
+    // Oscillatore a dente di sega con vibrato
+    osc = Saw.ar(freq * vibrato, 0.7);
+
+    // Oscillatore sub per rinforzare le basse frequenze
+    subOsc = Pulse.ar(freq / 2, 0.5, 0.3);
+
+    // Somma degli oscillatori
+    sig = osc + subOsc;
+
+    // Effetto chorus per dare profondità
+    chorus = CombN.ar(sig, 0.03, [0.02, 0.025], 2);
+
+    // Legge il valore del bus di controllo per la frequenza di taglio
+    lpFreq = In.kr(lpFreqBus);
+    filter = LPF.ar(chorus, lpFreq);
+
+    // Distorsione leggera per aggiungere carattere
+    distortion = tanh(filter * 2);
+
+    // Inviluppo ADSR
+    env = EnvGen.ar(Env.adsr(0.01, 0.2, 0.6, 0.4), gate, doneAction: 2);
+
+    // Legge il valore del bus di controllo per l'ampiezza
+    amp = In.kr(ampBus);
+
+    // Uscita con panning
+    Out.ar(out, Pan2.ar(distortion * env * amp, pan));
 }).add;
 
 //--------------------------------------\synchronicity-----------------------------------------------
@@ -215,34 +279,6 @@ SynthDef(\VIOLSYN, { |out = 0, freq = 440, amp = 1, gate = 1, pan = 0.0, ampBus 
     Out.ar(out, Pan2.ar(filter * env * amp, pan));
 }).add;
 
-SynthDef(\BASSYN2, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0, detune = 0.005|
-    var sig, env, osc1, osc2, filter, vibrato, lpFreq, subOsc;
-
-    // Vibrato per aggiungere realismo
-    vibrato = SinOsc.kr(4, 0, 0.01, 1);
-
-    // Oscillatori a dente di sega leggermente scordati con vibrato
-    osc1 = Saw.ar((freq + (freq * detune)) * vibrato, 0.5);
-    osc2 = Saw.ar((freq - (freq * detune)) * vibrato, 0.5);
-
-    // Oscillatore sub per aggiungere profondità
-    subOsc = Pulse.ar(freq / 2, 0.5, 0.3);
-
-    // Combina gli oscillatori
-    sig = Mix([osc1, osc2, subOsc]);
-
-    // Legge il valore del bus di controllo per la frequenza di taglio
-    lpFreq = In.kr(lpFreqBus);
-    filter = LPF.ar(sig, lpFreq);
-
-    // Inviluppo ADSR
-    env = EnvGen.ar(Env.adsr(0.01, 0.1, 0.7, 0.3), gate, doneAction: 2);
-
-    // Legge il valore del bus di controllo per l'ampiezza
-    amp = In.kr(ampBus);
-    // Uscita con panning
-    Out.ar(out, Pan2.ar(filter * env * amp, pan));
-}).add;
 
 
 
@@ -273,38 +309,7 @@ SynthDef(\BASSIMP, { |out = 0, freq = 55, amp = 1, gate = 1, pan = 0.0, ampBus =
 
 //-------------------------------------------------------------------------------------------------
 
-SynthDef(\BASSYN3, { |out = 0, freq = 110, amp = 1, gate = 1, pan = 0.0, ampBus = 0, lpFreqBus = 0|
-    var sig, env, osc, filter, vibrato, subOsc, lpFreq, distortion, chorus;
-
-    // Vibrato per aggiungere realismo
-    vibrato = SinOsc.kr(4, 0, 0.005, 1);
-
-    // Oscillatore a dente di sega con vibrato
-    osc = Saw.ar(freq * vibrato, 0.7);
-
-    // Oscillatore sub per rinforzare le basse frequenze
-    subOsc = Pulse.ar(freq / 2, 0.5, 0.3);
-
-    // Somma degli oscillatori
-    sig = osc + subOsc;
-
-    // Effetto chorus per dare profondità
-    chorus = CombN.ar(sig, 0.03, [0.02, 0.025], 2);
-
-    // Legge il valore del bus di controllo per la frequenza di taglio
-    lpFreq = In.kr(lpFreqBus);
-    filter = LPF.ar(chorus, lpFreq);
-
-    // Distorsione leggera per aggiungere carattere
-    distortion = tanh(filter * 2);
-
-    // Inviluppo ADSR
-    env = EnvGen.ar(Env.adsr(0.01, 0.2, 0.6, 0.4), gate, doneAction: 2);
-
-    // Legge il valore del bus di controllo per l'ampiezza
-    amp = In.kr(ampBus);
-
-    // Uscita con panning
-    Out.ar(out, Pan2.ar(distortion * env * amp, pan));
+SynthDef(\NONE, {
 }).add;
+)
 

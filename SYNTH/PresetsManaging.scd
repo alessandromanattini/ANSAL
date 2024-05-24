@@ -1,8 +1,8 @@
 (
 ~daftPunk = (
 	currentPreset: "DAFT",
-    busOne: 0.5,
-    busTwo: 0.5,
+    busOne: 0.3,
+    busTwo: 0.3,
     lowPassFilterOne: 3000,
     lowPassFilterTwo: 3000,
     instOne: \VIOLSYN,
@@ -13,7 +13,7 @@
     octaveTwo: 1/2,
     bpmDrum: 100,
     vocAmpBus: 0.8,
-    ccPedalOne: 1,
+    ccPedalOne: 0,
     ccPedalTwo: 1,
     gloveXOne: false,
     gloveXTwo: false,
@@ -24,8 +24,8 @@
 
 ~intro = (
 	currentPreset: "INTR",
-    busOne: 0.5,
-    busTwo: 0.5,
+    busOne: 0.3,
+    busTwo: 0.3,
     lowPassFilterOne: 3000,
     lowPassFilterTwo: 3000,
     instOne: \VIOLSYN,
@@ -37,11 +37,11 @@
     bpmDrum: 100,
     vocAmpBus: 0.0,
     ccPedalOne: 0,
-    ccPedalTwo: -1,
+    ccPedalTwo: 1,
     gloveXOne: true,
-    gloveXTwo: false,
+    gloveXTwo: true,
     gloveYOne: true,
-    gloveYTwo: true
+    gloveYTwo: false
 );
 
 // Funzione per impostare i valori dei parametri dal contenitore
