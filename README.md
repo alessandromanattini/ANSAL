@@ -3,7 +3,7 @@
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping.png)
 
 ## Supercollider Section
-![Hardware Connections](ReadmeFiles/SynthHardwareConnections.jpg)
+![Hardware Connections](ReadmeFiles/SynthHardwareConnections.png)
 
 ### Files and Descriptions
 1. **ArduinoAdapter.scd**
