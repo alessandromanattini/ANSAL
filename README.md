@@ -1,6 +1,12 @@
 # ANSAL CMLS PROJECT
-## Summary of the Vocoder and Synth functionalities
+## Summary of the functionalities
+The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. To achieve this, we have implemented the following modules:
+1. **Polyphonic MIDI Phase Vocoder (JUCE)**: This allows for the simulation of vocal harmonies, enriching the musical landscape.
+2. **Polyphonic Synthesizer**: Features numerous functionalities including mono mode, keyboard split, low-pass filter (LPF), octave shift, pitch shift, and drum sequences, which will be detailed later.
+   Note: These two instruments are interconnected. The Vocoder is accessible via the Synth interface, and the notes received by the Synth are forwarded to the Vocoder. This setup enables a single person to play both instruments effortlessly.
+3. **Guitar Effects Suite**: Enhances the guitar sound and uses pitch recognition to identify the fundamental note of the chord being played. This allows the simulation of doubling on that note, enabling a single guitarist to "play two guitars or a guitar and a bass."
 
+The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
 ## Hardware Configuration
 The hardware setup for the synth section is as follows:
@@ -16,10 +22,10 @@ The system also takes input from the hand inclination of the keyboardist. The re
 * Arduino Uno: Required to derive angle data from the accelerometer coordinates and interface the accelerometer with the system.
 
 The system components are connected as illustrated in the figure.
-![Hardware Connections](ReadmeFiles/SynthHardwareConnections.png)
+![Hardware Connections](ReadmeFiles/SynthHardwareConnections_noLab.png)
 
 ## Midi Mapping
-![Key Midi Mapping](ReadmeFiles/KeyMidiMapping.png)
+![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
 
 ## Supercollider Code Desription
 ### Files and Descriptions
