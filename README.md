@@ -1,10 +1,27 @@
 # ANSAL CMLS PROJECT
 ## Summary of the Vocoder and Synth functionalities
-![Key Midi Mapping](ReadmeFiles/KeyMidiMapping.png)
 
-## Supercollider Section
+
+## Hardware Configuration
+The hardware setup for the synth section is as follows:
+### MIDI Input Devices
+You can modify and control the system parameters using various MIDI controllers (details on how this is achieved will be provided in subsequent sections). The devices include:
+* MIDI keyboard (Arturia Minilab configured with [this preset](ReadmeFiles/MIDIMapConfig.minilabmk2)).
+* Sustain pedal.
+* Volume control pedal (not used for volume control).
+* Analog control pedal to MIDI signal adapter (I used [this one](https://beatbars.com/en/dual-to-midi.html)).
+### Hand Inclination Input
+The system also takes input from the hand inclination of the keyboardist. The reason and method for using this to aid in system control will be explained later. The necessary hardware devices are:
+* Accelerometer: Mounted on a glove to be worn while playing (I used [this one](https://wiki.dfrobot.com/Triple_Axis_Accelerometer_MMA7361_SKU_DFR0143)).
+* Arduino Uno: Required to derive angle data from the accelerometer coordinates and interface the accelerometer with the system.
+
+The system components are connected as illustrated in the figure.
 ![Hardware Connections](ReadmeFiles/SynthHardwareConnections.png)
 
+## Midi Mapping
+![Key Midi Mapping](ReadmeFiles/KeyMidiMapping.png)
+
+## Supercollider Code Desription
 ### Files and Descriptions
 1. **ArduinoAdapter.scd**
    - **Purpose:** Interfaces with Arduino to receive accelerometer data from a glove, enabling gesture-based control of synthesizer parameters.

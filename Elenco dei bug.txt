@@ -1,7 +1,0 @@
-PolyPhaseVoc2:
-** Da risolvere X **
-
-
-** Risolti ✓ **
-- Discontinuità quando si preme una nuova nota (Implementare EnvelopeGenerator).
-- Quando non si sta suonando alcuna nota e si parla nel microfono, viene comunque emessa una singola nota.
