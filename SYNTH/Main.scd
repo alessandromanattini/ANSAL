@@ -37,7 +37,7 @@ s.waitForBoot({
     "Knobs.scd".loadRelative;
     "Drum_Sequences.scd".loadRelative;
     "Drum_Midi.scd".loadRelative;
-    "ArduinoAdapter2.scd".loadRelative;
+    "ArduinoAdapter.scd".loadRelative;
     "PresetsManaging.scd".loadRelative;
     "VST3adapter.scd".loadRelative;
     "OSCCommunication.scd".loadRelative;
