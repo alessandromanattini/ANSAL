@@ -2,7 +2,7 @@
 
 #include <array>
 #include <cmath>
-#include "EnvelopeGenerator.h"  // Include the EnvelopeGenerator header
+#include "EnvelopeGenerator.h"  
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

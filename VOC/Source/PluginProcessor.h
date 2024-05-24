@@ -61,7 +61,7 @@ public:
 
 
 
-    /* ______________________________________METODI UTILI PER SLIDERS______________________________________*/
+    /* ______________________________________USEFUL METHODS FOR SLIDERS______________________________________*/
     void updateEnvelopeParameters();
     void updateCompressorParameters();
     void updatePhaseVocParameters();
@@ -104,7 +104,7 @@ private:
 
 
 
-    /* ______________________________________VARIABILI UTILI PER SLIDERS______________________________________*/
+    /* ______________________________________USEFUL VARIABLES FOR SLIDERS______________________________________*/
     // ENVELOPE GENERATOR VARIABLES
     float attack;
     float decay;

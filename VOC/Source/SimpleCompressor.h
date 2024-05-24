@@ -1,10 +1,6 @@
 /*
   ==============================================================================
-
-    SimpleCompressor.h
-    Created: 23 Apr 2024 12:31:51am
-    Author:  angel
-
+    SimpleCompressor
   ==============================================================================
 */
 
@@ -15,7 +11,7 @@
 class SimpleCompressor
 {
 public:
-    SimpleCompressor(){}
+    SimpleCompressor() {}
 
     void setThreshold(float newThreshold) { threshold = newThreshold; }
     void setRatio(float newRatio) { ratio = newRatio; }
@@ -24,17 +20,17 @@ public:
     {
         for (int i = 0; i < numSamples; ++i)
         {
-            float inputSample = input[i]*ratio;
+            float inputSample = input[i] * ratio;
             float outputSample = inputSample;
 
-            // Controllo solo se il campione supera la soglia in valore assoluto
+            // Check only if the sample exceeds the threshold in absolute value
             if (std::abs(inputSample) > threshold)
             {
                 float exceedance = std::abs(inputSample) - threshold;
                 float attenuation = exceedance * (1.0f - 1.0f / ratio);
                 outputSample = (inputSample > 0 ? 1 : -1) * (threshold + attenuation);
             }
-            // Altrimenti, lascia il campione come è se è sotto la soglia
+            // Otherwise, leave the sample as it is if it's below the threshold
             else
             {
                 outputSample = inputSample;
@@ -44,9 +40,7 @@ public:
         }
     }
 
-
-
 private:
-    float threshold; 
-    float ratio;     
+    float threshold;
+    float ratio;
 };

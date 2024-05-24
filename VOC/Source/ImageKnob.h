@@ -1,23 +1,23 @@
 #pragma once
 #include "JuceHeader.h"
 #include "BinaryData.h"
+
 class ImageKnob : public juce::Slider
 {
 public:
     ImageKnob()
     {
-        auto imageData = BinaryData::smallKnob_png;  // Sostituisci con il nome reale del file
-        auto imageSize = BinaryData::smallKnob_pngSize;  // Sostituisci con il nome reale del file
+        auto imageData = BinaryData::smallKnob_png;  // Replace with the actual file name
+        auto imageSize = BinaryData::smallKnob_pngSize;  // Replace with the actual file name
 
         juce::Image originalImage = juce::ImageFileFormat::loadFrom(imageData, (size_t)imageSize);
 
-        // Ridimensiona l'immagine in base al componente
-        auto maxDimension = 60;  // Usa una dimensione che si adatti bene al tuo componente
+        // Resize the image based on the component
+        auto maxDimension = 60;  // Use a dimension that fits your component well
         knobImage = originalImage.rescaled(maxDimension, maxDimension, juce::Graphics::highResamplingQuality);
 
-
-        setSliderStyle(RotaryVerticalDrag);  // Imposta lo stile di Slider adatto
-        setTextBoxStyle(NoTextBox, false, 0, 0);       // Nasconde la textbox, se presente
+        setSliderStyle(RotaryVerticalDrag);  // Set the appropriate Slider style
+        setTextBoxStyle(NoTextBox, false, 0, 0);  // Hide the textbox, if present
     }
 
     void paint(juce::Graphics& g) override
@@ -25,28 +25,27 @@ public:
         auto bounds = getLocalBounds();
         auto centre = bounds.getCentre();
 
-        // Calcola l'angolo di rotazione in radianti
+        // Calculate the rotation angle in radians
         auto angle = getRadians();
 
-        // Prepara una trasformazione che ruota l'immagine attorno al suo centro
+        // Prepare a transformation that rotates the image around its center
         juce::AffineTransform transform = juce::AffineTransform::rotation(angle, knobImage.getWidth() / 2.0, knobImage.getHeight() / 2.0)
             .translated(centre.getX() - knobImage.getWidth() / 2.0, centre.getY() - knobImage.getHeight() / 2.0);
 
-        // Disegna l'immagine trasformata
+        // Draw the transformed image
         g.drawImageTransformed(knobImage, transform);
     }
 
     double getRadians() const
     {
-        // Definisci l'angolo di partenza e fine in radianti (ad esempio, -135 a 135 gradi)
-        const double startAngle = -juce::MathConstants<double>::pi * 3.0 / 4.0;  // -135 gradi
-        const double endAngle = juce::MathConstants<double>::pi * 3.0 / 4.0;  // 135 gradi
+        // Define the start and end angle in radians (e.g., -135 to 135 degrees)
+        const double startAngle = -juce::MathConstants<double>::pi * 3.0 / 4.0;  // -135 degrees
+        const double endAngle = juce::MathConstants<double>::pi * 3.0 / 4.0;  // 135 degrees
 
-        // Mappa il valore dello slider ai radianti
+        // Map the slider value to radians
         auto proportion = (getValue() - getMinimum()) / (getMaximum() - getMinimum());
         return startAngle + proportion * (endAngle - startAngle);
     }
-
 
 private:
     juce::Image knobImage;

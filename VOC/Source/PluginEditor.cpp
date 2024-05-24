@@ -9,8 +9,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "SimpleCompressor.h"
-//#include "ImageKnob.h"
-
 //==============================================================================
 PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVoc2AudioProcessor& p)
     : AudioProcessorEditor(&p), audioProcessor(p)
@@ -29,8 +27,6 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVo
     juce::Font customFontKnobEnv(typeface);
     customFontKnobComp.setHeight(18);
     customFontKnobEnv.setHeight(18);
-    //customFontKnobComp.setBold(true);
-    //customFontKnobEnv.setBold(true);
 
     // font SCREEN KNOBS
     auto typeface1 = juce::Typeface::createSystemTypefaceFor(BinaryData::KronaOneRegular_ttf, BinaryData::KronaOneRegular_ttfSize);
@@ -47,8 +43,6 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVo
     screen = juce::ImageCache::getFromMemory(BinaryData::Rectangle_27_png, BinaryData::Rectangle_27_pngSize);
 
     // Load text images
-    //ratioText = juce::ImageCache::getFromMemory(BinaryData::RATIO_png, BinaryData::RATIO_pngSize);
-    //thresholdText = juce::ImageCache::getFromMemory(BinaryData::THR_png, BinaryData::THR_pngSize);
     juce::Image ansalLogo = juce::ImageCache::getFromMemory(BinaryData::ANSAL_LOGO_png, BinaryData::ANSAL_LOGO_pngSize);
     logoComponent.setImage(ansalLogo);
     addAndMakeVisible(logoComponent);
@@ -216,12 +210,6 @@ PolyPhaseVoc2AudioProcessorEditor::PolyPhaseVoc2AudioProcessorEditor(PolyPhaseVo
     addAndMakeVisible(&granuliserSlider);
     addAndMakeVisible(granuliserLabel);
     granuliserSlider.addListener(this);
-
-
-    /*prova knob image*/
-    //knob.setRange(0.0, 1.0);  // Set the knob's value range
-    //addAndMakeVisible(knob);
-    //knob.setBounds(300, 300, 150, 150);  // Position and size the knob
 
 }
 

@@ -1,3 +1,4 @@
+
 /*
   ==============================================================================
 
@@ -37,7 +38,7 @@ PolyPhaseVoc2AudioProcessor::PolyPhaseVoc2AudioProcessor()
     release = 0.3f; // Release time in seconds
 
     // Initialize default PhaseVoc parameters
-    corr_k = 0.9992f; //(direi tipo da 0.9950 a 0.9999, ma prova in tempo reale con lo slider)
+    corr_k = 0.9992f; // Correlation coefficient between old and current samples of the vocoder
 }
 
 PolyPhaseVoc2AudioProcessor::~PolyPhaseVoc2AudioProcessor()
@@ -182,8 +183,6 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         }
     }
 
-
-
     // Copy all the samples from tempBufferTot to buffer
     for (int channel = 0; channel < buffer.getNumChannels(); ++channel) {
         buffer.copyFrom(channel, 0, tempBufferTot, channel, 0, numSamples);
@@ -197,11 +196,6 @@ void PolyPhaseVoc2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         editor->pushDataToVisualiser(buffer);
     }
 }
-
-
-
-
-
 
 //==============================================================================
 bool PolyPhaseVoc2AudioProcessor::hasEditor() const
@@ -234,7 +228,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new PolyPhaseVoc2AudioProcessor();
 }
-
 
 void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) {
     if (msg.isNoteOn()) {
@@ -278,7 +271,7 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
         switch (controllerNumber) {
         case 22: {// MIDI controller 22 modifies the ratio
             setRatio(normalizedValue * 19.0f + 1.1f); // Map to ratio range 1.1 to 20.0
-            DBG("Updated ratio to: " << mappedValue);
+                DBG("Updated ratio to: " << mappedValue);
             if (ratioSlider)
                 ratioSlider->setValue(normalizedValue * 19.0f + 1.1f, juce::NotificationType::dontSendNotification);
             break;
@@ -337,12 +330,10 @@ void PolyPhaseVoc2AudioProcessor::handleMidiEvent(const juce::MidiMessage& msg) 
     }
 }
 
-
 void PolyPhaseVoc2AudioProcessor::updateCompressorParameters() {
     comp.setRatio(ratio);
     comp.setThreshold(threshold);
 }
-
 
 void PolyPhaseVoc2AudioProcessor::updateEnvelopeParameters() {
     for (int i = 0; i < maxVoices; ++i) {
@@ -352,7 +343,6 @@ void PolyPhaseVoc2AudioProcessor::updateEnvelopeParameters() {
         vocoders[i].envGen.setRelease(release);
     }
 }
-
 
 void PolyPhaseVoc2AudioProcessor::updatePhaseVocParameters() {
     for (int i = 0; i < maxVoices; ++i) {
@@ -395,11 +385,7 @@ void PolyPhaseVoc2AudioProcessor::setCorr(float newCorr) {
     updatePhaseVocParameters();
 }
 
-
 void PolyPhaseVoc2AudioProcessor::setHighPassCutoff(float newCutoff) {
     highPassCutoff = newCutoff;
     highPassFilter.setCutoffFrequency(newCutoff);
 }
-
-
-/* ____________________________________________________________________________________________________*/

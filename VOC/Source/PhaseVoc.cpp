@@ -22,33 +22,48 @@ void PhaseVocoder::initializeParameters() {
 
 void PhaseVocoder::process(const float* input, float* output, int numSamples) {
     for (int i = 0; i < numSamples; ++i) {
-        X[pos] = input[i]; // Apply envelope to input sample
+        // Store the current input sample at position 'pos' in array X
+        X[pos] = input[i];
 
+        // Initialize a temporary read position
         unsigned char rd = pos;
+        // Iterate over the lag values to update the correlation array R
         for (int lag = 0; lag < 128; lag++) {
+            // Update the autocorrelation values with a weighted average
             R[lag] = R[lag] * corr_k + (1 - corr_k) * X[pos] * X[rd];
+            // Decrement the read position, wrapping around if necessary
             if (rd > 0) --rd;
         }
 
+        // Increment the phase by the phase increment delta
         phase += delta;
+        // If the phase has completed a cycle
         if (phase < delta) {
+            // Initialize a temporary write position
             unsigned char wy = pos;
+            // Compute the scaling factor to normalize the correlation
             float scale = 1.0f / std::sqrt(R[0] + 0x1p-10f);
 
+            // Update the output array Y for the first half of the window
             for (int k = 1; k < 128; ++k, ++wy) {
                 Y[wy % 256] += R[128 - k] * window[k] * scale;
             }
+            // Update the output array Y for the second half of the window
             for (int k = 0; k < 128; ++k, ++wy) {
                 Y[wy % 256] += R[k] * window[k + 128] * scale;
             }
         }
 
-        output[i] = Y[pos] * envGen.getNextSample(); // Apply envelope to output sample
+        // Apply envelope to the current output sample and store in the output array
+        output[i] = Y[pos] * envGen.getNextSample();
+        // Reset the current position in the output array
         Y[pos] = 0.0f;
 
+        // Move to the next position, wrapping around if necessary
         pos = (pos + 1) % 256;
     }
 }
+
 
 void PhaseVocoder::setDelta(float newDelta) {
     delta = static_cast<unsigned int>(newDelta);
