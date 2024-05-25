@@ -36,7 +36,7 @@ The following steps and the class hierarchy related to audio processing are easi
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
 # Synth Module
-![Synth GUI](ReadmeFiles/SynthGUIBlock.png)
+![Synth GUI](ReadmeFiles/GUIDiagram.png)
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
 
@@ -56,6 +56,8 @@ The ~updateGUI function sends OSC messages to Processing to update the GUI with 
 
 ### Routine
 The ~guiRoutine is a loop that calls ~updateGUI every 0.1 seconds to send updates to the Processing GUI. This ensures that all parameter changes in SuperCollider are reflected in the GUI.
+
+![Synth GUI](ReadmeFiles/CommunicationDiagram.png)
 
 ## Synth Hardware Configuration
 The hardware setup for the synth module is as follows:
