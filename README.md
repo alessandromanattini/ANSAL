@@ -9,7 +9,7 @@ The aim of our project is to provide small groups of musicians with a comprehens
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
 # Vocoder Module
-![Vocoder GUI](ReadmeFiles/VocoderGUIDiagram.png)
+![Vocoder GUI](ReadmeFiles/VocoderGUIDiagramBlack.png)
 
 The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI. The operation is as follows:
 
@@ -36,7 +36,7 @@ The following steps and the class hierarchy related to audio processing are easi
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
 # Synth Module
-![Synth GUI](ReadmeFiles/VocoderGUIDiagramBlack.png)
+![Synth GUI](ReadmeFiles/GUIDiagram.png)
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
 
