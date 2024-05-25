@@ -40,25 +40,6 @@ The following steps and the class hierarchy related to audio processing are easi
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
 
-## Synth Module GUI
-The Processing code creates a graphical user interface (GUI) that allows users to control various musical parameters. These parameters are sent to SuperCollider using the Open Sound Control (OSC) protocol. SuperCollider processes these parameters to produce the corresponding audio output and can send updates back to Processing to dynamically adjust the GUI.
-
-### Processing
-The Processing code is responsible for creating the GUI, which includes buttons, sliders, and knobs for controlling various musical parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. When a user interacts with the GUI components, OSC messages are sent to SuperCollider to update the corresponding musical parameters. The functions are shown [here](ReadmeFiles/ProcessingFunctions.txt).
-
-#### OSC Communication
-The oscEvent(OscMessage theOscMessage) function handles the reception of OSC messages from SuperCollider. When an OSC message is received, the GUI components are updated accordingly.
-
-### SuperCollider
-The SuperCollider code manages the reception and processing of OSC messages sent from the Processing GUI. It also sends OSC messages back to Processing to update the GUI based on the current state of the audio parameters.
-
-The ~updateGUI function sends OSC messages to Processing to update the GUI with the current values of audio parameters. This function is periodically executed by the ~guiRoutine to ensure the GUI remains synchronized with the audio processing state.
-
-### Routine
-The ~guiRoutine is a loop that calls ~updateGUI every 0.1 seconds to send updates to the Processing GUI. This ensures that all parameter changes in SuperCollider are reflected in the GUI.
-
-![Synth GUI](ReadmeFiles/CommunicationDiagram2.png)
-
 ## Synth Hardware Configuration
 The hardware setup for the synth module is as follows:
 ### MIDI Input Devices
@@ -79,6 +60,28 @@ The system components are connected as illustrated in the figure below:
 ## Synth Functionalities
 ![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
+
+## Synth Module GUI
+The Processing code creates a graphical user interface (GUI) that allows users to control various musical parameters. These parameters are sent to SuperCollider using the Open Sound Control (OSC) protocol. SuperCollider processes these parameters to produce the corresponding audio output and can send updates back to Processing to dynamically adjust the GUI.
+
+![Synth GUI](ReadmeFiles/CommunicationDiagram2.png)
+
+### Processing
+The Processing code is responsible for creating the GUI, which includes buttons, sliders, and knobs for controlling various musical parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. When a user interacts with the GUI components, OSC messages are sent to SuperCollider to update the corresponding musical parameters. The functions are shown [here](ReadmeFiles/ProcessingFunctions.txt).
+
+#### OSC Communication
+The oscEvent(OscMessage theOscMessage) function handles the reception of OSC messages from SuperCollider. When an OSC message is received, the GUI components are updated accordingly.
+
+### SuperCollider
+The SuperCollider code manages the reception and processing of OSC messages sent from the Processing GUI. It also sends OSC messages back to Processing to update the GUI based on the current state of the audio parameters.
+
+The ~updateGUI function sends OSC messages to Processing to update the GUI with the current values of audio parameters. This function is periodically executed by the ~guiRoutine to ensure the GUI remains synchronized with the audio processing state.
+
+### Routine
+The ~guiRoutine is a loop that calls ~updateGUI every 0.1 seconds to send updates to the Processing GUI. This ensures that all parameter changes in SuperCollider are reflected in the GUI.
+
+
+
 
 
 # Guitar Module
