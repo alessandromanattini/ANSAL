@@ -116,9 +116,7 @@ This interaction is illustrated in the diagram below:
 
 ![Synth GUI](ReadmeFiles/CommunicationDiagram2.png)
 
-Below, we outline the roles of SuperCollider and
-
- Processing in managing the GUI and their communication methods.
+Below, we outline the roles of SuperCollider and Processing in managing the GUI and their communication methods.
 
 #### 2.4.1 Processing <a name="processing"></a>
 Processing generates the GUI, including buttons, sliders, and knobs for controlling parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. Excluding initialization and support functions, the code can be grouped into the following main sections:
