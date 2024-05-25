@@ -188,7 +188,7 @@ void sendPresetMessage(String preset) {
 }
 
 
-// ----------------------- RECEIVER OSC MESSAGES FUNCTIONS ----------------------------------
+// ----------------------- RECEIVE OSC MESSAGES FUNCTIONS ----------------------------------
 
 // This functions allow the GUI to change dynamically. The logic is the same for every function : 
 //Processing receive an OSC message from SC, read the message and the value contained in it,
