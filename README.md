@@ -81,11 +81,11 @@ The synthesizer offers extensive configuration and parameter customization optio
 
 Instead, I will focus on some interesting setting combinations, along with a video demonstration for each:
 
-* **Mono Bass, Drum, and Synth**: By activating keyboard split, applying a bass (octave shift -1) on the left section and another synth on the right section, you can simultaneously play a bass and a synth. The mono setting on the left side allows you to not worry about the sustain pedal release, enabling the pianist to focus on coordinating the pedal with only the right hand. Adding a drum sequence, mapping the synth's right-hand cut-off frequency with the glove or pedal, creates a very interesting effect [(video demonstration)](https://youtu.be/Q7d2GbvgGFU).
+* **Mono Bass, Drum, and Synth**: By activating keyboard split, applying a bass (octave shift -1) on the left section and another synth on the right section, you can simultaneously play a bass and a synth. The mono setting on the left side allows you to not worry about the sustain pedal release, enabling the pianist to focus on coordinating the pedal with only the right hand. Adding a drum sequence, mapping the synth's right-hand cut-off frequency with the glove or pedal, creates a very interesting effect [(video demonstration)](https://youtube.com/shorts/gCrn4zHpHQo).
 
-* **Theremin-like Setup**: Activating glove pitch bend mapping for both instruments and connecting the glove's y-control to the cut-off frequency of the higher synth and the control pedal to the cut-off frequency of the lower synth (-1 octave shift) produces unique results (video demonstration).
+* **Theremin-like Setup**: Activating glove pitch bend mapping for both instruments and connecting the glove's y-control to the cut-off frequency of the higher synth and the control pedal to the cut-off frequency of the lower synth (-1 octave shift) produces unique results [(video demonstration)](https://youtu.be/LO4PTDnikKs).
 
-* **Deep Synth**: Using settings similar to the first preset on the list but removing the keyboard split, you can achieve [this type of effect](https://www.youtube.com/watch?v=lsanD2PGECI).
+* **Deep Synth**: Using settings similar to the first preset on the list but removing the keyboard split, you can achieve [this type of effect](https://youtu.be/pK5QZlXaJGQ).
 
 **Note**: The *Keyboard Split* can be activated/deactivated as follows:
 
@@ -128,8 +128,6 @@ Processing generates the GUI, including buttons, sliders, and knobs for controll
 * **User Input Management:** The graphical interface allows users to interact with various controls. Buttons enable changing instruments, octaves, control pedal settings, accelerometers, and presets. Each button has a listener that changes its background color and sends an OSC message to SuperCollider. Sliders and knobs allow adjusting parameters such as BPM, vocoder volume, overall volume, and filter frequencies, sending the selected values to SuperCollider when modified.
 
 * **GUI Update:** The code graphically updates the user interface in each frame, drawing shapes and logos on the GUI window.
-
-The functions are detailed [here](ReadmeFiles/ProcessingFunctions.txt).
 
 #### 2.4.2 SuperCollider <a name="supercollider"></a>
 In SuperCollider, we can also divide communication management into main sections:
