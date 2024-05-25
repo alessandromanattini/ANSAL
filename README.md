@@ -1,18 +1,6 @@
 # ANSAL CMLS PROJECT
 
-## Index
-1. [Summary of the functionalities](#summary-of-the-functionalities)
-2. [Vocoder Module](#vocoder-module)
-3. [Synth Module](#synth-module)
-   1. [Synth Hardware Configuration](#synth-hardware-configuration)
-   2. [Synthesizer Features](#synthesizer-features)
-   3. [Implementation Details](#implementation-details)
-   4. [Communication between SuperCollider and Processing](#communication-between-supercollider-and-processing)
-      1. [Processing](#processing)
-      2. [SuperCollider](#supercollider)
-4. [Guitar Module](#guitar-module)
-
-## 1. Summary of the functionalities <a name="summary-of-the-functionalities"></a>
+## 0. Summary of the functionalities
 The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. To achieve this, we have implemented the following modules:
 1. **Polyphonic MIDI Phase Vocoder (JUCE)**: This allows for the simulation of vocal harmonies, enriching the musical landscape.
 2. **Polyphonic Synthesizer**: Features numerous functionalities including mono mode, keyboard split, low-pass filter (LPF), octave shift, pitch shift, and drum sequences, which will be detailed later. Note: These two instruments are interconnected. The Vocoder is accessible via the Synth interface, and the notes received by the Synth are forwarded to the Vocoder. This setup enables a single person to play both instruments effortlessly.
@@ -20,7 +8,18 @@ The aim of our project is to provide small groups of musicians with a comprehens
 
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
-## 2. Vocoder Module <a name="vocoder-module"></a>
+## Index
+1. [Vocoder Module](#vocoder-module)
+2. [Synth Module](#synth-module)
+   1. [Synth Hardware Configuration](#synth-hardware-configuration)
+   2. [Synthesizer Features](#synthesizer-features)
+   3. [Implementation Details](#implementation-details)
+   4. [Communication between SuperCollider and Processing](#communication-between-supercollider-and-processing)
+      1. [Processing](#processing)
+      2. [SuperCollider](#supercollider)
+3. [Guitar Module](#guitar-module)
+
+## 1. Vocoder Module <a name="vocoder-module"></a>
 
 The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI.
 
@@ -50,13 +49,13 @@ The following steps and the class hierarchy related to audio processing are easi
 
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
-## 3. Synth Module <a name="synth-module"></a>
+## 2. Synth Module <a name="synth-module"></a>
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
 
 ![Synth GUI](ReadmeFiles/GUIDiagramBlack.png)
 
-### 3.1 Synth Hardware Configuration <a name="synth-hardware-configuration"></a>
+### 2.1 Synth Hardware Configuration <a name="synth-hardware-configuration"></a>
 The hardware setup for the synth module is as follows:
 #### MIDI Input Devices
 You can modify and control the system parameters using various MIDI controllers (details on how this is achieved will be provided in subsequent sections). The devices include:
@@ -74,7 +73,7 @@ The system components are connected as illustrated in the figure below:
 
 ![Hardware Connections](ReadmeFiles/SynthHardwareConnections_noLab.png)
 
-### 3.2 Synthesizer Features <a name="synthesizer-features"></a>
+### 2.2 Synthesizer Features <a name="synthesizer-features"></a>
 The synthesizer offers extensive configuration and parameter customization options. The list of functionalities is detailed in the GUI picture at the beginning of the Synth chapter and in the MIDI mapping diagram provided below, so for brevity, I will not re-list them here.
 
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
@@ -92,7 +91,7 @@ Instead, I will focus on some interesting setting combinations, along with a vid
 * By clicking on knob 1 (top left on the Arturia), the "split selection" mode is activated. In this mode, the system waits for you to press a note. Once done, that note becomes the split point between the left and right sections of the keyboard.
 * To remove the keyboard split, press knob 1 again. Now, both instruments will play simultaneously across the entire keyboard range.
 
-### 3.3 Implementation Details <a name="implementation-details"></a>
+### 2.3 Implementation Details <a name="implementation-details"></a>
 To implement the system, we aimed to separate functionalities into distinct modules and files as much as possible. This approach ensures independent operation, improving maintainability and code reusability. As shown in the diagram below:
 
 * **Blue Modules**: Manage the rhythmic section, handling MIDI inputs, defining the sounds to be played, and setting up percussion sequences.
@@ -103,7 +102,7 @@ To implement the system, we aimed to separate functionalities into distinct modu
 
 ![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 
-### 3.4 Communication between SuperCollider and Processing <a name="communication-between-supercollider-and-processing"></a>
+### 2.4 Communication between SuperCollider and Processing <a name="communication-between-supercollider-and-processing"></a>
 
 Processing creates a graphical user interface (GUI) that allows users to control musical parameters, which are sent to SuperCollider via the Open Sound Control (OSC) protocol. SuperCollider processes these inputs to produce audio and can send updates back to Processing for dynamic GUI adjustments.
 
@@ -115,7 +114,7 @@ Below, we outline the roles of SuperCollider and
 
  Processing in managing the GUI and their communication methods.
 
-#### 3.4.1 Processing <a name="processing"></a>
+#### 2.4.1 Processing <a name="processing"></a>
 Processing generates the GUI, including buttons, sliders, and knobs for controlling parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. Excluding initialization and support functions, the code can be grouped into the following main sections:
 
 * **Communication Management with SuperCollider:**
@@ -128,7 +127,7 @@ Processing generates the GUI, including buttons, sliders, and knobs for controll
 
 The functions are detailed [here](ReadmeFiles/ProcessingFunctions.txt).
 
-#### 3.4.2 SuperCollider <a name="supercollider"></a>
+#### 2.4.2 SuperCollider <a name="supercollider"></a>
 In SuperCollider, we can also divide communication management into main sections:
 
 * **Receiving OSC Messages:** The code handles receiving OSC messages from Processing via OSCdef, which defines various handlers to process the received messages. These handlers update corresponding variables based on the messages received. They manage different aspects such as instrument selection, mono control, volume, low-pass filter, drum sequence BPM, octave selection, vocoder management, control pedal and glove mapping, and preset selection.
@@ -137,5 +136,5 @@ In SuperCollider, we can also divide communication management into main sections
 
 * **GUI Update Routine:** The ~guiRoutine ensures that the GUI is always synchronized with the current parameter states by executing the ~updateGUI function every 0.1 seconds.
 
-## 4. Guitar Module <a name="guitar-module"></a>
+## 3. Guitar Module <a name="guitar-module"></a>
 ![Guitar GUI](ReadmeFiles/GuitarGUIscheme.png)
