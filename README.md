@@ -128,4 +128,4 @@ In SuperCollider, we can also divide communication management into main sections
 
 
 # Guitar Module
-![Guitar GUI](ReadmeFiles/GuitarGUI.png)
+![Guitar GUI](ReadmeFiles/GuitarGUIscheme.png)
