@@ -54,15 +54,12 @@
             }
         },
         22, {                                                      // ratio
-            val.postln;
             ~vsti.midi.control(0, 22, val);
         },
         23, {                                                      // corr_k
-            val.postln;
             ~vsti.midi.control(0, 23, val);
         },
         24, {                                                      // highPassCutoff
-            val.postln;
             ~vsti.midi.control(0, 24, val);
         },
         26, {                                                      // attack

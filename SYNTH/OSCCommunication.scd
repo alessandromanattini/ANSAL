@@ -244,6 +244,12 @@ OSCdef(\cmd_currentPreset, { |msg|                                   // OSC hand
         "INTR", {
             ~setModelParameters.value(~intro);
         },
+		"MONO", {
+            ~setModelParameters.value(~mono);
+        },
+		"THER", {
+            ~setModelParameters.value(~ther);
+        },
         "DAFT", {
             ~setModelParameters.value(~daftPunk);
         };

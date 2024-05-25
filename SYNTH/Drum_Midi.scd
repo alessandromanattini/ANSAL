@@ -18,9 +18,9 @@ MIDIdef.cc(\midiDrumOn, { |val, num, chan, src|
         { num == 112 } { ~toggleDrumSequence.(\daftPunk2, ~sequences[\daftPunk2]);}
         { num == 113 } { ~toggleDrumSequence.(\daftPunk3, ~sequences[\daftPunk3]);}
         { num == 114 } { ~toggleDrumSequence.(\daftPunk4, ~sequences[\daftPunk4]);}
-		{ num == 114 } { }
-        { num == 116 && (val > 0) } { ~setModelParameters.value(~intro);}
-        { num == 117 && (val > 0) } { ~setModelParameters.value(~daftPunk);}
+		{ num == 115 && (val > 0) } {}
+        { num == 116 && (val > 0) } { ~changePreset.value("-"); }
+        { num == 117 && (val > 0) } { ~changePreset.value("+"); }
     }
 }, chan: 0);
 

@@ -19,7 +19,7 @@ String[] instruments = {"NONE", "RHODES1", "RHODES2", "BASSYN1", "BASSYN2", "BAS
 int[] octaves = {0, 1, 2, 3, -3, -2, -1};
 String[] controlPedal = {"NIL", "DIR", "INV"};
 String[] accelerometer = {"NONE", "INS 1", "INS 2", "BOTH"};
-String[] presets = {"INTR", "DAFT"};
+String[] presets = {"INTR", "DAFT", "THER","MONO"};
 
 int currentInstrumentIndex1 = 0;
 Textlabel instrumentLabel1;
