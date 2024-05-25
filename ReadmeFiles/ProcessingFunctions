@@ -1,0 +1,305 @@
+// --------------------------------- SEND OSC MESSAGES FUNCTIONS -------------------------------------------
+
+// These functions allow you to change the sound by changing the value from the GUI. When a parameter changes, these functions send an OSC
+//  message to SC with the chosen value.
+
+// This function sends an OSC message to SC with the selected first instrument
+void sendInstrument1Message(String instrument1) {
+    if (instrument1 != null && instrument1.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_instOne");
+        msg.add(instrument1);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Instrument1 = " + instrument1);
+    } else {
+        println("Errore: Instrument1 non è valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected second instrument
+void sendInstrument2Message(String instrument2) {
+    if (instrument2 != null && instrument2.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_instTwo");
+        msg.add(instrument2);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Instrument2 = " + instrument2);
+    } else {
+        println("Errore: Instrument2 non è valido");
+    }
+}
+
+// This function sends an OSC message to SC with the mono 1 state
+void sendMono1Message(String state) {
+    if (state != null && (state.equals("on") || state.equals("off"))) {
+        OscMessage msg = new OscMessage("/cmd_monoOne");
+        msg.add(state);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Mono 1 = " + state);
+    } else {
+        println("Errore: Stato Mono 1 non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the mono 2 state
+void sendMono2Message(String state) {
+    if (state != null && (state.equals("on") || state.equals("off"))) {
+        OscMessage msg = new OscMessage("/cmd_monoTwo");
+        msg.add(state);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Mono 2 = " + state);
+    } else {
+        println("Errore: Stato Mono 2 non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the volume value of the first instrument
+void sendVolume1Message(float value) {
+    OscMessage msg = new OscMessage("/cmd_volume1");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: Volume1 = " + value);
+}
+
+// This function sends an OSC message to SC with the volume value of the second instrument
+void sendVolume2Message(float value) {
+    OscMessage msg = new OscMessage("/cmd_volume2");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: Volume2 = " + value);
+}
+
+// This function sends an OSC message to SC with the LPF value of the first instrument
+void sendLPF1Message(float value) {
+    OscMessage msg = new OscMessage("/cmd_LPF1");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: LPF1 = " + value);
+}
+
+// This function sends an OSC message to SC with the LPF value of the second instrument
+void sendLPF2Message(float value) {
+    OscMessage msg = new OscMessage("/cmd_LPF2");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: LPF2 = " + value);
+}
+
+// This function sends an OSC message to SC with the BPM value 
+void sendBPMMessage(float value) {
+    OscMessage msg = new OscMessage("/cmd_bpmDrum");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: BPM = " + value);
+}
+
+// This function sends an OSC message to SC with the vocoder's volume value
+void sendVocoderVolumeMessage(float value) {
+    OscMessage msg = new OscMessage("/cmd_vocAmpBus");
+    msg.add(value);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: Vocoder Volume = " + value);
+}
+
+// This function sends an OSC message to SC with the Vocoder's GUI state
+void sendGUIMessage(String state) {
+    if (state != null && (state.equals("on") || state.equals("off"))) {
+        OscMessage msg = new OscMessage("/cmd_editorOpen");
+        msg.add(state);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: GUI Vocoder = " + state);
+    } else {
+        println("Errore: Stato GUI non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected octave of the first instrument
+void sendOctave1Message(int octave1) {
+    OscMessage msg = new OscMessage("/cmd_octaveOne");
+    msg.add(octave1);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: Octave 1 = " + octave1);
+}
+
+// This function sends an OSC message to SC with the selected octave of the second instrument
+void sendOctave2Message(int octave2) {
+    OscMessage msg = new OscMessage("/cmd_octaveTwo");
+    msg.add(octave2);
+    oscP5.send(msg, superCollider);
+    println("Messaggio OSC inviato a SuperCollider: Octave 2 = " + octave2);
+}
+
+// This function sends an OSC message to SC with the selected control pedal of the first instrument
+void sendControlPedal1Message(String controlPedal1) {
+    if (controlPedal1 != null && controlPedal1.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_ccPedalOne");
+        msg.add(controlPedal1);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Control Pedal 1 = " + controlPedal1);
+    } else {
+        println("Errore: Control Pedal 1 non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected control pedal of the second instrument
+void sendControlPedal2Message(String controlPedal2) {
+    if (controlPedal2 != null && controlPedal2.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_ccPedalTwo");
+        msg.add(controlPedal2);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Control Pedal 2 = " + controlPedal2);
+    } else {
+        println("Errore: Control Pedal 2 non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected X axis parameter of the accelerometer
+void sendAccelerometerXMessage(String accelerometerX) {
+    if (accelerometerX != null && accelerometerX.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_gloveX");
+        msg.add(accelerometerX);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Accelerometer X = " + accelerometerX);
+    } else {
+        println("Errore: Accelerometer X non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected Y axis parameter of the accelerometer
+void sendAccelerometerYMessage(String accelerometerY) {
+    if (accelerometerY != null && accelerometerY.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_gloveY");
+        msg.add(accelerometerY);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Accelerometer Y = " + accelerometerY);
+    } else {
+        println("Errore: Accelerometer Y non valido");
+    }
+}
+
+// This function sends an OSC message to SC with the selected preset
+void sendPresetMessage(String preset) {
+    if (preset != null && preset.length() > 0) {
+        OscMessage msg = new OscMessage("/cmd_currentPreset");
+        msg.add(preset);
+        oscP5.send(msg, superCollider);
+        println("Messaggio OSC inviato a SuperCollider: Preset = " + preset);
+    } else {
+        println("Errore: Preset non valido");
+    }
+}
+
+
+// ----------------------- RECEIVER OSC MESSAGES FUNCTIONS ----------------------------------
+
+// This functions allow the GUI to change dynamically. The logic is the same for every function : 
+//Processing receive an OSC message from SC, read the message and the value contained in it,
+// and set the value in the GUI component in order to change it.
+
+// This is useful when you move a knob/fader and when you change the preset.
+
+void oscEvent(OscMessage theOscMessage) {
+    String addr = theOscMessage.addrPattern();
+    println("Messaggio OSC ricevuto: " + addr);
+    
+    if (addr.equals("/cmd_volume1")) {
+        float value = theOscMessage.get(0).floatValue();
+        volume1Knob.setValue(value);
+        println("Ricevuto volume1: " + value);
+        
+    } else if (addr.equals("/cmd_volume2")) {
+        float value = theOscMessage.get(0).floatValue();
+        volume2Knob.setValue(value);
+        println("Ricevuto volume2: " + value);
+        
+    } else if (addr.equals("/cmd_LPF1")) {
+        float value = theOscMessage.get(0).floatValue();
+        lpf1Knob.setValue(value);
+        println("Ricevuto LPF1: " + value);
+        
+    } else if (addr.equals("/cmd_LPF2")) {
+        float value = theOscMessage.get(0).floatValue();
+        lpf2Knob.setValue(value);
+        println("Ricevuto LPF2: " + value);
+        
+    } else if (addr.equals("/cmd_bpmDrum")) {
+        float value = theOscMessage.get(0).floatValue();
+        bpm.setValue(value);
+        println("Ricevuto BPM: " + value);
+        
+    } else if (addr.equals("/cmd_vocAmpBus")) {
+        float value = theOscMessage.get(0).floatValue();
+        vocoderVolume.setValue(value);
+        println("Ricevuto Vocoder Volume: " + value);
+        
+    } else if (addr.equals("/cmd_instOne")) {
+        String instrument1 = theOscMessage.get(0).stringValue();
+        currentInstrumentIndex1 = findInstrumentIndex(instrument1);
+        instrumentLabel1.setText(instruments[currentInstrumentIndex1]);
+        println("Ricevuto Instrument 1: " + instrument1);
+        
+    } else if (addr.equals("/cmd_instTwo")) {
+        String instrument2 = theOscMessage.get(0).stringValue();
+        currentInstrumentIndex2 = findInstrumentIndex(instrument2);
+        instrumentLabel2.setText(instruments[currentInstrumentIndex2]);
+        println("Ricevuto Instrument 2: " + instrument2);
+        
+    } else if (addr.equals("/cmd_octaveOne")) {
+        int octave1 = theOscMessage.get(0).intValue();
+        currentOctaveIndex1 = findOctaveIndex(octave1);
+        currentOctaveLabel1.setText(str(octaves[currentOctaveIndex1]));
+        println("Ricevuto Octave 1: " + octave1);
+        
+    } else if (addr.equals("/cmd_octaveTwo")) {
+        int octave2 = theOscMessage.get(0).intValue();
+        currentOctaveIndex2 = findOctaveIndex(octave2);
+        currentOctaveLabel2.setText(str(octaves[currentOctaveIndex2]));
+        println("Ricevuto Octave 2: " + octave2);
+        
+    } else if (addr.equals("/cmd_ccPedalOne")) {
+        String controlPedal1 = theOscMessage.get(0).stringValue();
+        currentPedalIndex1 = findControlPedalIndex(controlPedal1);
+        currentPedalLabel1.setText(controlPedal[currentPedalIndex1]);
+        println("Ricevuto Control Pedal 1: " + controlPedal1);
+        
+    } else if (addr.equals("/cmd_ccPedalTwo")) {
+        String controlPedal2 = theOscMessage.get(0).stringValue();
+        currentPedalIndex2 = findControlPedalIndex(controlPedal2);
+        currentPedalLabel2.setText(controlPedal[currentPedalIndex2]);
+        println("Ricevuto Control Pedal 2: " + controlPedal2);
+        
+    } else if (addr.equals("/cmd_gloveX")) {
+        String accelerometerX = theOscMessage.get(0).stringValue();
+        currentXIndex = findAccelerometerIndex(accelerometerX);
+        currentXLabel.setText(accelerometer[currentXIndex]);
+        println("Ricevuto Accelerometer X: " + accelerometerX);
+        
+    } else if (addr.equals("/cmd_gloveY")) {
+        String accelerometerY = theOscMessage.get(0).stringValue();
+        currentYIndex = findAccelerometerIndex(accelerometerY);
+        currentYLabel.setText(accelerometer[currentYIndex]);
+        println("Ricevuto Accelerometer Y: " + accelerometerY);
+        
+    } else if (addr.equals("/cmd_monoOne")) {
+        String state = theOscMessage.get(0).stringValue();
+        mono1On = state.equals("on");
+        println("Ricevuto Mono 1: " + state);
+        cp5.getController("Mono1").setColorBackground(mono1On ? color(0, 205, 70) : color(124, 18, 18));
+        
+    } else if (addr.equals("/cmd_monoTwo")) {
+        String state = theOscMessage.get(0).stringValue();
+        mono2On = state.equals("on");
+        println("Ricevuto Mono 2: " + state);
+        cp5.getController("Mono2").setColorBackground(mono2On ? color(0, 205, 70) : color(124, 18, 18));
+        
+    } else if (addr.equals("/cmd_editorOpen")) {
+        String state = theOscMessage.get(0).stringValue();
+        guiOn = state.equals("on");
+        println("Ricevuto Gui Vocoder: " + state);  
+        cp5.getController("GUI").setColorBackground(guiOn ? color(0, 205, 70) : color(124, 18, 18));
+        
+    } else if (addr.equals("/cmd_currentPreset")) {
+        String preset = theOscMessage.get(0).stringValue();
+        currentPresetIndex = findPresetIndex(preset);
+        currentPresetLabel.setText(presets[currentPresetIndex]);
+        println("Ricevuto Preset: " + preset);
+    }
+}
