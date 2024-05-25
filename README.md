@@ -91,24 +91,37 @@ To implement the system, we aimed to separate functionalities into distinct modu
 
 ![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 
-## Synth Module GUI
-The Processing code creates a graphical user interface (GUI) that allows users to control various musical parameters. These parameters are sent to SuperCollider using the Open Sound Control (OSC) protocol. SuperCollider processes these parameters to produce the corresponding audio output and can send updates back to Processing to dynamically adjust the GUI.
+## Communication between SuperCollider and Processing
+
+Processing creates a graphical user interface (GUI) that allows users to control musical parameters, which are sent to SuperCollider via the Open Sound Control (OSC) protocol. SuperCollider processes these inputs to produce audio and can send updates back to Processing for dynamic GUI adjustments.
+
+This interaction is illustrated in the diagram below:
 
 ![Synth GUI](ReadmeFiles/CommunicationDiagram2.png)
 
-### Processing
-The Processing code is responsible for creating the GUI, which includes buttons, sliders, and knobs for controlling various musical parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. When a user interacts with the GUI components, OSC messages are sent to SuperCollider to update the corresponding musical parameters. The functions are shown [here](ReadmeFiles/ProcessingFunctions.txt).
+Below, we outline the roles of SuperCollider and Processing in managing the GUI and their communication methods.
 
-#### OSC Communication
-The oscEvent(OscMessage theOscMessage) function handles the reception of OSC messages from SuperCollider. When an OSC message is received, the GUI components are updated accordingly.
+### Processing
+Processing generates the GUI, including buttons, sliders, and knobs for controlling parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. Excluding initialization and support functions, the code can be grouped into the following main sections:
+
+* **Communication Management with SuperCollider:**
+   * *Sending OSC Messages*: the code handles sending OSC messages to SuperCollider to communicate various parameters. Functions send the names of selected instruments, control parameters such as mono status, volume, low-pass filter (LPF) frequency, BPM, vocoder volume, and the state of the graphical user interface (GUI). Additionally, they send selected octaves and accelerometer values.
+   * *Receiving OSC Messages*: When OSC messages are received from SuperCollider, the graphical interface updates accordingly. This includes updating knobs, sliders, and labels with received values and control statuses, such as the mono and GUI buttons.
+
+* **User Input Management:** the graphical interface allows users to interact with various controls. Buttons enable changing instruments, octaves, control pedal settings, accelerometers, and presets. Each button has a listener that changes its background color and sends an OSC message to SuperCollider. Sliders and knobs allow adjusting parameters such as BPM, vocoder volume, overall volume, and filter frequencies, sending the selected values to SuperCollider when modified.
+
+* **GUI Update:** the code graphically updates the user interface in each frame, drawing shapes and logos on the GUI window.
+
+The functions are detailed [here](ReadmeFiles/ProcessingFunctions.txt).
 
 ### SuperCollider
-The SuperCollider code manages the reception and processing of OSC messages sent from the Processing GUI. It also sends OSC messages back to Processing to update the GUI based on the current state of the audio parameters.
+In SuperCollider, we can also divide communication management into main sections:
 
-The ~updateGUI function sends OSC messages to Processing to update the GUI with the current values of audio parameters. This function is periodically executed by the ~guiRoutine to ensure the GUI remains synchronized with the audio processing state.
+* **Receiving OSC Messages:** the code handles receiving OSC messages from Processing via OSCdef, which defines various handlers to process the received messages. These handlers update corresponding variables based on the messages received. They manage different aspects such as instrument selection, mono control, volume, low-pass filter, drum sequence BPM, octave selection, vocoder management, control pedal and glove mapping, and preset selection.
 
-### Routine
-The ~guiRoutine is a loop that calls ~updateGUI every 0.1 seconds to send updates to the Processing GUI. This ensures that all parameter changes in SuperCollider are reflected in the GUI.
+* **Sending OSC Messages:** the ~updateGUI function sends OSC messages to Processing to keep the GUI updated. This function sends information about instrument volumes, low-pass filter cut-off frequencies, selected preset, selected instruments, mono status, drum sequence BPM, current glove status, vocoder volume, vocoder editor status, control pedal mapping, and selected octaves.
+
+* **GUI Update Routine:** the ~guiRoutine ensures that the GUI is always synchronized with the current parameter states by executing the ~updateGUI function every 0.1 seconds.
 
 
 
