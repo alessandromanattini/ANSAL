@@ -10,6 +10,18 @@ The functionalities of the modules can be modified either through the graphical 
 
 # Vocoder Module
 ![Vocoder GUI](ReadmeFiles/VocoderGUI.png)
+
+The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI. The operation is as follows:
+
+1. **Audio Input**: The audio enters through the microphone input into the PluginProcessor. Here, it is normalized (using the SimpleCompressor class) to ensure a stable input signal level.
+2. **Audio and MIDI Processing**: The processBlock reads the incoming audio buffer and MIDI input. For each MIDI note read, it activates one of the K voices and assigns it to process the audio buffer at the specific MIDI note frequency.
+3. **Voice Processing**: Each vocoder voice (PhaseVoc class) processes the audio buffer using the following formula:
+   ...
+4. **Envelope Application**: To ensure the notes have a pleasant envelope, PhaseVoc applies methods from the EnvelopeGenerator class to the processed audio. Once this is done, it returns the buffer containing the processed result to PluginProcessor.
+5. **High-Pass Filtering**: Before outputting the audio, PluginProcessor applies a High-Pass Filter (HighPassFilter class) to the outgoing audio to remove the lowest frequencies and enhance audio intelligibility if necessary.
+
+The following steps and the class hierarchy related to audio processing are easily deducible from the following diagram:
+
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
 # Synh Module
@@ -27,7 +39,7 @@ The system also takes input from the hand inclination of the keyboardist. The re
 * Accelerometer: Mounted on a glove to be worn while playing (I used [this one](https://wiki.dfrobot.com/Triple_Axis_Accelerometer_MMA7361_SKU_DFR0143)).
 * Arduino Uno: Required to derive angle data from the accelerometer coordinates and interface the accelerometer with the system.
 
-The system components are connected as illustrated in the figure.
+The system components are connected as illustrated in the figure below:
 ![Hardware Connections](ReadmeFiles/SynthHardwareConnections_noLab.png)
 
 ## Midi Mapping
