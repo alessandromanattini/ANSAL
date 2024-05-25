@@ -15,4 +15,4 @@ Here is an overview of the functions:
 8) **OSCCommunication** : sets up OSC (Open Sound Control) communication for managing instruments, volume, low-pass filters, mono mode, BPM, and octave selection and more.
 9) **Main** : configures the SuperCollider server for a session by setting up various parameters, loading necessary resources, and initializing the required buses and state variables. It ensures that the environment is ready for processing audio and control data received from external interfaces like MIDI devices and the Arduino.
 10) **ArduinoAdapter** : handles serial communication between SuperCollider and an Arduino. It processes pitch and roll data from the Arduino to control musical parameters.
-11) **Presetmanaging** : defines various presets for the music control interface, specifying parameters for each preset and providing a function to apply these presets.
+11) **PresetManaging** : defines various presets for the music control interface, specifying parameters for each preset and providing a function to apply these presets.
