@@ -180,3 +180,4 @@ The system components are connected as illustrated in the figure.
       ```
 
 # Guitar Module
+![Guitar GUI](ReadmeFiles/GuitarGUI.png)
