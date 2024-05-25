@@ -36,7 +36,7 @@ The following steps and the class hierarchy related to audio processing are easi
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
 # Synth Module
-![Synth GUI](ReadmeFiles/GUIDiagram.png)
+![Synth GUI](ReadmeFiles/GUIDiagramBlack.png)
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
 
