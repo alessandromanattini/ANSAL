@@ -16,7 +16,9 @@ The polyphonic vocoder implemented in this project is a K-voice polyphonic vocod
 1. **Audio Input**: The audio enters through the microphone input into the PluginProcessor. Here, it is normalized (using the SimpleCompressor class) to ensure a stable input signal level.
 2. **Audio and MIDI Processing**: The processBlock reads the incoming audio buffer and MIDI input. For each MIDI note read, it activates one of the K voices and assigns it to process the audio buffer at the specific MIDI note frequency.
 3. **Voice Processing**: Each vocoder voice (PhaseVoc class) processes the audio buffer using the following "leaky autocorrelation" formula:
-   $$ R_{l,n} = (1 - k) R_{l,n-1} + k x_n x_{n-l} $$
+
+$$ R_{l,n} = (1 - k) R_{l,n-1} + k x_n x_{n-l} $$
+
    Where: 
    - **$R_{l,n}$**: Leaky autocorrelation at lag $l$ and time $n$.
    - **$R_{l,n-1}$**: Leaky autocorrelation at lag $l$ and previous time step $n-1$.
