@@ -8,8 +8,14 @@ The aim of our project is to provide small groups of musicians with a comprehens
 
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
-## Hardware Configuration
-The hardware setup for the synth section is as follows:
+# Vocoder Module
+![Vocoder GUI](ReadmeFiles/VocoderGUI.png)
+![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
+
+# Synh Module
+![Synth GUI](ReadmeFiles/SynthGUI.png)
+## Synth Hardware Configuration
+The hardware setup for the synth module is as follows:
 ### MIDI Input Devices
 You can modify and control the system parameters using various MIDI controllers (details on how this is achieved will be provided in subsequent sections). The devices include:
 * MIDI keyboard (Arturia Minilab configured with [this preset](ReadmeFiles/MIDIMapConfig.minilabmk2)).
@@ -172,3 +178,5 @@ The system components are connected as illustrated in the figure.
       VSTPlugin.search(s);
       ~vocoder = VSTPluginController.new(s, "path/to/vocoder.vst3");
       ```
+
+# Guitar Module
