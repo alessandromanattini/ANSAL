@@ -1,7 +1,7 @@
 # SYNTH
 
 ## Overview
-In this part there is the implementation of **SuperCollider** and **Processing**. 
+In this part there is the implementation of **SuperCollider**.
 
 ## SuperCollider
 Here is an overview of the functions:
@@ -13,5 +13,6 @@ Here is an overview of the functions:
 6) **Knobs** : provides a comprehensive system for controlling synthesizer parameters in SuperCollider using MIDI control changes, with real-time updates to the Processing GUI via OSC messages. It includes functionality for capturing key split points, managing volumes, and low-pass filter cutoffs for two instruments, as well as handling control pedal inputs.
 7) **Midi_Init** : initializes the MIDI system, connects all available MIDI devices, and provides options for debugging incoming MIDI messages.
 8) **OSCCommunication** : sets up OSC (Open Sound Control) communication for managing instruments, volume, low-pass filters, mono mode, BPM, and octave selection and more.
-9) **Main** : configures and initializes a SuperCollider server with custom settings for buffer sizes, memory allocation, sample rate, and latency. It then loads various configuration files and SynthDefs necessary for the project, which include definitions for instruments and drum sounds. Buses are created and initialized for controlling parameters such as volume and low-pass filters for two instruments. The script sets up dictionaries for tracking active notes and states for sustain, instrument selection, mono modes, and octave settings. Additionally, it establishes initial values for control pedal states and BPM for drum sequences. Finally, the script manually sets some initial values for octave, mono mode, control pedal state, and the instruments selected for the setup. This comprehensive initialization ensures that all components are ready for real-time audio processing and interaction.
-
+9) **Main** : configures the SuperCollider server for a session by setting up various parameters, loading necessary resources, and initializing the required buses and state variables. It ensures that the environment is ready for processing audio and control data received from external interfaces like MIDI devices and the Arduino.
+10) **ArduinoAdapter** : handles serial communication between SuperCollider and an Arduino. It processes pitch and roll data from the Arduino to control musical parameters.
+11) **Presetmanaging** : defines various presets for the music control interface, specifying parameters for each preset and providing a function to apply these presets.
