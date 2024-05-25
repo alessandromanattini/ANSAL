@@ -27,6 +27,7 @@ $$ R_{l,n} = (1 - k) R_{l,n-1} + k x_n x_{n-l} $$
    - **$k$**: Leakiness constant, typically around $0.001$.
 
   This formula balances past autocorrelation values with new data, allowing the vocoder to adapt to changes in the speech signal over time.
+  
 4. **Envelope Application**: To ensure the notes have a pleasant envelope, PhaseVoc applies methods from the EnvelopeGenerator class to the processed audio. Once this is done, it returns the buffer containing the processed result to PluginProcessor.
 5. **High-Pass Filtering**: Before outputting the audio, PluginProcessor applies a High-Pass Filter (HighPassFilter class) to the outgoing audio to remove the lowest frequencies and enhance audio intelligibility if necessary.
 
