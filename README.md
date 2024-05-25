@@ -9,7 +9,7 @@ The aim of our project is to provide small groups of musicians with a comprehens
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
 # Vocoder Module
-![Vocoder GUI](ReadmeFiles/VocoderGUI.png)
+![Vocoder GUI](ReadmeFiles/VocoderGUIDiagram.png)
 
 The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI. The operation is as follows:
 
