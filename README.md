@@ -14,7 +14,8 @@ The functionalities of the modules can be modified either through the graphical 
    1. [Synth Hardware Configuration](#synth-hardware-configuration)
    2. [Synthesizer Features](#synthesizer-features)
    3. [Implementation Details](#implementation-details)
-   4. [Communication between SuperCollider and Processing](#communication-between-supercollider-and-processing)
+   4. [Interaction with Accelerometer and Arduino](#arduino)
+   5. [Communication between SuperCollider and Processing](#communication-between-supercollider-and-processing)
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
 3. [Guitar Module](#guitar-module)
@@ -102,7 +103,12 @@ To implement the system, we aimed to separate functionalities into distinct modu
 
 ![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 
-### 2.4 Communication between SuperCollider and Processing <a name="communication-between-supercollider-and-processing"></a>
+### 2.4 Interaction with Accelerometer and Arduino <a name="arduino"></a>
+
+Regarding the implementation of the glove, the input management is almost entirely handled in SuperCollider. However, the data received in SuperCollider is not the raw 3-axis accelerometer data. The accelerometer detects acceleration along the three Cartesian axes, whereas SuperCollider receives acceleration relative to the hand's orientation. To perform this conversion, we used formulas typically employed for managing drone orientation in the air ([source]([ReadmeFiles/SynthClassScheme.png](https://atadiat.com/en/e-towards-understanding-imu-basics-of-accelerometer-and-gyroscope-sensors/))).
+
+
+### 2.5 Communication between SuperCollider and Processing <a name="communication-between-supercollider-and-processing"></a>
 
 Processing creates a graphical user interface (GUI) that allows users to control musical parameters, which are sent to SuperCollider via the Open Sound Control (OSC) protocol. SuperCollider processes these inputs to produce audio and can send updates back to Processing for dynamic GUI adjustments.
 
