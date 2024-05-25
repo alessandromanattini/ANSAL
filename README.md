@@ -15,8 +15,15 @@ The polyphonic vocoder implemented in this project is a K-voice polyphonic vocod
 
 1. **Audio Input**: The audio enters through the microphone input into the PluginProcessor. Here, it is normalized (using the SimpleCompressor class) to ensure a stable input signal level.
 2. **Audio and MIDI Processing**: The processBlock reads the incoming audio buffer and MIDI input. For each MIDI note read, it activates one of the K voices and assigns it to process the audio buffer at the specific MIDI note frequency.
-3. **Voice Processing**: Each vocoder voice (PhaseVoc class) processes the audio buffer using the following formula:
-   ...
+3. **Voice Processing**: Each vocoder voice (PhaseVoc class) processes the audio buffer using the following "leaky autocorrelation" formula:
+   $R_{l,n} = (1 - k) R_{l,n-1} + k x_n x_{n-l}$
+   Where: 
+   - **$R_{l,n}$**: Leaky autocorrelation at lag $l$ and time $n$.
+   - **$R_{l,n-1}$**: Leaky autocorrelation at lag $l$ and previous time step $n-1$.
+   - **$x_n$**: Input signal at time $n$.
+   - **$x_{n-l}$**: Input signal $l$ steps before $n$.
+   - **$k$**: Leakiness constant, typically around $0.001$.
+   This formula balances past autocorrelation values with new data, allowing the vocoder to adapt to changes in the speech signal over time.
 4. **Envelope Application**: To ensure the notes have a pleasant envelope, PhaseVoc applies methods from the EnvelopeGenerator class to the processed audio. Once this is done, it returns the buffer containing the processed result to PluginProcessor.
 5. **High-Pass Filtering**: Before outputting the audio, PluginProcessor applies a High-Pass Filter (HighPassFilter class) to the outgoing audio to remove the lowest frequencies and enhance audio intelligibility if necessary.
 
