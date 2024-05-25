@@ -27,7 +27,7 @@ $$ R_{l,n} = (1 - k) R_{l,n-1} + k x_n x_{n-l} $$
    - **$k$**: Leakiness constant, typically around $0.001$.
 
   This formula balances past autocorrelation values with new data, allowing the vocoder to adapt to changes in the speech signal over time.
-  
+
 4. **Envelope Application**: To ensure the notes have a pleasant envelope, PhaseVoc applies methods from the EnvelopeGenerator class to the processed audio. Once this is done, it returns the buffer containing the processed result to PluginProcessor.
 5. **High-Pass Filtering**: Before outputting the audio, PluginProcessor applies a High-Pass Filter (HighPassFilter class) to the outgoing audio to remove the lowest frequencies and enhance audio intelligibility if necessary.
 
@@ -35,8 +35,11 @@ The following steps and the class hierarchy related to audio processing are easi
 
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
-# Synh Module
+# Synth Module
 ![Synth GUI](ReadmeFiles/SynthGUI.png)
+
+The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
+
 ## Synth Hardware Configuration
 The hardware setup for the synth module is as follows:
 ### MIDI Input Devices
@@ -51,12 +54,14 @@ The system also takes input from the hand inclination of the keyboardist. The re
 * Arduino Uno: Required to derive angle data from the accelerometer coordinates and interface the accelerometer with the system.
 
 The system components are connected as illustrated in the figure below:
+
 ![Hardware Connections](ReadmeFiles/SynthHardwareConnections_noLab.png)
 
-## Midi Mapping
+## Synth Functionalities
+![Vocoder Block Scheme](ReadmeFiles/VocoderClassScheme.png)
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
 
-## Supercollider Code Desription
+## Supercollider Code Description
 ### Files and Descriptions
 1. **ArduinoAdapter.scd**
    - **Purpose:** Interfaces with Arduino to receive accelerometer data from a glove, enabling gesture-based control of synthesizer parameters.
