@@ -9,9 +9,12 @@ The aim of our project is to provide small groups of musicians with a comprehens
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
 # Vocoder Module
+
+The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI.
+
 ![Vocoder GUI](ReadmeFiles/VocoderGUIDiagramBlack.png)
 
-The polyphonic vocoder implemented in this project is a K-voice polyphonic vocoder (where K is a parameter that can be easily modified in the private variables in PluginProcessor) controlled via MIDI. The operation is as follows:
+ The operation is as follows:
 
 1. **Audio Input**: The audio enters through the microphone input into the PluginProcessor. Here, it is normalized (using the SimpleCompressor class) to ensure a stable input signal level.
 2. **Audio and MIDI Processing**: The processBlock reads the incoming audio buffer and MIDI input. For each MIDI note read, it activates one of the K voices and assigns it to process the audio buffer at the specific MIDI note frequency.
@@ -36,9 +39,10 @@ The following steps and the class hierarchy related to audio processing are easi
 ![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChain.png)
 
 # Synth Module
-![Synth GUI](ReadmeFiles/GUIDiagramBlack.png)
 
 The synth module includes numerous functions available to the user, all controllable via both the graphical interface and MIDI. Additionally, the Vocoder described in the previous section is integrated within the Synth module. This setup ensures that the MIDI notes used to play the synthesizer are also forwarded to the Vocoder, allowing it to modulate the voice with the same harmonies.
+
+![Synth GUI](ReadmeFiles/GUIDiagramBlack.png)
 
 ## Synth Hardware Configuration
 The hardware setup for the synth module is as follows:
@@ -57,9 +61,35 @@ The system components are connected as illustrated in the figure below:
 
 ![Hardware Connections](ReadmeFiles/SynthHardwareConnections_noLab.png)
 
-## Synth Functionalities
-![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
+## Synthesizer Features
+The synthesizer offers extensive configuration and parameter customization options. The list of functionalities is detailed in the GUI picture at the beginning of the Synth chapter and in MIDI mapping diagram provided below, so for brevity, I will not re-list them here.
+
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
+
+Instead, I will focus on some interesting setting combinations, along with a video demonstration for each:
+
+* **Mono Bass, Drum, and Synth**: By activating keyboard split, applying a bass (octave shift -1) on the left section and another synth on the right section, you can simultaneously play a bass and a synth. The mono setting on the left side allows you to not worry about the sustain pedal release, enabling the pianist to focus on coordinating the pedal with only the right hand. Adding a drum sequence, mapping the synth's right-hand cut-off frequency with the glove or pedal, creates a very interesting effect (video demonstration).
+
+* **Theremin-like Setup**: Activating glove pitch bend mapping for both instruments and connecting the glove's y-control to the cut-off frequency of the higher synth and the control pedal to the cut-off frequency of the lower synth (-1 octave shift) produces unique results (video demonstration).
+
+* **Synth and Drum**: Using settings similar to the first preset on the list but removing the keyboard split, you can achieve this type of effect.
+
+**Note**: The *Keyboard Split* can be activated/deactivated as follows:
+
+* By clicking on knob 1 (top left on the Arturia), the "split selection" mode is activated. In this mode, the system waits for you to press a note. Once done, that note becomes the split point between the left and right sections of the keyboard.
+* To remove the keyboard split, press knob 1 again. Now, both instruments will play simultaneously across the entire keyboard range.
+
+## Implementation Details
+
+To implement the system, we aimed to separate functionalities into distinct modules and files as much as possible. This approach ensures independent operation, improving maintainability and code reusability. As shown in the diagram below:
+
+* **Blue Modules**: Manage the rhythmic section, handling MIDI inputs, defining the sounds to be played, and setting up percussion sequences.
+* **Red Modules**: Handle MIDI note management, including processing MIDI note inputs, defining the synth sounds, and forwarding notes to the vocoder.
+* **Orange and Gray Sections**: Represent the management of knobs and presets. When a user selects a new preset, the knobs module updates all "knob values" (system parameters), which then propagate to all other modules. Additionally, the knobs module handles MIDI CC inputs.
+* **Green Module**: ArduinoAdapter module, which receives hand inclination values and applies them to the system.
+* **Pink Module**: OSCCommunication module, responsible for receiving user mouse inputs and refreshing the GUI to display the system status on the screen.
+
+![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 
 ## Synth Module GUI
 The Processing code creates a graphical user interface (GUI) that allows users to control various musical parameters. These parameters are sent to SuperCollider using the Open Sound Control (OSC) protocol. SuperCollider processes these parameters to produce the corresponding audio output and can send updates back to Processing to dynamically adjust the GUI.
