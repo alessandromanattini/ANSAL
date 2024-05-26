@@ -21,8 +21,8 @@ The functionalities of the modules can be modified either through the graphical 
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
 3. [Guitar Module](#guitar-module)
-      1. [Bass Synth](bass-synth)
-      2. [Guitar Stereo Effects](guitar-stereo-effects)
+      1. [Bass Synth](#bass-synth)
+      2. [Guitar Stereo Effects](#guitar-stereo-effects)
 
 ## 1. Vocoder Module <a name="vocoder-module"></a>
 
@@ -169,7 +169,7 @@ The use of the Pitch.kr and Amplitude.ar UGens, along with SoundIn, allows for a
 allowing a polyphonic input.
 * The latter gave us the idea to redesign the algorithm to play a synthetic bass line along with clean chords, or arpeggios.  The straight tuning was fine tuned to a more effective 0.994, with octave up at 1.985 and down at 0.497.  Formant.ar was exploited 
 instead SinOsc for a more synthetic result.
-* To perfect the bass result, we decided to add a release time in the Aplitude,ar and to add a low pass filter after the SoundIn for the treated result, to be add in the output and balanced with chords and arpeggios from the input.
+* To perfect the bass result, we decided to add a release time in the Amplitude.ar and to add a low pass filter after the SoundIn for the treated result, to be add in the output and balanced with chords and arpeggios from the input.
 
 ### 3.1.2 Guitar Stereo Effects
 Pitch effects on the market (Choruses, Flangers, Phasers), invariably treat the whole guitar signal, adding muddines to the lower frequecies.  Having added the LP on the input, we reversed its result, to present the untouched bass registers in the center of the output, and we added an HP to gather the signal (mid and high registers), to be detuned cyclically L-R. LP and HP were offset in an almost Linkwitz-Rayleigh configuration, not to overlap the signal bands. 
@@ -177,7 +177,7 @@ L-R detunings obtained fine tuning two delayed SinOsc with two arguments “rate
 
             DelayN.ar(highSig, 0.5, SinOsc.kr((rate + 0.3)).exprange(depth*0.012, rate*0.030)*0.1);
  
-Final result is a stereo Chorus (almost a Flanger), with a firm and clean bass register in the center of the image. Finally, for our demo, we implemented a control interface were we assigned the three sounds needed:  Clean, Chorus, and (Clean with a) Bass.
+Final result is a stereo Chorus (almost a Flanger), with a firm and clean bass register in the center of the image. Finally, for our demo, we implemented a control interface where we assigned the three sounds needed:  Clean, Chorus, and (Clean with a) Bass.
 
 
 
