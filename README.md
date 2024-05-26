@@ -1,5 +1,7 @@
 # ANSAL CMLS PROJECT
 
+For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a report, and a demo video.
+
 ## Summary of the functionalities
 
 The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. 
