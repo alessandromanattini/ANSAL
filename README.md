@@ -21,6 +21,8 @@ The functionalities of the modules can be modified either through the graphical 
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
 3. [Guitar Module](#guitar-module)
+      1. [Bass Synth](bass-synth)
+      2. [Guitar Stereo Effects](guitar-stereo-effects)
 
 ## 1. Vocoder Module <a name="vocoder-module"></a>
 
@@ -152,25 +154,28 @@ In SuperCollider, we can also divide communication management into main sections
 * **GUI Update Routine:** The ~guiRoutine ensures that the GUI is always synchronized with the current parameter states by executing the ~updateGUI function every 0.1 seconds.
 
 ## 3. Guitar Module <a name="guitar-module"></a>
-ThIs module has been deployed in SuperCollider.  We’ve called it “Guitar“ because this is the way we used it but, technically, it could be used with any input signal from a microphone.  
+This module has been deployed in SuperCollider.  We’ve called it “Guitar“ because this is the way we used it but, technically, it could be used with any input signal from a microphone.  
 Care has been put in the choice of the interface - the MMA-A - , to ensure a stable conversion, 
 and the mic - 4099 - a precise supercardioid, both from DPA Microphones
+
 ![Guitar GUI](ReadmeFiles/GuitarGUIscheme.png)
 
 ### 3.1 The Algorithms
 A good starting point was the study of the SoundIn.ar UGen and the code found in the examples included in the SC documentation3.  For our purpouse, we decided to always have a mono input and a stereo (or at least stereo centered) output.
 
 ### 3.1.1  Bass Synth
-The use of the Pitch.kr and Amplitude.ar UGens, along with SoundIn, allows for a stable tracking of the incoming signal that, assigned as a frequency parameter to an UGen like SinOsc.ar, in its turn generates a stable, controllable output. Initially, and playing single notes, we tuned it straight (1.0) and per octaves (0.5 lower, 2.0 higher), but we pretty soon discovered few interesting effects:  
-the coefficients used needed to be fine tuned to compensate for the initial detuning of the strings in play and the slight delay of the output, and accidentaly playing more than one note, the resulting pitch was attributed to the note of higher volume in execution, thus 
-allowing a polyphonic input.  The latter gave us the idea to redesign the algorithm to play a synthetic bass line along with clean chords, or arpeggios.  The straight tuning was fine tuned to a more effective 0.994, with octave up at 1.985 and down at 0.497.  Formant.ar was exploited 
-instead SinOsc for a more synthetic result.  To perfect the bass result, we decided to add a release time in the Aplitude,ar and to add a low pass filter after the SoundIn for the treated result, to be add in the output and balanced with chords and arpeggios from the input.
+The use of the Pitch.kr and Amplitude.ar UGens, along with SoundIn, allows for a stable tracking of the incoming signal that, assigned as a frequency parameter to an UGen like SinOsc.ar, in its turn generates a stable, controllable output. Initially, and playing single notes, we tuned it straight (1.0) and per octaves (0.5 lower, 2.0 higher), but we pretty soon discovered few interesting effects.  
+* The coefficients used needed to be fine tuned to compensate for the initial detuning of the strings in play and the slight delay of the output, and accidentaly playing more than one note, the resulting pitch was attributed to the note of higher volume in execution, thus 
+allowing a polyphonic input.
+* The latter gave us the idea to redesign the algorithm to play a synthetic bass line along with clean chords, or arpeggios.  The straight tuning was fine tuned to a more effective 0.994, with octave up at 1.985 and down at 0.497.  Formant.ar was exploited 
+instead SinOsc for a more synthetic result.
+* To perfect the bass result, we decided to add a release time in the Aplitude,ar and to add a low pass filter after the SoundIn for the treated result, to be add in the output and balanced with chords and arpeggios from the input.
 
 ### 3.1.2 Guitar Stereo Effects
 Pitch effects on the market (Choruses, Flangers, Phasers), invariably treat the whole guitar signal, adding muddines to the lower frequecies.  Having added the LP on the input, we reversed its result, to present the untouched bass registers in the center of the output, and we added an HP to gather the signal (mid and high registers), to be detuned cyclically L-R. LP and HP were offset in an almost Linkwitz-Rayleigh configuration, not to overlap the signal bands. 
 L-R detunings obtained fine tuning two delayed SinOsc with two arguments “rate @~0.1” and “depth @~6”, as in this example:
 
-               DelayN.ar(highSig, 0.5, SinOsc.kr((rate + 0.3)).exprange(depth*0.012, rate*0.030)*0.1);
+            DelayN.ar(highSig, 0.5, SinOsc.kr((rate + 0.3)).exprange(depth*0.012, rate*0.030)*0.1);
  
 Final result is a stereo Chorus (almost a Flanger), with a firm and clean bass register in the center of the image. Finally, for our demo, we implemented a control interface were we assigned the three sounds needed:  Clean, Chorus, and (Clean with a) Bass.
 
