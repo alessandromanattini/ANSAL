@@ -13,8 +13,10 @@ The functionalities of the modules can be modified either through the graphical 
 2. [Synth Module](#synth-module)
    1. [Synth Hardware Configuration](#synth-hardware-configuration)
    2. [Synthesizer Features](#synthesizer-features)
+      1. [Sound Patch Details](#sound-patch-details)
+      2. [Presets Details](#presets-details)
    3. [Implementation Details](#implementation-details)
-   4. [Interaction with Accelerometer and Arduino](#arduino)
+   4. [Interaction with Accelerometer and Arduino](#interaction-with-accelerometer-and-arduino)
    5. [Communication between SuperCollider and Processing](#communication-between-supercollider-and-processing)
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
@@ -79,7 +81,19 @@ The synthesizer offers extensive configuration and parameter customization optio
 
 ![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab.png)
 
-Instead, I will focus on some interesting setting combinations, along with a video demonstration for each:
+Instead, in the following two paragraphs, I will focus on describing the sounds available in the synth and how the settings and sounds can be combined to create interesting presets.
+
+#### 2.2.1 Sound Patch Details <a name="sound-patch-details"></a>
+
+Within the synth, various types of sounds are available for each of the two instruments, enhancing the versatility of sound customization. Below are the unique features of each sound patch:
+
+* **Rhodes:** *RHODES1* and *RHODES2* emulate the classic Rhodes electric piano using pulse waves to create a rich harmonic spectrum. **RHODES1** provides a warm, lush sound with an ADSR envelope and a dynamically shifting low-pass filter, enhanced by a chorus effect, making it perfect for chordal textures. **RHODES2** offers an alternative Rhodes sound with a faster attack, enhanced chorus with a longer delay, and added reverb, creating a spacious, immersive sound ideal for both pads and expressive leads.
+
+* **Bass Synths:** *BASSYN1, BASSYN2, BASSYN3, and BASSIMP* cover a broad range of bass sounds. **BASSYN1** uses LFOs to modulate pulse width and rate, resulting in a dynamic, evolving sound with automated panning, suitable for electronic and pop styles. **BASSYN2** features slightly detuned sawtooth oscillators combined with a sub oscillator for a deep, powerful bass sound, with vibrato adding realism and a low-pass filter ensuring punchiness and clarity. **BASSYN3** enhances this design with chorus and light distortion, adding character to the sawtooth and sub oscillator combination, ideal for standout bass lines. **BASSIMP** focuses on simplicity with a single sawtooth oscillator, vibrato, and a low-pass filter, offering a clean, solid bass tone perfect for no-frills bass lines.
+
+* **Lead and Wave Synths:** *LEADSCR, TRIWAVE, and SAWWAVE* are designed for a variety of uses, from lead lines to pads and bass. **LEADSCR** is crafted for powerful, cutting lead sounds with a sync sawtooth oscillator and dynamic frequency modulation, with the filter's cutoff and resonance modulated by envelopes for added expressiveness. **TRIWAVE** generates a triangle wave with added distortion, providing a distinctive tone controlled by a low-pass filter and ADSR envelope, great for smooth, warm leads or pads with a touch of grit. **SAWWAVE** produces a classic sawtooth wave known for its bright, rich harmonic content, with a low-pass filter and ADSR envelope offering control over timbre and dynamics, making it versatile for leads, pads, and bass lines.
+
+#### 2.2.2 Presets Details <a name="presets-details"></a>
 
 * **Mono Bass, Drum, and Synth**: By activating keyboard split, applying a bass (octave shift -1) on the left section and another synth on the right section, you can simultaneously play a bass and a synth. The mono setting on the left side allows you to not worry about the sustain pedal release, enabling the pianist to focus on coordinating the pedal with only the right hand. Adding a drum sequence, mapping the synth's right-hand cut-off frequency with the glove or pedal, creates a very interesting effect [(video demonstration)](https://youtube.com/shorts/gCrn4zHpHQo).
 
@@ -103,10 +117,9 @@ To implement the system, we aimed to separate functionalities into distinct modu
 
 ![Synth Block Scheme](ReadmeFiles/SynthClassScheme.png)
 
-### 2.4 Interaction with Accelerometer and Arduino <a name="arduino"></a>
+### 2.4 Interaction with Accelerometer and Arduino <a name="interaction-with-accelerometer-and-arduino"></a>
 
-Regarding the implementation of the glove, the input management is almost entirely handled in SuperCollider. However, the data received in SuperCollider is not the raw 3-axis accelerometer data. The accelerometer detects acceleration along the three Cartesian axes, whereas SuperCollider receives acceleration relative to the hand's orientation. To perform this conversion, we used formulas typically employed for managing drone orientation in the air ([source]([ReadmeFiles/SynthClassScheme.png](https://atadiat.com/en/e-towards-understanding-imu-basics-of-accelerometer-and-gyroscope-sensors/))).
-
+Regarding the implementation of the glove, the input management is almost entirely handled in SuperCollider. However, the data received in SuperCollider is not the raw 3-axis accelerometer data. The accelerometer detects acceleration along the three Cartesian axes, whereas SuperCollider receives acceleration relative to the hand's orientation. To perform this conversion, we used formulas typically employed for managing drone orientation in the air ([source](https://atadiat.com/en/e-towards-understanding-imu-basics-of-accelerometer-and-gyroscope-sensors/)).
 
 ### 2.5 Communication between SuperCollider and Processing <a name="communication-between-supercollider-and-processing"></a>
 
@@ -118,7 +131,7 @@ This interaction is illustrated in the diagram below:
 
 Below, we outline the roles of SuperCollider and Processing in managing the GUI and their communication methods.
 
-#### 2.4.1 Processing <a name="processing"></a>
+#### 2.5.1 Processing <a name="processing"></a>
 Processing generates the GUI, including buttons, sliders, and knobs for controlling parameters such as volume, low-pass filters (LPF), instrument selection, octaves, control pedals, and presets. Excluding initialization and support functions, the code can be grouped into the following main sections:
 
 * **Communication Management with SuperCollider:**
@@ -129,7 +142,7 @@ Processing generates the GUI, including buttons, sliders, and knobs for controll
 
 * **GUI Update:** The code graphically updates the user interface in each frame, drawing shapes and logos on the GUI window.
 
-#### 2.4.2 SuperCollider <a name="supercollider"></a>
+#### 2.5.2 SuperCollider <a name="supercollider"></a>
 In SuperCollider, we can also divide communication management into main sections:
 
 * **Receiving OSC Messages:** The code handles receiving OSC messages from Processing via OSCdef, which defines various handlers to process the received messages. These handlers update corresponding variables based on the messages received. They manage different aspects such as instrument selection, mono control, volume, low-pass filter, drum sequence BPM, octave selection, vocoder management, control pedal and glove mapping, and preset selection.
