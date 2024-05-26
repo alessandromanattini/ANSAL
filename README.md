@@ -21,7 +21,7 @@ The functionalities of the modules can be modified either through the graphical 
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
 3. [Guitar Module](#guitar-module)
-   1. [The Algorithm](#algorithm) 
+   1. [The Algorithms](#algorithm) 
       1. [Bass Synth](#bass-synth)
       2. [Guitar Stereo Effects](#guitar-stereo-effects)
 
