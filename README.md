@@ -1,11 +1,15 @@
 # ANSAL CMLS PROJECT
 
 ## Summary of the functionalities
-The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. To achieve this, we have implemented the following modules:
+
+The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. 
+
+![Vocoder GUI](ReadmeFiles/ConnessioneGlobale.png)
+
+To achieve this, we have implemented the following modules:
 1. **Polyphonic MIDI Phase Vocoder (JUCE)**: This allows for the simulation of vocal harmonies, enriching the musical landscape.
 2. **Polyphonic Synthesizer**: Features numerous functionalities including mono mode, keyboard split, low-pass filter (LPF), octave shift, pitch shift, and drum sequences, which will be detailed later. Note: These two instruments are interconnected. The Vocoder is accessible via the Synth interface, and the notes received by the Synth are forwarded to the Vocoder. This setup enables a single person to play both instruments effortlessly.
 3. **Guitar Effects Suite**: Uses pitch recognition to identify the fundamental notes of the chords being played. This allows processing that note, with or without synthetic sounds and harmonizations, enabling a single guitarist to "play two guitars" or a "guitar and a bass."
-
 The functionalities of the modules can be modified either through the graphical interface or via MIDI command mappings, as will be illustrated later.
 
 ## Index
