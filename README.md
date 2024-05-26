@@ -83,9 +83,9 @@ Instead, I will focus on some interesting setting combinations, along with a vid
 
 * **Mono Bass, Drum, and Synth**: By activating keyboard split, applying a bass (octave shift -1) on the left section and another synth on the right section, you can simultaneously play a bass and a synth. The mono setting on the left side allows you to not worry about the sustain pedal release, enabling the pianist to focus on coordinating the pedal with only the right hand. Adding a drum sequence, mapping the synth's right-hand cut-off frequency with the glove or pedal, creates a very interesting effect [(video demonstration)](https://youtube.com/shorts/gCrn4zHpHQo).
 
-* **Theremin-like Setup**: Activating glove pitch bend mapping for both instruments and connecting the glove's y-control to the cut-off frequency of the higher synth and the control pedal to the cut-off frequency of the lower synth (-1 octave shift) produces unique results [(video demonstration)](https://youtu.be/LO4PTDnikKs).
+* **Theremin-like Setup**: Activating glove pitch bend mapping for both instruments and connecting the glove's y-control to the cut-off frequency of the higher synth and the control pedal to the cut-off frequency of the lower synth (-1 octave shift) produces unique results [(video demonstration)](https://youtube.com/shorts/tryA1LliBas?feature=share).
 
-* **Deep Synth**: Using settings similar to the first preset on the list but removing the keyboard split, you can achieve [this type of effect](https://youtu.be/pK5QZlXaJGQ).
+* **Deep Synth**: Using settings similar to the first preset on the list but removing the keyboard split, you can achieve [this type of effect](https://youtube.com/shorts/acOKHua5lS0?feature=share).
 
 **Note**: The *Keyboard Split* can be activated/deactivated as follows:
 
