@@ -21,6 +21,7 @@ The functionalities of the modules can be modified either through the graphical 
       1. [Processing](#processing)
       2. [SuperCollider](#supercollider)
 3. [Guitar Module](#guitar-module)
+   1.[The Algorithm](#algorithm) 
       1. [Bass Synth](#bass-synth)
       2. [Guitar Stereo Effects](#guitar-stereo-effects)
 
@@ -160,10 +161,10 @@ and the mic - 4099 - a precise supercardioid, both from DPA Microphones
 
 ![Guitar GUI](ReadmeFiles/GuitarGUIscheme.png)
 
-### 3.1 The Algorithms
+### 3.1 The Algorithms <a name="algorithm"></a>
 A good starting point was the study of the SoundIn.ar UGen and the code found in the examples included in the SC documentation3.  For our purpouse, we decided to always have a mono input and a stereo (or at least stereo centered) output.
 
-### 3.1.1  Bass Synth
+### 3.1.1  Bass Synth <a name="bass-synth"></a>
 The use of the Pitch.kr and Amplitude.ar UGens, along with SoundIn, allows for a stable tracking of the incoming signal that, assigned as a frequency parameter to an UGen like SinOsc.ar, in its turn generates a stable, controllable output. Initially, and playing single notes, we tuned it straight (1.0) and per octaves (0.5 lower, 2.0 higher), but we pretty soon discovered few interesting effects.  
 * The coefficients used needed to be fine tuned to compensate for the initial detuning of the strings in play and the slight delay of the output, and accidentaly playing more than one note, the resulting pitch was attributed to the note of higher volume in execution, thus 
 allowing a polyphonic input.
@@ -171,7 +172,7 @@ allowing a polyphonic input.
 instead SinOsc for a more synthetic result.
 * To perfect the bass result, we decided to add a release time in the Amplitude.ar and to add a low pass filter after the SoundIn for the treated result, to be add in the output and balanced with chords and arpeggios from the input.
 
-### 3.1.2 Guitar Stereo Effects
+### 3.1.2 Guitar Stereo Effects <a name="guitar-stereo-effects"></a> 
 Pitch effects on the market (Choruses, Flangers, Phasers), invariably treat the whole guitar signal, adding muddines to the lower frequecies.  Having added the LP on the input, we reversed its result, to present the untouched bass registers in the center of the output, and we added an HP to gather the signal (mid and high registers), to be detuned cyclically L-R. LP and HP were offset in an almost Linkwitz-Rayleigh configuration, not to overlap the signal bands. 
 L-R detunings obtained fine tuning two delayed SinOsc with two arguments “rate @~0.1” and “depth @~6”, as in this example:
 
