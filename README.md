@@ -157,7 +157,7 @@ In SuperCollider, we can also divide communication management into main sections
 ## 3. Guitar Module <a name="guitar-module"></a>
 This module has been deployed in SuperCollider.  We’ve called it “Guitar“ because this is the way we used it but, technically, it could be used with any input signal from a microphone.  
 Care has been put in the choice of the interface - the MMA-A - , to ensure a stable conversion, 
-and the mic - 4099 - a precise supercardioid, both from DPA Microphones
+and the mic - 4099 - a precise supercardioid, both from DPA Microphones.
 
 ![Guitar GUI](ReadmeFiles/GuitarGUIscheme.png)
 
