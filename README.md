@@ -6,7 +6,7 @@ For the presentation of this project, we have prepared [slides](ReadmeFiles/Slid
 
 The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. 
 
-![Vocoder GUI](ReadmeFiles/ConnessioneGlobaleBlack.png)
+![Vocoder GUI](ReadmeFiles/ConnessioneGlobaleBlackBorders.png)
 
 To achieve this, we have implemented the following modules:
 1. **Polyphonic MIDI Phase Vocoder (JUCE)**: This allows for the simulation of vocal harmonies, enriching the musical landscape.
@@ -59,7 +59,7 @@ This formula balances past autocorrelation values with new data, allowing the vo
 
 The following steps and the class hierarchy related to audio processing are easily deducible from the following diagram:
 
-![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChainBlack.png)
+![Vocoder Audio Path and Dependencies Scheme](ReadmeFiles/VocoderChainBlackBorders.png)
 
 ## 2. Synth Module <a name="synth-module"></a>
 
@@ -83,12 +83,12 @@ The system also takes input from the hand inclination of the keyboardist. The re
 
 The system components are connected as illustrated in the figure below:
 
-![Hardware Connections](ReadmeFiles/SynthHardwareConnectionsBlack.png)
+![Hardware Connections](ReadmeFiles/SynthHardwareConnectionsBlackBorders.png)
 
 ### 2.2 Synthesizer Features <a name="synthesizer-features"></a>
 The synthesizer offers extensive configuration and parameter customization options. The list of functionalities is detailed in the GUI picture at the beginning of the Synth chapter and in the MIDI mapping diagram provided below, so for brevity, I will not re-list them here.
 
-![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab_black.png)
+![Key Midi Mapping](ReadmeFiles/KeyMidiMapping_noLab_blackBorders.png)
 
 Instead, in the following two paragraphs, I will focus on describing the sounds available in the synth and how the settings and sounds can be combined to create interesting presets.
 
@@ -124,7 +124,7 @@ To implement the system, we aimed to separate functionalities into distinct modu
 * **Green Module**: ArduinoAdapter module, which receives hand inclination values and applies them to the system.
 * **Pink Module**: OSCCommunication module, responsible for receiving user mouse inputs and refreshing the GUI to display the system status on the screen.
 
-![Synth Block Scheme](ReadmeFiles/SynthClassSchemeBlack.png)
+![Synth Block Scheme](ReadmeFiles/SynthClassSchemeBlackBorders.png)
 
 ### 2.4 Interaction with Accelerometer and Arduino <a name="interaction-with-accelerometer-and-arduino"></a>
 
@@ -136,7 +136,7 @@ Processing creates a graphical user interface (GUI) that allows users to control
 
 This interaction is illustrated in the diagram below:
 
-![Synth GUI](ReadmeFiles/CommunicationDiagram2Black.png)
+![Synth GUI](ReadmeFiles/CommunicationDiagram2BlackBorders.png)
 
 Below, we outline the roles of SuperCollider and Processing in managing the GUI and their communication methods.
 
@@ -165,7 +165,7 @@ This module has been deployed in SuperCollider.  We’ve called it “Guitar“ 
 Care has been put in the choice of the interface - the MMA-A - , to ensure a stable conversion, 
 and the mic - 4099 - a precise supercardioid, both from DPA Microphones.
 
-![Guitar GUI](ReadmeFiles/GuitarGUIschemeBlack.png)
+![Guitar GUI](ReadmeFiles/GuitarGUIschemeBlackborders.png)
 
 ### 3.1 The Algorithms <a name="algorithm"></a>
 A good starting point was the study of the SoundIn.ar UGen and the code found in the examples included in the SC documentation3.  For our purpouse, we decided to always have a mono input and a stereo (or at least stereo centered) output.
