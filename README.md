@@ -3,7 +3,7 @@
 For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a [report](ANSAL_CMLS_HW_Report.pdf), and a [demo video](https://www.youtube.com/playlist?list=PLH7Bvh7iR_KMFTS75npgJiDk0f4muGISl).
 
 ## Index
-0. [Summary of the functionalities](#summary)
+0. [Summary of functionalities](#summary)
 1. [Vocoder Module](#vocoder-module)
 2. [Synth Module](#synth-module)
    1. [Synth Hardware Configuration](#synth-hardware-configuration)
@@ -20,7 +20,7 @@ For the presentation of this project, we have prepared [slides](ReadmeFiles/Slid
       1. [Bass Synth](#bass-synth)
       2. [Guitar Stereo Effects](#guitar-stereo-effects)
 
-## Summary of the functionalities <a name="summary"></a>
+## Summary of functionalities <a name="summary"></a>
 
 The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. 
 
