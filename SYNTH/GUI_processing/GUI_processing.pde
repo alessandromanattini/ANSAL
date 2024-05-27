@@ -59,7 +59,7 @@ Textlabel instrument1Text, instrument2Text, octave1Text, octave2Text, bpmText,
           vocVolumeText, volume1Text, volume2Text, lpf1Text, lpf2Text, controlPedal1Text, 
           controlPedal2Text, xText, yText, presetText;
 
-// Knobs and Sliders definition
+// Knobs and Sliders definitions
 Knob volume1Knob, lpf1Knob, volume2Knob, lpf2Knob;
 Slider bpm, vocoderVolume;
 
@@ -175,7 +175,7 @@ void setup() {
                 .setFont(createFont("Arial", 15))
                 .setText("Y AXIS");
 
-// Here there are the definition of the GUI components. The SEND functions are described below this part.
+// Here there are the definitions of the GUI components. The SEND functions are described below this part.
 
 // -------------------- BPM, VOCODER VOLUME & GUI --------------------------------------
 
@@ -190,7 +190,7 @@ void setup() {
         .setColorBackground(color(43, 40, 40))
         .setColorCaptionLabel(color(128, 122, 122))
         
-        // When there is a change, send the new value to SC. The logic will be the same for every components.
+        // When there is a change, sends the new value to SC. The logic will be the same for every components.
         .onChange(new CallbackListener() {
             public void controlEvent(CallbackEvent event) {
                 float value = event.getController().getValue();
@@ -286,7 +286,7 @@ void setup() {
 
     // Instrument 1 selector
     
-    // This label allows us you to see the selected instrument
+    // This label allows you to see the selected instrument
     instrumentLabel1 = cp5.addTextlabel("instrumentLabel1")
                         .setPosition(116, 96)
                         .setSize(200, 50)
@@ -302,7 +302,7 @@ void setup() {
        .setColorCaptionLabel(color(43, 40, 40))
        .setLabel("NEXT")
        
-       // When there is a change, show the next element in the list and send the value to SC. The logic will be the same for 
+       // When there is a change, shows the next element in the list and sends the value to SC. The logic will be the same for 
        // every selector.
        .onClick(new CallbackListener() {
             public void controlEvent(CallbackEvent event) {
@@ -332,7 +332,7 @@ void setup() {
 
     // Instrument 1 octave selector
     
-    // This label allows us you to see the selected octave
+    // This label allows you to see the selected octave
     currentOctaveLabel1 = cp5.addTextlabel("currentOctaveLabel1")
                         .setPosition(140, 193)
                         .setSize(200, 50)
@@ -375,7 +375,7 @@ void setup() {
 
      // Control pedal selector of the first instrument 
     
-    // This label allows us you to see the selected control of the pedal
+    // This label allows you to see the selected control of the pedal
     currentPedalLabel1 = cp5.addTextlabel("ControlPedal1")
                         .setPosition(132.5, 292.5)
                         .setSize(200, 50)
@@ -473,7 +473,7 @@ void setup() {
 
     // Instrument 2 selector
     
-    // This label allows us you to see the selected instrument 
+    // This label allows you to see the selected instrument 
     instrumentLabel2 = cp5.addTextlabel("instrumentLabel2")
                         .setPosition(416, 95)
                         .setSize(200, 50)
@@ -515,7 +515,7 @@ void setup() {
 
     // Instrument 2 octave selector
     
-    // This label allows us you to see the selected octave
+    // This label allows you to see the selected octave
     currentOctaveLabel2 = cp5.addTextlabel("currentOctaveLabel2")
                         .setPosition(440, 193)
                         .setSize(200, 50)
@@ -538,7 +538,7 @@ void setup() {
             }
         });
 
-    // Previous instrument button
+    // Previous octave button
     cp5.addButton("IndietroOctave2")
        .setPosition(350, 175)
        .setSize(50, 50)
@@ -641,7 +641,7 @@ void setup() {
 
     sendAccelerometerXMessage(accelerometer[currentXIndex]);
 
-    // Accelerometer X axis selector
+    // Accelerometer Y axis selector
     
     // This label allows you to see the selected Y axis parameter
     currentYLabel = cp5.addTextlabel("currentYLabel")
@@ -745,7 +745,7 @@ void draw() {
     rect(625, 550, 275, 125);
     rect(325, 700, 250, 125);
     
-    // Scale the images and add it in the GUI
+    // Scale the images and add them in the GUI
     float logoWidthRight = logoRight.width * 0.3;  // Scale down the width to 30%
     float logoHeightRight = logoRight.height * 0.3;  // Scale down the height to 30%
     image(logoRight, 65, 675, logoWidthRight, logoHeightRight);
@@ -758,7 +758,7 @@ void draw() {
 // --------------------------------- SEND OSC MESSAGES FUNCTIONS -------------------------------------------
 
 // These functions allow you to change the sound by changing the value from the GUI. When a parameter changes, these functions send an OSC
-//  message to SC with the chosen value.
+// message to SC with the selected value.
 
 // This function sends an OSC message to SC with the selected first instrument
 void sendInstrument1Message(String instrument1) {
@@ -946,9 +946,9 @@ void sendPresetMessage(String preset) {
 
 // ----------------------- RECEIVE OSC MESSAGES FUNCTIONS ----------------------------------
 
-// This functions allow the GUI to change dynamically. The logic is the same for every function : 
-//Processing receive an OSC message from SC, read the message and the value contained in it,
-// and set the value in the GUI component in order to change it.
+// These functions allow the GUI to change dynamically. The logic is the same for every function : 
+// Processing receives an OSC message from SC, reads the message and the value contained in it,
+// and sets the value in the GUI component in order to change it.
 
 // This is useful when you move a knob/fader and when you change the preset.
 
