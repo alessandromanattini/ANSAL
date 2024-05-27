@@ -17,13 +17,14 @@ OSCdef(\cmd_instOne, { |msg, time, addr, recvPort|                   // OSC hand
     { instrument == "RHODES1" } { \RHODES1 }
     { instrument == "RHODES2" } { \RHODES2 }
     { instrument == "BASSYN1" } { \BASSYN1 }
+	{ instrument == "BASSYN2" } { \BASSYN2 }
+	{ instrument == "BASSYN3" } { \BASSYN3 }
+	{ instrument == "BASSIMP" } { \BASSIMP }
     { instrument == "LEADSCR" } { \LEADSCR }
     { instrument == "TRIWAVE" } { \TRIWAVE }
     { instrument == "SAWWAVE" } { \SAWWAVE }
     { instrument == "HAMMOND" } { \HAMMOND }
     { instrument == "VIOLSYN" } { \VIOLSYN }
-    { instrument == "BASSYN2" } { \BASSYN2 }
-    { instrument == "BASSIMP" } { \BASSIMP }
     { \NONE  };
 }, '/cmd_instOne');
 
@@ -36,12 +37,12 @@ OSCdef(\cmd_instTwo, { |msg, time, addr, recvPort|
     { instrument == "BASSYN1" } { \BASSYN1 }
 	{ instrument == "BASSYN2" } { \BASSYN2 }
 	{ instrument == "BASSYN3" } { \BASSYN3 }
+	{ instrument == "BASSIMP" } { \BASSIMP }
     { instrument == "LEADSCR" } { \LEADSCR }
     { instrument == "TRIWAVE" } { \TRIWAVE }
     { instrument == "SAWWAVE" } { \SAWWAVE }
-    { instrument == "HAMMOND" } { \HAMMOND }
-    { instrument == "VIOLSYN" } { \VIOLSYN }
-    { instrument == "BASSIMP" } { \BASSIMP }
+	{ instrument == "HAMMOND" } { \HAMMOND }
+	{ instrument == "VIOLSYN" } { \VIOLSYN }
     { \NONE };
 }, '/cmd_instTwo');
 
