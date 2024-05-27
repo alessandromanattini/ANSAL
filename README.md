@@ -20,7 +20,7 @@ For the presentation of this project, we have prepared [slides](ReadmeFiles/Slid
       1. [Bass Synth](#bass-synth)
       2. [Guitar Stereo Effects](#guitar-stereo-effects)
 
-## Summary of functionalities <a name="summary"></a>
+## 0. Summary of functionalities <a name="summary"></a>
 
 The aim of our project is to provide small groups of musicians with a comprehensive tool to expand their musical possibilities and perform as if they were a full band. 
 
