@@ -1,6 +1,6 @@
 # ANSAL CMLS PROJECT
 
-For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a report[report](ANSAL_CMLS_HW_Report.pdf), and a demo video.
+For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a [report](ANSAL_CMLS_HW_Report.pdf), and a demo video.
 
 ## Summary of the functionalities
 
