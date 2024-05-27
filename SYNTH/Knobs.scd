@@ -28,11 +28,11 @@
     var value;
     switch(num,
         16, {
-            value = val.linexp(0, 127, 0.01, 1);
+            value = val.linexp(0, 127, 0.001, 1);
             ~busOne.set(value);
         },
         17, {
-            value = val.linexp(0, 127, 0.01, 1);
+            value = val.linexp(0, 127, 0.001, 1);
             ~busTwo.set(value);
         },
         20, {
