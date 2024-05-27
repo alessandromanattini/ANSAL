@@ -1,4 +1,8 @@
+<div align="center">
+   
 # ANSAL CMLS PROJECT
+
+
 
 For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a [report](ANSAL_CMLS_HW_Report.pdf), and a [demo video](https://www.youtube.com/playlist?list=PLH7Bvh7iR_KMFTS75npgJiDk0f4muGISl).
 
@@ -7,6 +11,8 @@ For the presentation of this project, we have prepared [slides](ReadmeFiles/Slid
 | **Name**    | Angelo Antona         | Salvatore Benvenuto Zocco   | Alessandro Manattini      |
 | **ID**      | 10665838              | 11035358                    | 11006826                  |
 
+
+</div>
 
 ## Index
 0. [Summary of functionalities](#summary)
