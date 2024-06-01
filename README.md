@@ -4,7 +4,7 @@
 
 
 
-For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a [report](ANSAL_CMLS_HW_Report.pdf), and a [demo video](https://www.youtube.com/playlist?list=PLH7Bvh7iR_KMFTS75npgJiDk0f4muGISl).
+For the presentation of this project, we have prepared [slides](ReadmeFiles/Slides_ANSAL.pdf), a [report](ANSAL_CMLS_HW_Report.pdf), and a [demo video](https://youtu.be/Nszo1dWtVL0).
 
 |             | AN                    | SA                          | AL                        |
 |-------------|:---------------------:|:---------------------------:|:-------------------------:|
